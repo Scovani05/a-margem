@@ -1,4 +1,9 @@
 require('dotenv').config();
+// Neon transaction poolers are for application traffic. Use the direct URL
+// for schema changes when one is configured.
+if (process.env.DATABASE_URL_UNPOOLED) {
+  process.env.DATABASE_URL = process.env.DATABASE_URL_UNPOOLED;
+}
 const { QueryTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const migration = require('./001-initial-schema');
