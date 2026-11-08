@@ -14,6 +14,9 @@ function PasswordInput({ id, label, value, onChange, autoComplete, minLength = 1
   return <div className="mb-3"><label className="form-label" htmlFor={id}>{label}</label><div className="password-input"><input className="form-control" id={id} type={visible ? 'text' : 'password'} value={value} onChange={onChange} autoComplete={autoComplete} minLength={minLength} required /><button type="button" aria-label={visible ? 'Ocultar palavra-passe' : 'Mostrar palavra-passe'} onClick={() => setVisible(!visible)}>{visible ? <EyeOff size={17} /> : <Eye size={17} />}</button></div></div>;
 }
 
+// Só aceita caminhos internos (evita redirecionamentos para sites externos).
+const safeRedirect = (value, user) => (value && value.startsWith('/') && !value.startsWith('//') ? value : user?.role === 'admin' ? '/admin' : '/profile');
+
 function Notice({ error, message }) {
   return error || message ? <div className={`form-alert ${error ? 'form-alert--error' : 'form-alert--success'}`} role={error ? 'alert' : 'status'}>{error || message}</div> : null;
 }
@@ -27,10 +30,10 @@ export function LoginPage() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   usePageMeta('Entrar');
-  if (user) return <Navigate to={searchParams.get('redirect') || '/profile'} replace />;
+  if (user) return <Navigate to={safeRedirect(searchParams.get('redirect'), user)} replace />;
   const submit = async (event) => {
     event.preventDefault(); setBusy(true); setError('');
-    try { await login({ email, password }); navigate(searchParams.get('redirect') || '/profile', { replace: true }); }
+    try { const account = await login({ email, password }); navigate(safeRedirect(searchParams.get('redirect'), account), { replace: true }); }
     catch (err) { setError(err.response?.data?.message || 'Não foi possível iniciar sessão.'); }
     finally { setBusy(false); }
   };
@@ -53,7 +56,7 @@ export function RegisterPage() {
     finally { setBusy(false); }
   };
   return <AuthFrame eyebrow="A tua próxima descoberta" title="Guarda o que te toca." text="Cria uma conta para guardar eventos, artistas, obras, espaços e histórias." footer={<>Já tens conta? <Link to="/login">Entrar</Link></>}>
-    <form onSubmit={submit}><Notice error={error} /><div className="mb-3"><label className="form-label" htmlFor="register-name">Nome</label><input className="form-control" id="register-name" value={name} onChange={(event) => setName(event.target.value)} autoComplete="name" maxLength={120} required /></div><div className="mb-3"><label className="form-label" htmlFor="register-email">Email</label><input className="form-control" id="register-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} autoComplete="email" maxLength={254} required /></div><PasswordInput id="register-password" label="Palavra-passe (mínimo 10 caracteres)" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="new-password" minLength={10} /><p className="auth-legal">Ao criar uma conta, aceitas os <Link to="/terms">Termos de Utilização</Link> e confirmas que leste a <Link to="/privacy">Política de Privacidade</Link>.</p><button className="btn btn-dark w-100 mt-3" type="submit" disabled={busy}>{busy ? 'A criar conta…' : 'Criar conta'} <ArrowRight size={16} /></button></form>
+    <form onSubmit={submit}><Notice error={error} /><div className="mb-3"><label className="form-label" htmlFor="register-name">Nome</label><input className="form-control" id="register-name" value={name} onChange={(event) => setName(event.target.value)} autoComplete="name" maxLength={120} required /></div><div className="mb-3"><label className="form-label" htmlFor="register-email">Email</label><input className="form-control" id="register-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} autoComplete="email" maxLength={254} required /></div><PasswordInput id="register-password" label="Palavra-passe (mín. 10 caracteres, com letras e números)" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="new-password" minLength={10} /><p className="auth-legal">Ao criar uma conta, aceitas os <Link to="/terms">Termos de Utilização</Link> e confirmas que leste a <Link to="/privacy">Política de Privacidade</Link>.</p><button className="btn btn-dark w-100 mt-3" type="submit" disabled={busy}>{busy ? 'A criar conta…' : 'Criar conta'} <ArrowRight size={16} /></button></form>
   </AuthFrame>;
 }
 

@@ -31,6 +31,15 @@ async function seed() {
     if (admin.role !== 'admin') await admin.update({ role: 'admin' });
   }
 
+  // Conta opcional com perfil "cliente" para demonstração.
+  if (process.env.CLIENT_EMAIL && process.env.CLIENT_PASSWORD) {
+    if (process.env.CLIENT_PASSWORD.length < 10) throw new Error('CLIENT_PASSWORD must contain at least 10 characters.');
+    await User.findOrCreate({
+      where: { email: process.env.CLIENT_EMAIL.trim().toLowerCase() },
+      defaults: { name: 'Cliente de demonstração', email: process.env.CLIENT_EMAIL.trim().toLowerCase(), passwordHash: await bcrypt.hash(process.env.CLIENT_PASSWORD, 12), role: 'cliente' }
+    });
+  }
+
   const categoryRows = await Promise.all([
     ['Música', 'musica', 'Sons, discos e projetos independentes.', '#d8e87a', 'music-2'],
     ['Cinema', 'cinema', 'Filmes, salas e outras imagens em movimento.', '#f2a18a', 'clapperboard'],
@@ -101,7 +110,12 @@ async function seed() {
   console.log('Seed complete. The cultural catalogue records are fictional and carry the demonstration label.');
 }
 
-seed().catch((error) => {
-  console.error('Seed failed:', error.message);
-  process.exitCode = 1;
-}).finally(() => sequelize.close());
+module.exports = seed;
+
+// Executado diretamente (npm run seed): corre e fecha a ligação.
+if (require.main === module) {
+  seed().catch((error) => {
+    console.error('Seed failed:', error.message);
+    process.exitCode = 1;
+  }).finally(() => sequelize.close());
+}

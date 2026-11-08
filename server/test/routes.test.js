@@ -19,10 +19,23 @@ test('registers public catalogue, search, authentication, and moderation endpoin
   assert.ok(hasRoute('post', '/admin/submissions/:id/publish'));
 });
 
-test('keeps administrator routes behind authentication and the admin role check', () => {
-  const dashboard = router.stack.find((layer) => layer.route?.path === '/admin/dashboard').route;
-  assert.equal(dashboard.stack.length, 3);
-  const middlewareNames = dashboard.stack.map((entry) => entry.name);
-  assert.ok(middlewareNames.includes('requireAuth'));
-  assert.ok(middlewareNames.includes('requireAdmin'));
+test('keeps every administrator route behind authentication and the admin role check', () => {
+  const guard = router.stack.find((layer) => !layer.route && layer.regexp.test('/admin/dashboard'));
+  assert.ok(guard, 'expected a router-level guard on /admin');
+  const names = router.stack.filter((layer) => !layer.route && layer.regexp.test('/admin/database')).map((layer) => layer.name);
+  assert.ok(names.includes('requireAuth'));
+  assert.ok(names.includes('requireAdmin'));
+  const firstAdminRoute = router.stack.findIndex((layer) => layer.route?.path?.startsWith('/admin'));
+  const lastGuard = router.stack.findLastIndex((layer) => !layer.route && layer.name === 'requireAdmin');
+  assert.ok(lastGuard < firstAdminRoute, 'guards must be registered before admin routes');
+});
+
+test('exposes the database explorer and account security endpoints', () => {
+  assert.ok(hasRoute('get', '/admin/database'));
+  assert.ok(hasRoute('get', '/admin/database/:table'));
+  assert.ok(hasRoute('post', '/admin/database/query'));
+  assert.ok(hasRoute('get', '/admin/audit'));
+  assert.ok(hasRoute('post', '/auth/change-password'));
+  assert.ok(hasRoute('post', '/auth/logout-all'));
+  assert.ok(hasRoute('get', '/submissions/mine'));
 });

@@ -4,6 +4,26 @@
 
 All initial catalogue records are marked **Demonstração** in the interface. They are fictional examples for local development, not verified events, venues, people, or editorial claims.
 
+## Perfis de utilizador
+
+| Perfil | Como se obtém | O que pode fazer |
+| --- | --- | --- |
+| **Cliente** | Registo público em `/register` (ou criado por um admin) | Guardar conteúdos, gerir o perfil, alterar a palavra-passe, terminar sessões, enviar sugestões e ver o estado delas. |
+| **Admin** | Criado pelo seed (`ADMIN_EMAIL`/`ADMIN_PASSWORD`) ou promovido por outro admin | Tudo o que o cliente faz + backoffice em `/admin`: conteúdos, moderação, utilizadores e perfis, newsletter, mensagens, **explorador da base de dados** (tabelas, pesquisa, edição, exportação CSV, consola SQL só de leitura) e registo de atividade. |
+
+O perfil é validado no servidor em todos os pedidos (`requireAuth` + `requireAdmin` aplicados a todo o prefixo `/api/admin`), por isso esconder botões no React não é a única proteção.
+
+## Segurança
+
+- Palavras-passe com bcrypt (custo 12) e política mínima (10+ caracteres, letras e números).
+- JWT HS256 com `issuer`/`audience`, validade de 8 h e versão de sessão: mudar a palavra-passe, repor a palavra-passe, mudar o perfil ou "terminar todas as sessões" invalida os tokens antigos.
+- Bloqueio temporário da conta após 5 tentativas de login falhadas (15 min) e limitação de pedidos por IP nas rotas sensíveis (`trust proxy` ativo para o Render).
+- Cabeçalhos HTTP de segurança na API (CSP, HSTS, nosniff, X-Frame-Options) e CSP/HSTS/X-Frame-Options no Vercel (`client/vercel.json`); CORS restrito a `CLIENT_URL`.
+- Respostas de conta/admin com `Cache-Control: no-store`; erros internos não expõem detalhes.
+- Explorador da base de dados nunca mostra hashes de palavras-passe ou tokens; a consola SQL aceita só uma instrução `SELECT`/`WITH`/`EXPLAIN`, dentro de uma transação `READ ONLY` com limite de 5 s.
+- Registo de auditoria (`audit_logs`) para logins, falhas de login e todas as alterações feitas no backoffice.
+- Ligação TLS ao Neon com verificação de certificado; segredos apenas em variáveis de ambiente.
+
 ## Requirements
 
 - Node.js 20 or newer and npm.
@@ -53,7 +73,7 @@ The API is available at `http://localhost:4000/api`; Vite serves the client at `
 | `npm test` | Run server input-validation and slug tests |
 | `npm run db:migrate` | Apply pending Sequelize QueryInterface migrations |
 | `npm run db:rollback` | Roll back the most recent migration |
-| `npm run seed` | Add development demonstration data and optional admin |
+| `npm run seed` | Add demonstration data and the optional admin (`ADMIN_*`) and client (`CLIENT_*`) accounts |
 
 ## Architecture
 

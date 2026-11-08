@@ -1,14 +1,22 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowDownLeft, ArrowUpRight, Check, ChevronRight, LayoutDashboard, LogOut, Plus, Save, Trash2, X } from 'lucide-react';
+import { Activity, ArrowDownLeft, ArrowUpRight, Check, ChevronRight, Database, LayoutDashboard, LogOut, Plus, Save, Search, Trash2, Users, X } from 'lucide-react';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import api from '../api/client.js';
 import { Loading } from '../components/States.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import usePageMeta from '../hooks/usePageMeta.js';
 import { formatDate } from '../utils/content.js';
+import DatabaseExplorer from './admin/DatabaseExplorer.jsx';
+import { ActivityPanel, Dashboard, UsersPanel } from './admin/AdminPanels.jsx';
 
-const labels = { overview: 'Visão geral', events: 'Eventos', works: 'Obras', artists: 'Artistas', venues: 'Espaços', articles: 'Artigos', collections: 'Coleções', categories: 'Categorias', submissions: 'Sugestões', users: 'Utilizadores', newsletter: 'Newsletter', contact: 'Mensagens' };
-const navigation = ['overview', 'events', 'works', 'artists', 'venues', 'articles', 'collections', 'categories', 'submissions', 'users', 'newsletter', 'contact'];
+const labels = { overview: 'Visão geral', database: 'Base de dados', activity: 'Atividade', events: 'Eventos', works: 'Obras', artists: 'Artistas', venues: 'Espaços', articles: 'Artigos', collections: 'Coleções', categories: 'Categorias', submissions: 'Sugestões', users: 'Utilizadores', newsletter: 'Newsletter', contact: 'Mensagens' };
+const navigationGroups = [
+  ['Painel', ['overview']],
+  ['Conteúdos', ['events', 'works', 'artists', 'venues', 'articles', 'collections', 'categories']],
+  ['Comunidade', ['submissions', 'users', 'newsletter', 'contact']],
+  ['Sistema', ['database', 'activity']]
+];
+const navIcons = { overview: LayoutDashboard, database: Database, activity: Activity, users: Users };
 const schemas = {
   categories: [
     ['name', 'Nome'], ['slug', 'Slug'], ['description', 'Descrição'], ['color', 'Cor', 'color'], ['icon', 'Ícone'], ['sortOrder', 'Ordem', 'number']
@@ -49,21 +57,19 @@ function AdminGate({ children }) {
   const location = useLocation();
   if (checking) return <div className="container page-loading"><Loading label="A verificar permissões…" /></div>;
   if (!user) return <Navigate to={`/login?redirect=${encodeURIComponent(location.pathname)}`} replace />;
-  if (user.role !== 'admin') return <div className="container inner-page"><h1>Esta área é reservada à equipa editorial.</h1><Link to="/">Voltar à À Margem</Link></div>;
+  if (user.role !== 'admin') return <div className="container inner-page"><p className="eyebrow">Acesso restrito</p><h1>Esta área é reservada a administradores.</h1><p>A tua conta tem o perfil <strong>Cliente</strong>. Podes gerir os teus dados e guardados na tua área pessoal.</p><Link className="btn btn-dark" to="/profile">Ir para a minha conta</Link></div>;
   return children;
 }
 
 function AdminShell({ children, section }) {
   const { logout, user } = useAuth(); const navigate = useNavigate();
-  return <div className="admin-shell"><aside className="admin-sidebar"><Link className="admin-brand" to="/admin"><span>à</span> margem <small>EDITORIAL</small></Link><p className="admin-sidebar__caption">GESTÃO DA PLATAFORMA</p><nav aria-label="Navegação administrativa">{navigation.map((key) => <Link to={key === 'overview' ? '/admin' : `/admin/${key}`} key={key} className={`admin-nav-link ${section === key ? 'is-active' : ''}`}>{key === 'overview' && <LayoutDashboard size={16} />}{labels[key]}{section === key && <ChevronRight size={15} />}</Link>)}</nav><div className="admin-sidebar__bottom"><div className="admin-user"><span>{user.name.slice(0, 1)}</span><div><strong>{user.name}</strong><small>Administrador</small></div></div><button type="button" onClick={() => { logout(); navigate('/'); }}><LogOut size={15} /> Terminar sessão</button><Link to="/" className="admin-return"><ArrowDownLeft size={15} /> Ver site público</Link></div></aside><main className="admin-main"><header className="admin-topbar"><div><span className="eyebrow">À Margem / Administração</span><h1>{labels[section]}</h1></div><Link className="text-link" to="/">Abrir site <ArrowUpRight size={15} /></Link></header>{children}</main></div>;
-}
-
-function Dashboard() {
-  const [data, setData] = useState(null); const [error, setError] = useState('');
-  useEffect(() => { api.get('/admin/dashboard').then(({ data: result }) => setData(result)).catch((err) => setError(err.response?.data?.message || 'Não foi possível carregar o painel.')); }, []);
-  if (error) return <p className="admin-error" role="alert">{error}</p>;
-  if (!data) return <Loading />;
-  return <div className="admin-content"><div className="admin-welcome"><div><p className="eyebrow">Bom trabalho começa com atenção</p><h2>O que está a acontecer?</h2><p>Conteúdos, comunidade e moderação num só lugar.</p></div><Link className="btn btn-dark" to="/admin/articles"><Plus size={16} /> Novo artigo</Link></div><div className="admin-stats">{Object.entries(data.counts).map(([key, value]) => <article className={key === 'pendingSubmissions' ? 'admin-stat admin-stat--lime' : 'admin-stat'} key={key}><span>{labels[key] || (key === 'pendingSubmissions' ? 'Sugestões por rever' : key === 'subscribers' ? 'Inscritos ativos' : key)}</span><strong>{value}</strong></article>)}</div><div className="admin-shortcuts"><h2>Atalhos editoriais</h2><div>{['events', 'works', 'artists', 'venues', 'articles', 'collections', 'categories'].map((key) => <Link to={`/admin/${key}`} key={key}>{labels[key]} <ArrowUpRight size={15} /></Link>)}</div></div></div>;
+  return <div className="admin-shell"><aside className="admin-sidebar"><Link className="admin-brand" to="/admin"><span>à</span> margem <small>BACKOFFICE</small></Link>
+    <nav aria-label="Navegação administrativa">{navigationGroups.map(([group, keys]) => <div className="admin-nav-group" key={group}><p className="admin-sidebar__caption">{group.toUpperCase()}</p>{keys.map((key) => {
+      const Icon = navIcons[key];
+      return <Link to={key === 'overview' ? '/admin' : `/admin/${key}`} key={key} className={`admin-nav-link ${section === key ? 'is-active' : ''}`}>{Icon && <Icon size={15} />}{labels[key]}{section === key && <ChevronRight size={15} />}</Link>;
+    })}</div>)}</nav>
+    <div className="admin-sidebar__bottom"><div className="admin-user"><span>{user.name.slice(0, 1)}</span><div><strong>{user.name}</strong><small>Administrador</small></div></div><button type="button" onClick={() => { logout(); navigate('/'); }}><LogOut size={15} /> Terminar sessão</button><Link to="/" className="admin-return"><ArrowDownLeft size={15} /> Ver site público</Link></div></aside>
+    <main className="admin-main"><header className="admin-topbar"><div><span className="eyebrow">À Margem / Backoffice</span><h1>{labels[section]}</h1></div><Link className="text-link" to="/">Abrir site <ArrowUpRight size={15} /></Link></header>{children}</main></div>;
 }
 
 function initialValue(field, item) {
@@ -78,9 +84,9 @@ function initialValue(field, item) {
 }
 
 function ResourceEditor({ resource }) {
-  const config = schemas[resource]; const [items, setItems] = useState(null); const [categories, setCategories] = useState([]); const [venues, setVenues] = useState([]); const [artists, setArtists] = useState([]); const [editing, setEditing] = useState(null); const [form, setForm] = useState({}); const [busy, setBusy] = useState(false); const [error, setError] = useState(''); const [message, setMessage] = useState('');
+  const config = schemas[resource]; const [items, setItems] = useState(null); const [categories, setCategories] = useState([]); const [venues, setVenues] = useState([]); const [artists, setArtists] = useState([]); const [editing, setEditing] = useState(null); const [form, setForm] = useState({}); const [busy, setBusy] = useState(false); const [error, setError] = useState(''); const [message, setMessage] = useState(''); const [filter, setFilter] = useState('');
   const load = async () => { setItems(null); try { const { data } = await api.get(`/admin/resources/${resource}`); setItems(data); } catch (err) { setError(err.response?.data?.message || 'Não foi possível carregar os registos.'); } };
-  useEffect(() => { setEditing(null); setForm({}); setError(''); load(); }, [resource]);
+  useEffect(() => { setEditing(null); setForm({}); setError(''); setFilter(''); load(); }, [resource]);
   useEffect(() => { if (['events', 'works', 'articles'].includes(resource)) api.get('/categories').then(({ data }) => setCategories(data)).catch(() => setCategories([])); }, [resource]);
   useEffect(() => { if (resource === 'events') api.get('/admin/resources/venues').then(({ data }) => setVenues(data)).catch(() => setVenues([])); }, [resource]);
   useEffect(() => { if (resource === 'works') api.get('/admin/resources/artists').then(({ data }) => setArtists(data)).catch(() => setArtists([])); }, [resource]);
@@ -123,8 +129,10 @@ function ResourceEditor({ resource }) {
   };
   const remove = async (item) => { if (!window.confirm(`Apagar “${item.title || item.name}”?`)) return; try { await api.delete(`/admin/resources/${resource}/${item.id}`); await load(); } catch (err) { setError(err.response?.data?.message || 'Não foi possível apagar o registo.'); } };
   const titleFor = (item) => item.title || item.name;
+  const needle = filter.trim().toLowerCase();
+  const visible = !items ? [] : needle ? items.filter((item) => [titleFor(item), item.slug, item.city, String(item.id)].some((value) => value && String(value).toLowerCase().includes(needle))) : items;
 
-  return <div className="admin-content"><div className="admin-list-toolbar"><p>{items ? `${items.length} registos` : 'A carregar…'}</p><button className="btn btn-dark" type="button" onClick={startCreate}><Plus size={16} /> Criar {labels[resource]?.replace(/s$/, '')}</button></div>
+  return <div className="admin-content"><div className="admin-list-toolbar admin-list-toolbar--wrap"><p>{items ? `${visible.length} de ${items.length} registos` : 'A carregar…'}</p><div className="db-search"><Search size={15} /><input className="form-control" value={filter} onChange={(event) => setFilter(event.target.value)} placeholder="Filtrar por título, slug, cidade ou #id" aria-label="Filtrar registos" /></div><button className="btn btn-dark" type="button" onClick={startCreate}><Plus size={16} /> Criar {labels[resource]?.replace(/s$/, '')}</button></div>
     {(error || message) && <div className={`form-alert ${error ? 'form-alert--error' : 'form-alert--success'}`} role={error ? 'alert' : 'status'}>{error || message}</div>}
     {form && Object.keys(form).length > 0 && <form className="admin-editor" onSubmit={save}>
       <div className="admin-editor__heading"><div><p className="eyebrow">{editing ? 'Editar conteúdo' : 'Novo conteúdo'}</p><h2>{editing ? titleFor(editing) : `Criar ${labels[resource]?.toLowerCase()}`}</h2></div><button type="button" className="admin-icon-button" onClick={() => { setForm({}); setEditing(null); }} aria-label="Fechar formulário"><X size={18} /></button></div>
@@ -153,7 +161,7 @@ function ResourceEditor({ resource }) {
       })}</div>
       <div className="admin-editor__actions"><button className="btn btn-dark" type="submit" disabled={busy}><Save size={16} /> {busy ? 'A guardar…' : 'Guardar'}</button><button className="btn btn-outline-dark" type="button" onClick={() => { setForm({}); setEditing(null); }}>Cancelar</button></div>
     </form>}
-    {!items ? <Loading /> : <div className="admin-table-wrap"><table className="table admin-table"><thead><tr><th scope="col">Conteúdo</th><th scope="col">Estado</th><th scope="col">Atualizado</th><th scope="col"><span className="visually-hidden">Ações</span></th></tr></thead><tbody>{items.map((item) => <tr key={item.id}><td><strong>{titleFor(item)}</strong><small>#{item.id}{item.slug ? ` · ${item.slug}` : item.email ? ` · ${item.email}` : ''}</small></td><td><span className={`admin-status ${item.published || item.status === 'published' ? 'is-published' : ''}`}>{item.status || (item.published ? 'Publicado' : 'Rascunho')}{item.isDemo ? ' · Demonstração' : ''}</span></td><td>{formatDate(item.updatedAt)}</td><td className="admin-table__actions"><button className="btn btn-sm btn-outline-dark" onClick={() => startEdit(item)}>Editar</button>{(item.published || item.status === 'published') && item.slug && <Link className="admin-icon-button" to={routeFor(resource, item)} target="_blank" aria-label={`Ver ${titleFor(item)}`}><ArrowUpRight size={16} /></Link>}<button className="admin-icon-button admin-icon-button--danger" onClick={() => remove(item)} aria-label={`Apagar ${titleFor(item)}`}><Trash2 size={16} /></button></td></tr>)}</tbody></table>{items.length === 0 && <p className="admin-empty">Ainda não há {labels[resource]?.toLowerCase()}.</p>}</div>}
+    {!items ? <Loading /> : <div className="admin-table-wrap"><table className="table admin-table"><thead><tr><th scope="col">Conteúdo</th><th scope="col">Estado</th><th scope="col">Atualizado</th><th scope="col"><span className="visually-hidden">Ações</span></th></tr></thead><tbody>{visible.map((item) => <tr key={item.id}><td><strong>{titleFor(item)}</strong><small>#{item.id}{item.slug ? ` · ${item.slug}` : item.email ? ` · ${item.email}` : ''}</small></td><td><span className={`admin-status ${item.published || item.status === 'published' ? 'is-published' : ''}`}>{item.status || (item.published ? 'Publicado' : 'Rascunho')}{item.isDemo ? ' · Demonstração' : ''}</span></td><td>{formatDate(item.updatedAt)}</td><td className="admin-table__actions"><button className="btn btn-sm btn-outline-dark" onClick={() => startEdit(item)}>Editar</button>{(item.published || item.status === 'published') && item.slug && <Link className="admin-icon-button" to={routeFor(resource, item)} target="_blank" aria-label={`Ver ${titleFor(item)}`}><ArrowUpRight size={16} /></Link>}<button className="admin-icon-button admin-icon-button--danger" onClick={() => remove(item)} aria-label={`Apagar ${titleFor(item)}`}><Trash2 size={16} /></button></td></tr>)}</tbody></table>{visible.length === 0 && <p className="admin-empty">{items.length ? 'Nenhum registo corresponde ao filtro.' : `Ainda não há ${labels[resource]?.toLowerCase()}.`}</p>}</div>}
   </div>;
 }
 
@@ -172,7 +180,7 @@ function AdminSimpleList({ resource }) {
   useEffect(() => { load(); }, [resource]);
   const update = async (item, data) => { try { await api.patch(`/admin/${resource}/${item.id}`, data); await load(); } catch (err) { setError(err.response?.data?.message || 'Não foi possível atualizar.'); } };
   const remove = async (item) => { if (!window.confirm(`Remover ${item.email || item.subject || item.name}?`)) return; try { await api.delete(`/admin/newsletter/${item.id}`); await load(); } catch (err) { setError(err.response?.data?.message || 'Não foi possível remover.'); } };
-  return <div className="admin-content"><div className="admin-list-toolbar"><p>{items ? `${items.length} registos` : 'A carregar…'}</p></div>{error && <p role="alert" className="admin-error">{error}</p>}{!items ? <Loading /> : <div className="admin-record-list">{items.map((item) => <article className="submission-card admin-simple-card" key={item.id}><div><strong>{resource === 'contact' ? `${item.subject} — ${item.name}` : item.name || item.email}</strong><p>{resource === 'contact' ? item.message : item.email || ''}</p><small>{formatDate(item.createdAt || item.consentAt)}{item.unsubscribedAt ? ' · Inscrição cancelada' : ''}</small>{resource === 'contact' && <a href={`mailto:${item.email}`}>{item.email}</a>}</div>{resource === 'users' ? <select aria-label={`Perfil de ${item.name}`} className="form-select" value={item.role} onChange={(event) => update(item, { role: event.target.value })}><option value="user">Utilizador</option><option value="admin">Administrador</option></select> : resource === 'contact' ? <select aria-label="Estado da mensagem" className="form-select" value={item.status} onChange={(event) => update(item, { status: event.target.value })}><option value="new">Nova</option><option value="read">Lida</option><option value="closed">Fechada</option></select> : <button className="admin-icon-button admin-icon-button--danger" onClick={() => remove(item)} aria-label="Remover email"><Trash2 size={16} /></button>}</article>)}</div>}</div>;
+  return <div className="admin-content"><div className="admin-list-toolbar"><p>{items ? `${items.length} registos` : 'A carregar…'}</p></div>{error && <p role="alert" className="admin-error">{error}</p>}{!items ? <Loading /> : <div className="admin-record-list">{items.map((item) => <article className="submission-card admin-simple-card" key={item.id}><div><strong>{resource === 'contact' ? `${item.subject} — ${item.name}` : item.name || item.email}</strong><p>{resource === 'contact' ? item.message : item.email || ''}</p><small>{formatDate(item.createdAt || item.consentAt)}{item.unsubscribedAt ? ' · Inscrição cancelada' : ''}</small>{resource === 'contact' && <a href={`mailto:${item.email}`}>{item.email}</a>}</div>{resource === 'contact' ? <select aria-label="Estado da mensagem" className="form-select" value={item.status} onChange={(event) => update(item, { status: event.target.value })}><option value="new">Nova</option><option value="read">Lida</option><option value="closed">Fechada</option></select> : <button className="admin-icon-button admin-icon-button--danger" onClick={() => remove(item)} aria-label="Remover email"><Trash2 size={16} /></button>}</article>)}</div>}</div>;
 }
 
 export default function AdminPage() {
@@ -181,9 +189,12 @@ export default function AdminPage() {
   usePageMeta(`Administração · ${labels[section] || 'Conteúdo'}`);
   if (!labels[section]) return <AdminGate><AdminShell section="overview"><div className="admin-content"><h2>Página não encontrada</h2></div></AdminShell></AdminGate>;
   let content;
-  if (section === 'overview') content = <Dashboard />;
+  if (section === 'overview') content = <Dashboard labels={labels} />;
+  else if (section === 'database') content = <DatabaseExplorer />;
+  else if (section === 'activity') content = <ActivityPanel />;
+  else if (section === 'users') content = <UsersPanel />;
   else if (schemas[section]) content = <ResourceEditor resource={section} />;
   else if (section === 'submissions') content = <Submissions />;
-  else if (['users', 'newsletter', 'contact'].includes(section)) content = <AdminSimpleList resource={section} />;
+  else if (['newsletter', 'contact'].includes(section)) content = <AdminSimpleList resource={section} />;
   return <AdminGate><AdminShell section={section}>{content}</AdminShell></AdminGate>;
 }

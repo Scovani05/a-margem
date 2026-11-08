@@ -1,3 +1,4 @@
+// Limitador de pedidos em memória (por IP e rota). Suficiente para uma instância no Render.
 const buckets = new Map();
 const cleanup = setInterval(() => {
   const now = Date.now();
@@ -5,14 +6,17 @@ const cleanup = setInterval(() => {
 }, 60000);
 cleanup.unref?.();
 
-function rateLimit({ windowMs = 15 * 60 * 1000, max = 20, message = 'Demasiados pedidos. Tenta novamente mais tarde.' } = {}) {
+function rateLimit({ windowMs = 15 * 60 * 1000, max = 20, message = 'Demasiados pedidos. Tenta novamente mais tarde.', keyByPath = true } = {}) {
+  const id = Math.random().toString(36).slice(2);
   return (req, res, next) => {
     const now = Date.now();
-    const key = `${req.ip}:${req.baseUrl}${req.path}`;
+    const key = `${id}:${req.ip}:${keyByPath ? `${req.baseUrl}${req.path}` : ''}`;
     const entry = buckets.get(key);
     if (!entry || entry.until <= now) buckets.set(key, { count: 1, until: now + windowMs });
-    else if (entry.count >= max) return res.status(429).json({ message });
-    else entry.count += 1;
+    else if (entry.count >= max) {
+      res.setHeader('Retry-After', Math.ceil((entry.until - now) / 1000));
+      return res.status(429).json({ message });
+    } else entry.count += 1;
     return next();
   };
 }

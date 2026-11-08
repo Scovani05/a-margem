@@ -64,7 +64,7 @@ export default function Layout({ children }) {
           </nav>
           <form className="header-search" role="search" onSubmit={search}><label className="visually-hidden" htmlFor="header-search">Pesquisar cultura</label><input id="header-search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Pesquisar" /><button type="submit" aria-label="Pesquisar"><Search size={17} /></button></form>
           <div className="account-links">
-            {user ? <><Link to="/saved" className="account-links__saved" onClick={follow}>Guardados</Link><Link to="/profile" className="account-links__profile" onClick={follow}>{user.name.split(' ')[0]}</Link>{user.role === 'admin' && <Link className="account-links__admin" to="/admin" onClick={follow}>Admin</Link>}<button className="btn btn-sm btn-quiet" type="button" onClick={() => { logout(); follow(); navigate('/'); }}>Sair</button></> : <><Link to="/login" className="account-links__login" onClick={follow}>Entrar</Link><Link to="/register" className="btn btn-sm btn-dark" onClick={follow}>Criar conta</Link></>}
+            {user ? <><Link to="/saved" className="account-links__saved" onClick={follow}>Guardados</Link><Link to="/profile" className="account-links__profile" onClick={follow}>{user.name.split(' ')[0]}</Link>{user.role === 'admin' && <Link className="account-links__admin" to="/admin" onClick={follow}>Backoffice</Link>}<button className="btn btn-sm btn-quiet" type="button" onClick={() => { logout(); follow(); navigate('/'); }}>Sair</button></> : <><Link to="/login" className="account-links__login" onClick={follow}>Entrar</Link><Link to="/register" className="btn btn-sm btn-dark" onClick={follow}>Criar conta</Link></>}
           </div>
         </div>
       </div>

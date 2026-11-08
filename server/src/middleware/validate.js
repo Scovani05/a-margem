@@ -12,4 +12,11 @@ const isSafeAssetRef = (value) => {
 };
 const cleanText = (value, max = 10000) => typeof value === 'string' && value.trim().length > 0 && value.length <= max;
 
-module.exports = { isEmail, isHttpUrl, isSafeAssetRef, cleanText };
+// Política de palavras-passe: 10 a 128 caracteres, com pelo menos uma letra e um número.
+const passwordProblem = (password) => {
+  if (typeof password !== 'string' || password.length < 10 || password.length > 128) return 'A palavra-passe deve ter entre 10 e 128 caracteres.';
+  if (!/[A-Za-zÀ-ÿ]/.test(password) || !/\d/.test(password)) return 'A palavra-passe deve incluir pelo menos uma letra e um número.';
+  return '';
+};
+
+module.exports = { isEmail, isHttpUrl, isSafeAssetRef, cleanText, passwordProblem };

@@ -20,4 +20,15 @@ const create = async (req, res, next) => {
   } catch (error) { return next(error); }
 };
 
-module.exports = { create };
+const mine = async (req, res, next) => {
+  try {
+    const rows = await Submission.findAll({
+      where: { userId: req.user.id },
+      attributes: ['id', 'type', 'title', 'status', 'city', 'startsAt', 'publishedContentType', 'createdAt'],
+      order: [['createdAt', 'DESC']], limit: 100
+    });
+    return res.json(rows);
+  } catch (error) { return next(error); }
+};
+
+module.exports = { create, mine };

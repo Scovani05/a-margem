@@ -1,7 +1,9 @@
 const { Op } = require('sequelize');
-const { sequelize, Category, Event, Work, Artist, Venue, Article, Collection, CollectionItem, ContentRelation, Submission, NewsletterSubscriber, ContactMessage, User } = require('../models');
-const { isHttpUrl, isSafeAssetRef } = require('../middleware/validate');
+const bcrypt = require('bcryptjs');
+const { sequelize, Category, Event, Work, Artist, Venue, Article, Collection, CollectionItem, ContentRelation, Submission, NewsletterSubscriber, ContactMessage, User, AuditLog, SavedItem } = require('../models');
+const { isHttpUrl, isSafeAssetRef, isEmail, cleanText, passwordProblem } = require('../middleware/validate');
 const slugify = require('../utils/slugify');
+const audit = require('../utils/audit');
 
 const managed = {
   categories: { model: Category, fields: ['name', 'slug', 'description', 'color', 'icon', 'sortOrder'], slugSource: 'name' },
@@ -77,11 +79,24 @@ function validateResource(resource, values) {
 
 const dashboard = async (req, res, next) => {
   try {
-    const [events, works, artists, venues, articles, collections, pendingSubmissions, subscribers] = await Promise.all([
+    const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    const [events, works, artists, venues, articles, collections, pendingSubmissions, subscribers, clients, admins, newUsers, newMessages, saved, drafts] = await Promise.all([
       Event.count(), Work.count(), Artist.count(), Venue.count(), Article.count(), Collection.count(),
-      Submission.count({ where: { status: 'pending' } }), NewsletterSubscriber.count({ where: { unsubscribedAt: null } })
+      Submission.count({ where: { status: 'pending' } }), NewsletterSubscriber.count({ where: { unsubscribedAt: null } }),
+      User.count({ where: { role: 'cliente' } }), User.count({ where: { role: 'admin' } }),
+      User.count({ where: { createdAt: { [Op.gte]: weekAgo } } }), ContactMessage.count({ where: { status: 'new' } }),
+      SavedItem.count(), Article.count({ where: { status: 'draft' } })
     ]);
-    return res.json({ counts: { events, works, artists, venues, articles, collections, pendingSubmissions, subscribers } });
+    const [recentActivity, recentSubmissions, recentUsers] = await Promise.all([
+      AuditLog.findAll({ order: [['createdAt', 'DESC']], limit: 8 }),
+      Submission.findAll({ attributes: ['id', 'title', 'type', 'status', 'createdAt'], order: [['createdAt', 'DESC']], limit: 5 }),
+      User.findAll({ attributes: ['id', 'name', 'email', 'role', 'createdAt'], order: [['createdAt', 'DESC']], limit: 5 })
+    ]);
+    return res.json({
+      counts: { events, works, artists, venues, articles, collections, pendingSubmissions, subscribers },
+      people: { clients, admins, newUsers, newMessages, saved, drafts },
+      recentActivity, recentSubmissions, recentUsers
+    });
   } catch (error) { return next(error); }
 };
 
@@ -123,6 +138,7 @@ const createResource = (resource) => async (req, res, next) => {
     const created = await config.model.create(values);
     if (resource === 'collections' && Array.isArray(req.body.items)) await replaceCollectionItems(created.id, req.body.items);
     if (related !== undefined) await replaceContentRelations(resource, created.id, related);
+    await audit(req, 'content.create', { entity: resource, entityId: created.id, details: { title: created.title || created.name } });
     return res.status(201).json(created);
   } catch (error) { return next(error); }
 };
@@ -141,6 +157,7 @@ const updateResource = (resource) => async (req, res, next) => {
     await record.update(values);
     if (resource === 'collections' && Array.isArray(req.body.items)) await replaceCollectionItems(record.id, req.body.items);
     if (related !== undefined) await replaceContentRelations(resource, record.id, related);
+    await audit(req, 'content.update', { entity: resource, entityId: record.id, details: { fields: Object.keys(values) } });
     return res.json(record);
   } catch (error) { return next(error); }
 };
@@ -172,8 +189,12 @@ const deleteResource = (resource) => async (req, res, next) => {
     if (resource === 'collections') await CollectionItem.destroy({ where: { collectionId: record.id } });
     await ContentRelation.destroy({ where: { [Op.or]: [{ sourceType: resource, sourceId: record.id }, { targetType: resource, targetId: record.id }] } });
     await record.destroy();
+    await audit(req, 'content.delete', { entity: resource, entityId: req.params.id, details: { title: record.title || record.name } });
     return res.status(204).end();
-  } catch (error) { return next(error); }
+  } catch (error) {
+    if (error.name === 'SequelizeForeignKeyConstraintError') return res.status(409).json({ message: 'Este registo está a ser usado por outros conteúdos e não pode ser apagado.' });
+    return next(error);
+  }
 };
 
 const listSubmissions = async (req, res, next) => {
@@ -198,6 +219,7 @@ const updateSubmission = async (req, res, next) => {
     const { status, adminNotes } = req.body;
     if (!['pending', 'reviewing', 'approved', 'rejected'].includes(status)) return res.status(400).json({ message: 'Estado de moderação inválido.' });
     await submission.update({ status, adminNotes: typeof adminNotes === 'string' ? adminNotes.slice(0, 2000) : submission.adminNotes });
+    await audit(req, 'submission.status', { entity: 'submissions', entityId: submission.id, details: { status } });
     return res.json(submission);
   } catch (error) { return next(error); }
 };
@@ -228,23 +250,83 @@ const publishSubmission = async (req, res, next) => {
       content = await Venue.create({ name: submission.title, slug: `${base}-${suffix}`, type: 'Espaço cultural', description: submission.description, city: submission.city || 'A confirmar', website: submission.officialUrl, published: true });
     }
     await submission.update({ status: 'approved', publishedContentType: contentType, publishedContentId: content.id });
+    await audit(req, 'submission.publish', { entity: contentType, entityId: content.id, details: { submissionId: submission.id } });
     return res.status(201).json({ contentType, content });
   } catch (error) { return next(error); }
 };
 
+const userAttributes = ['id', 'name', 'email', 'role', 'createdAt', 'lastLoginAt', 'lockedUntil', 'failedLoginAttempts'];
+
 const listUsers = async (req, res, next) => {
-  try { return res.json(await User.findAll({ attributes: ['id', 'name', 'email', 'role', 'createdAt'], order: [['createdAt', 'DESC']], limit: 300 })); } catch (error) { return next(error); }
+  try {
+    const where = {};
+    if (User.ROLES.includes(req.query.role)) where.role = req.query.role;
+    const q = String(req.query.q || '').trim().slice(0, 100);
+    if (q) where[Op.or] = [{ name: { [Op.iLike]: `%${q}%` } }, { email: { [Op.iLike]: `%${q}%` } }];
+    return res.json(await User.findAll({ attributes: userAttributes, where, order: [['createdAt', 'DESC']], limit: 500 }));
+  } catch (error) { return next(error); }
+};
+
+const createUser = async (req, res, next) => {
+  try {
+    const { name, email, password, role } = req.body;
+    if (!cleanText(name, 120) || !isEmail(email)) return res.status(400).json({ message: 'Indica um nome e um email válido.' });
+    if (!User.ROLES.includes(role)) return res.status(400).json({ message: 'Perfil inválido.' });
+    const problem = passwordProblem(password);
+    if (problem) return res.status(400).json({ message: problem });
+    const user = await User.create({ name: name.trim(), email: email.trim().toLowerCase(), role, passwordHash: await bcrypt.hash(password, 12) });
+    await audit(req, 'user.create', { entity: 'users', entityId: user.id, details: { email: user.email, role } });
+    return res.status(201).json(Object.fromEntries(userAttributes.map((key) => [key, user.get(key)])));
+  } catch (error) {
+    if (error.name === 'SequelizeUniqueConstraintError') return res.status(409).json({ message: 'Já existe uma conta com este email.' });
+    return next(error);
+  }
 };
 
 const updateUserRole = async (req, res, next) => {
   try {
-    const { role } = req.body;
+    const { role, unlock } = req.body;
     const user = await User.findByPk(req.params.id);
     if (!user) return res.status(404).json({ message: 'Utilizador não encontrado.' });
-    if (!['user', 'admin'].includes(role)) return res.status(400).json({ message: 'Perfil inválido.' });
-    if (user.role === 'admin' && role === 'user' && await User.count({ where: { role: 'admin' } }) <= 1) return res.status(409).json({ message: 'É necessário manter pelo menos uma conta administradora.' });
-    await user.update({ role });
-    return res.json({ id: user.id, name: user.name, email: user.email, role: user.role });
+    if (unlock) {
+      await user.update({ failedLoginAttempts: 0, lockedUntil: null });
+      await audit(req, 'user.unlock', { entity: 'users', entityId: user.id });
+    }
+    if (role !== undefined) {
+      if (!User.ROLES.includes(role)) return res.status(400).json({ message: 'Perfil inválido.' });
+      if (user.id === req.user.id && role !== 'admin') return res.status(409).json({ message: 'Não podes retirar o perfil de administrador à tua própria conta.' });
+      if (user.role === 'admin' && role !== 'admin' && await User.count({ where: { role: 'admin' } }) <= 1) return res.status(409).json({ message: 'É necessário manter pelo menos uma conta administradora.' });
+      if (user.role !== role) {
+        // Mudar o perfil termina as sessões abertas dessa conta, para o novo nível de acesso entrar logo em vigor.
+        await user.update({ role, tokenVersion: user.tokenVersion + 1 });
+        await audit(req, 'user.role', { entity: 'users', entityId: user.id, details: { role } });
+      }
+    }
+    return res.json(Object.fromEntries(userAttributes.map((key) => [key, user.get(key)])));
+  } catch (error) { return next(error); }
+};
+
+const deleteUser = async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    if (!user) return res.status(404).json({ message: 'Utilizador não encontrado.' });
+    if (user.id === req.user.id) return res.status(409).json({ message: 'Não podes apagar a tua própria conta a partir do backoffice.' });
+    if (user.role === 'admin' && await User.count({ where: { role: 'admin' } }) <= 1) return res.status(409).json({ message: 'É necessário manter pelo menos uma conta administradora.' });
+    await user.destroy();
+    await audit(req, 'user.delete', { entity: 'users', entityId: req.params.id, details: { email: user.email } });
+    return res.status(204).end();
+  } catch (error) { return next(error); }
+};
+
+const listAudit = async (req, res, next) => {
+  try {
+    const pageSize = 50;
+    const page = Math.max(1, Number.parseInt(req.query.page, 10) || 1);
+    const where = {};
+    const action = String(req.query.action || '').trim();
+    if (/^[a-z_.]{1,60}$/.test(action)) where.action = { [Op.startsWith]: action };
+    const { rows, count } = await AuditLog.findAndCountAll({ where, order: [['createdAt', 'DESC']], limit: pageSize, offset: (page - 1) * pageSize });
+    return res.json({ rows, total: count, page, pages: Math.max(1, Math.ceil(count / pageSize)) });
   } catch (error) { return next(error); }
 };
 
@@ -253,7 +335,11 @@ const listNewsletter = async (req, res, next) => {
 };
 
 const deleteNewsletter = async (req, res, next) => {
-  try { await NewsletterSubscriber.destroy({ where: { id: req.params.id } }); return res.status(204).end(); } catch (error) { return next(error); }
+  try {
+    await NewsletterSubscriber.destroy({ where: { id: req.params.id } });
+    await audit(req, 'newsletter.delete', { entity: 'newsletter_subscribers', entityId: req.params.id });
+    return res.status(204).end();
+  } catch (error) { return next(error); }
 };
 
 const listContacts = async (req, res, next) => {
@@ -266,12 +352,13 @@ const updateContact = async (req, res, next) => {
     if (!record) return res.status(404).json({ message: 'Mensagem não encontrada.' });
     if (!['new', 'read', 'closed'].includes(req.body.status)) return res.status(400).json({ message: 'Estado inválido.' });
     await record.update({ status: req.body.status });
+    await audit(req, 'contact.status', { entity: 'contact_messages', entityId: record.id, details: { status: req.body.status } });
     return res.json(record);
   } catch (error) { return next(error); }
 };
 
 module.exports = {
   dashboard, listResources, createResource, updateResource, deleteResource,
-  listSubmissions, updateSubmission, publishSubmission, listUsers, updateUserRole,
+  listSubmissions, updateSubmission, publishSubmission, listUsers, createUser, updateUserRole, deleteUser, listAudit,
   listNewsletter, deleteNewsletter, listContacts, updateContact, managed
 };
