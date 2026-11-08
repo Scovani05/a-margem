@@ -1,97 +1,129 @@
 # À Margem
 
-À Margem is a Portuguese cultural discovery platform and independent digital magazine. Its public catalogue, editorial content, and moderation tools use React, React Router, Bootstrap, Axios, Express MVC, PostgreSQL, and Sequelize.
+A À Margem é uma plataforma de descoberta cultural e revista digital independente sobre cultura em Portugal. Tem um catálogo público (eventos, obras, artistas, espaços, artigos e coleções), área de cliente e um backoffice para administradores.
 
-All initial catalogue records are marked **Demonstração** in the interface. They are fictional examples for local development, not verified events, venues, people, or editorial claims.
+Projeto da unidade curricular **Aplicações para a Internet II** (ESTGV, 2025/2026).
+
+Todos os registos iniciais do catálogo estão marcados como **Demonstração** na interface. São exemplos fictícios, não eventos, espaços ou pessoas reais.
+
+## Versão online
+
+| Parte | Serviço | URL |
+| --- | --- | --- |
+| Frontend (React) | Render — Static Site | https://a-margem-web.onrender.com |
+| API (Express) | Render — Web Service | https://a-margem-api.onrender.com/api/health |
+| Base de dados | Neon — PostgreSQL | (privada, acedida pela API) |
+
+O plano gratuito do Render adormece a API quando não há tráfego: o primeiro pedido pode demorar 30–60 segundos.
+
+## Tecnologias obrigatórias
+
+| Requisito | Como foi cumprido |
+| --- | --- |
+| Arquitetura MVC | `server/src/models` (Modelos Sequelize), `server/src/controllers` (Controladores), `server/src/routes` (Rotas) e as Vistas em React (`client/src`) |
+| Interface com Bootstrap | `bootstrap` importado em `client/src/main.jsx`; grelha, botões, formulários, tabelas e alertas do Bootstrap |
+| PostgreSQL com Sequelize | Modelos e migrações em Sequelize; base de dados no Neon |
+| Express | API REST em `server/src/app.js` e `server/src/routes/index.js` |
+| Axios | Único cliente HTTP (`client/src/api/client.js`); não há `fetch` no projeto |
+| React + Hooks | Componentes funcionais com `useState`, `useEffect`, `useMemo`, `useCallback`, `useContext` e hooks próprios (`usePageMeta`) |
+| Projeto online | Neon + Render |
 
 ## Perfis de utilizador
 
 | Perfil | Como se obtém | O que pode fazer |
 | --- | --- | --- |
 | **Cliente** | Registo público em `/register` (ou criado por um admin) | Guardar conteúdos, gerir o perfil, alterar a palavra-passe, terminar sessões, enviar sugestões e ver o estado delas. |
-| **Admin** | Criado pelo seed (`ADMIN_EMAIL`/`ADMIN_PASSWORD`) ou promovido por outro admin | Tudo o que o cliente faz + backoffice em `/admin`: conteúdos, moderação, utilizadores e perfis, newsletter, mensagens, **explorador da base de dados** (tabelas, pesquisa, edição, exportação CSV, consola SQL só de leitura) e registo de atividade. |
+| **Admin** | Criado pelo seed (`ADMIN_EMAIL`/`ADMIN_PASSWORD`) ou promovido por outro admin | Tudo o que o cliente faz + backoffice em `/admin`: conteúdos, moderação de sugestões, utilizadores e perfis, newsletter, mensagens, **explorador da base de dados** (tabelas, pesquisa, edição, exportação CSV, consola SQL só de leitura) e registo de atividade. |
 
-O perfil é validado no servidor em todos os pedidos (`requireAuth` + `requireAdmin` aplicados a todo o prefixo `/api/admin`), por isso esconder botões no React não é a única proteção.
+O perfil é validado no servidor em todos os pedidos: `requireAuth` + `requireAdmin` são aplicados a todo o prefixo `/api/admin`. Esconder botões no React é apenas conforto visual, não é a proteção.
 
 ## Segurança
 
-- Palavras-passe com bcrypt (custo 12) e política mínima (10+ caracteres, letras e números).
-- JWT HS256 com `issuer`/`audience`, validade de 8 h e versão de sessão: mudar a palavra-passe, repor a palavra-passe, mudar o perfil ou "terminar todas as sessões" invalida os tokens antigos.
-- Bloqueio temporário da conta após 5 tentativas de login falhadas (15 min) e limitação de pedidos por IP nas rotas sensíveis (`trust proxy` ativo para o Render).
-- Cabeçalhos HTTP de segurança na API (CSP, HSTS, nosniff, X-Frame-Options) e CSP/HSTS/X-Frame-Options no Vercel (`client/vercel.json`); CORS restrito a `CLIENT_URL`.
-- Respostas de conta/admin com `Cache-Control: no-store`; erros internos não expõem detalhes.
-- Explorador da base de dados nunca mostra hashes de palavras-passe ou tokens; a consola SQL aceita só uma instrução `SELECT`/`WITH`/`EXPLAIN`, dentro de uma transação `READ ONLY` com limite de 5 s.
-- Registo de auditoria (`audit_logs`) para logins, falhas de login e todas as alterações feitas no backoffice.
-- Ligação TLS ao Neon com verificação de certificado; segredos apenas em variáveis de ambiente.
+- Palavras-passe guardadas com bcrypt (custo 12) e política mínima (10+ caracteres, com letras e números).
+- Autenticação com JWT (HS256, `issuer`/`audience`, validade de 8 h). Cada conta tem uma "versão de sessão": mudar ou repor a palavra-passe, mudar o perfil ou "terminar todas as sessões" invalida os tokens antigos.
+- Bloqueio temporário da conta após 5 tentativas de login falhadas (15 min) e limitação de pedidos por IP nas rotas sensíveis.
+- Cabeçalhos HTTP de segurança na API (CSP, HSTS, nosniff, X-Frame-Options); CORS restrito ao endereço do frontend (`CLIENT_URL`).
+- Respostas de conta e de administração com `Cache-Control: no-store`; os erros internos não expõem detalhes.
+- O explorador da base de dados nunca mostra hashes de palavras-passe nem tokens. A consola SQL aceita uma única instrução `SELECT`/`WITH`/`EXPLAIN`, executada numa transação `READ ONLY` com limite de 5 s.
+- Registo de auditoria (`audit_logs`) de logins, falhas de login e todas as alterações feitas no backoffice.
+- Ligação TLS ao Neon com verificação de certificado; segredos apenas em variáveis de ambiente (nunca no Git).
 
-## Requirements
+## Requisitos para correr localmente
 
-- Node.js 20 or newer and npm.
-- PostgreSQL 14 or newer.
-- Separate PostgreSQL database for development.
+- Node.js 20 ou superior e npm.
+- PostgreSQL 14 ou superior (ou uma base de dados no Neon).
 
-## Install and configure
+## Instalar e configurar
 
 ```powershell
 npm run install:all
 Copy-Item server/.env.example server/.env
+Copy-Item client/.env.example client/.env
 ```
 
-Edit `server/.env` and set `DATABASE_URL` to a PostgreSQL connection string. Generate a secret with `node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"` and use it for `JWT_SECRET`. Optionally configure `ADMIN_EMAIL` and `ADMIN_PASSWORD` before seeding to create an administrator. The seed script never uses a built-in production password.
+Edita `server/.env`:
 
-## Database
+- `DATABASE_URL` — ligação ao PostgreSQL.
+- `JWT_SECRET` — segredo aleatório com pelo menos 32 caracteres. Para gerar: `node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"`.
+- `ADMIN_EMAIL` / `ADMIN_PASSWORD` e `CLIENT_EMAIL` / `CLIENT_PASSWORD` (opcional) — contas criadas pelo seed.
+
+## Base de dados
 
 ```powershell
 npm run db:migrate
 npm run seed
 ```
 
-`npm run db:rollback` reverses the latest migration. `npm run seed` is safe to rerun and adds only the clearly labelled demonstration catalogue. Set both `ADMIN_EMAIL` and `ADMIN_PASSWORD` to provision the first administrator. Otherwise create a normal account and promote it directly in PostgreSQL:
+`npm run db:rollback` desfaz a última migração. `npm run seed` pode ser repetido sem duplicar dados. Também é possível promover uma conta diretamente no PostgreSQL:
 
 ```sql
-UPDATE users SET role = 'admin' WHERE email = 'your-address@example.com';
+UPDATE users SET role = 'admin' WHERE email = 'o-teu-email@example.com';
 ```
 
-## Start the app
+## Arrancar a aplicação
 
-Open two terminals from the repository root:
+Em dois terminais, a partir da raiz do repositório:
 
 ```powershell
 npm run dev:server
 npm run dev:client
 ```
 
-The API is available at `http://localhost:4000/api`; Vite serves the client at `http://localhost:5173`. The API requires PostgreSQL and will not silently switch to browser storage or static fallback data.
+A API fica em `http://localhost:4000/api` e o Vite serve o site em `http://localhost:5173`.
 
 ## Scripts
 
-| Command | Purpose |
+| Comando | Função |
 | --- | --- |
-| `npm run dev:client` | Start Vite development server |
-| `npm run dev:server` | Start Express with nodemon |
-| `npm run build` | Build the React client |
-| `npm test` | Run server input-validation and slug tests |
-| `npm run db:migrate` | Apply pending Sequelize QueryInterface migrations |
-| `npm run db:rollback` | Roll back the most recent migration |
-| `npm run seed` | Add demonstration data and the optional admin (`ADMIN_*`) and client (`CLIENT_*`) accounts |
+| `npm run dev:client` | Servidor de desenvolvimento do Vite |
+| `npm run dev:server` | Express com nodemon |
+| `npm run build` | Build do React (gera também `404.html` para os links diretos no Render) |
+| `npm test` | Testes do servidor (rotas, validação, segurança, migrações) |
+| `npm run db:migrate` | Aplica as migrações pendentes |
+| `npm run db:rollback` | Desfaz a última migração |
+| `npm run seed` | Dados de demonstração e contas opcionais |
 
-## Architecture
+## Estrutura
 
-- `client/src/pages`, `components`, `hooks`, and `api` contain the React application. React Router handles navigation; Axios is the only HTTP client; Bootstrap provides layout and controls.
-- `server/src/models` defines Sequelize models. `controllers` handle HTTP input/output, `routes` register REST endpoints, `services` hold catalogue/search and editorial logic, and `middleware` handles authentication, validation, rate limiting, and errors.
-- `server/src/migrations` contains versioned schema changes. `server/src/seed` contains development seed data.
-- Passwords are bcrypt-hashed. JWTs are kept in browser session storage. Admin access is checked by the API on every protected request.
-- Password recovery provides a development-only reset link in the API response. No email is sent unless a provider is configured in a future deployment.
-- Newsletter signup stores consent and an unsubscribe token. It does not send campaigns.
-- Public pages update titles and descriptions client-side, and the API exposes a sitemap. This SPA does not server-render article metadata; server-side rendering or prerendering should be added before relying on full social-card previews or broad crawler support.
+```text
+client/                 React + Vite + Bootstrap + Axios
+  src/api/client.js     instância do Axios (envia o token JWT)
+  src/context/          AuthContext (sessão do utilizador)
+  src/pages/            páginas públicas, conta e backoffice (pages/admin)
+  src/components/       componentes reutilizáveis
+server/                 Express + Sequelize (MVC)
+  src/models/           Modelos (tabelas)
+  src/controllers/      Controladores (lógica de cada pedido)
+  src/routes/           Rotas da API REST
+  src/middleware/       autenticação, perfis, validação, limitação de pedidos
+  src/migrations/       migrações versionadas da base de dados
+  src/seed/             dados de demonstração
+  test/                 testes (node:test)
+```
 
-## Deployment notes
+## Publicação (Neon + Render)
 
-The checked-in deployment files target a Vercel static frontend, a Render Express API, and Neon PostgreSQL:
-
-1. Push this repository to a Git provider and import it into Vercel. Set the Vercel project root directory to `client`; `client/vercel.json` supplies the SPA rewrite needed for direct links. Add `VITE_API_URL=https://<render-service>.onrender.com/api` and `VITE_PUBLIC_URL=https://<your-vercel-domain>` to the Vercel production environment, then redeploy.
-2. Create a Neon PostgreSQL project and copy its connection string from the Neon Console. Keep the connection string private; the application reads it through `DATABASE_URL` and Neon requires TLS.
-3. Create a Render Blueprint from the repository root using `render.yaml`. During initial setup, provide the Neon `DATABASE_URL`, the Vercel origin for both `CLIENT_URL` and `PUBLIC_URL`, and let Render generate `JWT_SECRET`. The start command applies pending migrations before starting the API, and `/api/health` is the health check. `DATABASE_SSL=true` is set for the Neon connection.
-4. Once the Render URL is known, set `VITE_API_URL` in Vercel to that API URL and redeploy the frontend. The API uses Render's `RENDER_EXTERNAL_URL` for its robots sitemap URL unless `API_PUBLIC_URL` is explicitly set.
-
-The Render API Blueprint uses the free service plan, which can sleep when idle. Do not seed fictional demonstration content into a public production database. No mail service or third-party content feed is configured. For local development, continue to use `server/.env` and `client/.env` copied from their `.env.example` files.
+1. **Neon** — criar o projeto PostgreSQL e copiar a connection string para `DATABASE_URL` (e a ligação direta para `DATABASE_URL_UNPOOLED`, usada nas migrações).
+2. **Render — API** (Web Service): build `cd server && npm ci`; start `cd server && npm run db:migrate && npm start`. Variáveis: `DATABASE_URL`, `DATABASE_URL_UNPOOLED`, `DATABASE_SSL=true`, `JWT_SECRET`, `CLIENT_URL` (URL do frontend), `PUBLIC_URL`, `NODE_ENV=production`. `SEED_ON_START=true` corre o seed no arranque (útil no plano gratuito, sem consola); depois deve voltar a `false`.
+3. **Render — Frontend** (Static Site): build `cd client && npm ci && npm run build`; publish `client/dist`; variável `VITE_API_URL=https://a-margem-api.onrender.com/api`.
+4. **Alternativa Vercel** — importar o repositório com a pasta `client` como raiz; o `client/vercel.json` já tem o rewrite para a SPA e os cabeçalhos de segurança. Acrescentar o domínio do Vercel a `CLIENT_URL` na API.
