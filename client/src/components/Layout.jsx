@@ -44,7 +44,6 @@ export default function Layout({ children }) {
   const follow = () => setMenuOpen(false);
 
   return <div className="site-shell">
-    <div className="topline"><span>Uma revista e um mapa cultural para quem gosta de sair do caminho.</span><span>Cultura portuguesa · Lisboa · Porto · Braga</span></div>
     <header className="site-header navbar navbar-expand-lg">
       <div className="container-fluid site-header__inner">
         <Link to="/" className="brand" aria-label="À Margem, página inicial" onClick={follow}><span className="brand__mark">à</span><span className="brand__name">margem<span className="brand__period">.</span></span><span className="brand__descriptor">cultura que<br />merece atenção</span></Link>

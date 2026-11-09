@@ -58,8 +58,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .empty-state p { max-width: 410px; margin: 0 auto; font-size: 14px; }
 
 /* Header and footer */
-.topline { height: 29px; padding: 0 4.2%; color: #f4f1e9; background: var(--ink); display: flex; align-items: center; justify-content: space-between; font: 10px var(--mono); letter-spacing: .015em; }
-.topline span:last-child { color: #d7e977; }
 .site-header { z-index: 10; position: relative; background: var(--paper); border-bottom: 1px solid var(--line); }
 .site-header__inner { min-height: 82px; padding: 0 4.2%; display: flex; justify-content: space-between; align-items: center; gap: 20px; position: relative; z-index: 12; }
 .brand { display: flex; align-items: center; flex-shrink: 0; color: var(--ink); }
@@ -515,9 +513,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 }
 @media (max-width: 680px) {
   .container { padding-left: 21px; padding-right: 21px; }
-  .topline { padding: 0 20px; font-size: 8px; }
-  .topline span:first-child { max-width: 70%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .topline span:last-child { display: none; }
   .site-header__inner { padding: 0 20px; }
   .brand__mark { width: 33px; height: 33px; font-size: 22px; }
   .brand__name { font-size: 23px; }
