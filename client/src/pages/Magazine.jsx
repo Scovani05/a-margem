@@ -93,7 +93,7 @@ export default function MagazinePage() {
       {/* As restantes, em lista cronológica. */}
       {rest.length > 0 && <ol className="news-list">
         {rest.map((item) => <li key={item.id} className="news-item">
-          <time className="news-item__date" dateTime={item.publishedAt}><b>{new Date(item.publishedAt).getDate()}</b>{new Intl.DateTimeFormat('pt-PT', { month: 'short', year: 'numeric' }).format(new Date(item.publishedAt)).replace('.', '')}</time>
+          <time className="news-item__date" dateTime={item.publishedAt}><b>{new Date(item.publishedAt).getDate()}</b>{`${new Intl.DateTimeFormat('pt-PT', { month: 'short' }).format(new Date(item.publishedAt)).replace('.', '')} ${new Date(item.publishedAt).getFullYear()}`}</time>
           <div className="news-item__copy">
             <span className="news-tag" style={{ '--chip-color': item.category?.color }}>{item.category?.name || 'Revista'}</span>
             <h3><Link to={`/magazine/${item.slug}`}>{item.title}</Link></h3>
