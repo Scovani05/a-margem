@@ -1,4 +1,4 @@
-// Conteúdo real do catálogo: cultura portuguesa no outono/inverno de 2026 — discos novos,
+// Conteúdo real do catálogo: cultura portuguesa no outono/inverno de 2026 - discos novos,
 // exposições e concertos de artistas portugueses. Fontes consultadas a 9/11/2026: Rimas e Batidas
 // ("20 discos portugueses que vão sair até ao final do ano"), agenda musica.com.pt, Coliseu dos
 // Recreios, MAAT, Museu do Fado, Casa Fernando Pessoa, RTP, Teatro Nacional São João, Theatro Circo
@@ -55,7 +55,7 @@ const venues = [
     imageUrl: img.casaDaMusica, featured: true
   },
   {
-    slug: 'maat', name: 'MAAT — Museu de Arte, Arquitetura e Tecnologia', type: 'Museu', city: 'Lisboa',
+    slug: 'maat', name: 'MAAT - Museu de Arte, Arquitetura e Tecnologia', type: 'Museu', city: 'Lisboa',
     address: 'Av. Brasília, Central Tejo, 1300-598 Lisboa', website: 'https://www.maat.pt',
     description: 'Museu da Fundação EDP à beira do Tejo, em Belém. Em 2026 celebra 10 anos com exposições de Pedro Cabrita Reis e Joana Vasconcelos.',
     imageUrl: img.maat, featured: true
@@ -184,7 +184,7 @@ const works = [
   },
   {
     slug: 'aqui-tiago-guedes', title: 'Aquí', subtitle: 'Filme de Tiago Guedes (2026)', type: 'film', category: 'cinema', creator: 'Tiago Guedes',
-    description: 'Simón conhece um rapaz, David, numa travessia por mar até uma terra sem nome. Com Inés, formam uma família pouco convencional. Com Albano Jerónimo, Patricia López Arnaiz e Manolo Solo. Coprodução Portugal–França.',
+    description: 'Simón conhece um rapaz, David, numa travessia por mar até uma terra sem nome. Com Inés, formam uma família pouco convencional. Com Albano Jerónimo, Patricia López Arnaiz e Manolo Solo. Coprodução Portugal-França.',
     officialUrl: 'https://www.festival-cannes.com/en/f/aqui/', imageUrl: img.batalha, releasedAt: null
   }
 ];
@@ -197,13 +197,13 @@ const events = [
     officialUrl: 'https://www.coliseu.pt/agenda', imageUrl: img.coliseuPorto, featured: true
   },
   {
-    slug: 'luisa-sobral-cartas-de-desamor-casa-da-musica', title: 'Luísa Sobral — Cartas de Desamor', subtitle: 'Concerto', category: 'musica', venue: 'casa-da-musica',
+    slug: 'luisa-sobral-cartas-de-desamor-casa-da-musica', title: 'Luísa Sobral - Cartas de Desamor', subtitle: 'Concerto', category: 'musica', venue: 'casa-da-musica',
     city: 'Porto', organizer: 'Casa da Música', startsAt: '2026-11-16T21:00:00Z', endsAt: null,
     description: 'A cantautora apresenta o espetáculo Cartas de Desamor na Casa da Música. Confirma o horário e os preços no site da sala.',
     officialUrl: 'https://casadamusica.com', imageUrl: img.casaDaMusica
   },
   {
-    slug: 'janeiro-reticencias-coliseu-lisboa', title: 'janeiro — Reticências', subtitle: 'Uma nova versão de nós', category: 'musica', venue: 'coliseu-dos-recreios',
+    slug: 'janeiro-reticencias-coliseu-lisboa', title: 'janeiro - Reticências', subtitle: 'Uma nova versão de nós', category: 'musica', venue: 'coliseu-dos-recreios',
     city: 'Lisboa', organizer: 'Coliseu dos Recreios', startsAt: '2026-11-18T21:00:00Z', endsAt: null,
     description: 'O cantautor janeiro sobe ao palco do Coliseu dos Recreios com o espetáculo Reticências. Confirma o horário na bilheteira.',
     officialUrl: 'https://coliseulisboa.com', imageUrl: img.coliseuLisboa
@@ -221,19 +221,19 @@ const events = [
     officialUrl: 'https://coliseulisboa.com', imageUrl: img.coliseuLisboa, featured: true
   },
   {
-    slug: 'rodrigo-leao-alma-mater-misty-fest', title: 'Rodrigo Leão — Alma Mater', subtitle: 'Misty Fest', category: 'musica', venue: 'coliseu-dos-recreios',
+    slug: 'rodrigo-leao-alma-mater-misty-fest', title: 'Rodrigo Leão - Alma Mater', subtitle: 'Misty Fest', category: 'musica', venue: 'coliseu-dos-recreios',
     city: 'Lisboa', organizer: 'Misty Fest', startsAt: '2026-12-18T21:00:00Z', endsAt: null,
     description: 'Rodrigo Leão apresenta Alma Mater no Coliseu dos Recreios, no âmbito do Misty Fest. Confirma o horário e os preços na bilheteira.',
     officialUrl: 'https://coliseulisboa.com', imageUrl: img.coliseuLisboa
   },
   {
-    slug: 'pedro-cabrita-reis-sem-magoa-no-coracao-maat', title: 'Pedro Cabrita Reis — sem mágoa no coração', subtitle: 'Exposição no MAAT', category: 'artes-visuais', venue: 'maat',
+    slug: 'pedro-cabrita-reis-sem-magoa-no-coracao-maat', title: 'Pedro Cabrita Reis - sem mágoa no coração', subtitle: 'Exposição no MAAT', category: 'artes-visuais', venue: 'maat',
     city: 'Lisboa', organizer: 'MAAT', startsAt: '2026-09-16T10:00:00Z', endsAt: '2027-02-15T19:00:00Z',
     description: 'Quase 200 obras, muitas nunca mostradas, entre pintura, desenho e escultura, feitas para a Galeria Oval do MAAT. Curadoria de João Pinharanda. O título vem de Hesíodo e da sua Idade de Ouro.',
     officialUrl: 'https://www.maat.pt/en/event/pedro-cabrita-reis-without-sorrow-heart', imageUrl: img.maatNoite, featured: true
   },
   {
-    slug: 'venus-joana-vasconcelos-valentino-maat', title: 'VENUS — Valentino pelo olhar de Joana Vasconcelos', subtitle: 'Exposição no MAAT', category: 'artes-visuais', venue: 'maat',
+    slug: 'venus-joana-vasconcelos-valentino-maat', title: 'VENUS - Valentino pelo olhar de Joana Vasconcelos', subtitle: 'Exposição no MAAT', category: 'artes-visuais', venue: 'maat',
     city: 'Lisboa', organizer: 'MAAT', startsAt: '2026-10-02T10:00:00Z', endsAt: '2027-02-22T19:00:00Z',
     description: 'Diálogo entre arte e alta-costura: obras de Joana Vasconcelos, antigas e novas, ao lado de cerca de 30 criações de Valentino Garavani. Faz parte dos 10 anos do MAAT.',
     officialUrl: 'https://www.maat.pt/en/news/venus-valentino-garavani-through-eyes-joana-vasconcelos-maat-october', imageUrl: img.maat, featured: true
@@ -241,7 +241,7 @@ const events = [
   {
     slug: 'tragedia-e-farsa-pomar-abrantes', title: 'Tragédia e Farsa', subtitle: 'Júlio Pomar e Gabriel Abrantes', category: 'artes-visuais', venue: 'atelier-museu-julio-pomar',
     city: 'Lisboa', organizer: 'Atelier-Museu Júlio Pomar', startsAt: '2026-11-05T10:00:00Z', endsAt: '2027-02-28T18:00:00Z',
-    description: 'Cerca de 100 pinturas e desenhos que põem o neorrealismo de Júlio Pomar, dos anos 1940, a conversar com o olhar de Gabriel Abrantes sobre o trabalho precário de hoje — do trolha ao estafeta.',
+    description: 'Cerca de 100 pinturas e desenhos que põem o neorrealismo de Júlio Pomar, dos anos 1940, a conversar com o olhar de Gabriel Abrantes sobre o trabalho precário de hoje - do trolha ao estafeta.',
     officialUrl: 'https://www.ateliermuseujuliopomar.pt', imageUrl: img.pomar
   },
   {
@@ -263,7 +263,7 @@ const events = [
     officialUrl: 'https://www.tnsj.pt', imageUrl: img.tnsj
   },
   {
-    slug: 'aqui-antestreia-batalha', title: 'Aquí — antestreia', subtitle: 'Filme de Tiago Guedes', category: 'cinema', venue: 'batalha-centro-de-cinema',
+    slug: 'aqui-antestreia-batalha', title: 'Aquí - antestreia', subtitle: 'Filme de Tiago Guedes', category: 'cinema', venue: 'batalha-centro-de-cinema',
     city: 'Porto', organizer: 'Batalha Centro de Cinema', startsAt: '2026-12-01T17:15:00Z', endsAt: null,
     description: 'Antestreia no Porto do novo filme de Tiago Guedes, depois da passagem pelo Festival de Cannes. M/14, 5 €.',
     officialUrl: 'https://www.batalhacentrodecinema.pt', imageUrl: img.batalha

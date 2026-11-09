@@ -796,7 +796,7 @@ a.admin-stat:hover { transform: translateY(-2px); }
 .about-credits { margin: 3rem 0; font-size: .85rem; color: var(--bs-secondary-color, #666); }
 .about-credits ul { columns: 2 260px; padding-left: 1rem; margin: .75rem 0 0; }
 
-/* Página inicial — hero com pesquisa, números do catálogo, fotografia em destaque e próximos eventos */
+/* Página inicial - hero com pesquisa, números do catálogo, fotografia em destaque e próximos eventos */
 .hero-search { width: 100%; max-width: 470px; display: flex; align-items: center; gap: 10px; padding: 6px 6px 6px 16px; background: #fffdf7; border: 1px solid rgba(23,32,28,.18); box-shadow: 0 10px 30px rgba(23,32,28,.06); }
 .hero-search > svg { flex-shrink: 0; color: #6e7569; }
 .hero-search input { flex: 1; min-width: 0; border: 0; background: transparent; font-size: 14px; outline: none; }

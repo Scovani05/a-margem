@@ -80,7 +80,7 @@ export function HomePage() {
       </div>
     </section>
 
-    <section className="feature-band"><div className="container feature-band__inner"><div><p className="eyebrow">Não é um feed. É uma escolha.</p><h2>Há coisas que<br />merecem <em>tempo.</em></h2></div><p>Descobrimos, lemos, ouvimos e saímos à rua. Depois contamos-te o que encontrámos — com contexto, cuidado e as fontes à vista.</p><Link to="/about" className="btn btn-outline-light">Conhece a À Margem <ArrowUpRight size={17} /></Link></div><span className="feature-band__symbol" aria-hidden="true">∿</span></section>
+    <section className="feature-band"><div className="container feature-band__inner"><div><p className="eyebrow">Não é um feed. É uma escolha.</p><h2>Há coisas que<br />merecem <em>tempo.</em></h2></div><p>Descobrimos, lemos, ouvimos e saímos à rua. Depois contamos-te o que encontrámos - com contexto, cuidado e as fontes à vista.</p><Link to="/about" className="btn btn-outline-light">Conhece a À Margem <ArrowUpRight size={17} /></Link></div><span className="feature-band__symbol" aria-hidden="true">∿</span></section>
 
     <section className="section-pad container">
       <SectionHeading eyebrow="Para começar" title="Trabalho que fica contigo" href="/discover/works" />

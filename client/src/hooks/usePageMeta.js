@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 export default function usePageMeta(title, description = 'Descobre cultura, artistas e espaços independentes em Portugal.', metadata = {}) {
   const { image, type = 'website' } = metadata;
   useEffect(() => {
-    const fullTitle = title ? `${title} — À Margem` : 'À Margem — cultura para descobrir';
+    const fullTitle = title ? `${title} - À Margem` : 'À Margem - cultura para descobrir';
     const pageUrl = new URL(window.location.pathname, import.meta.env.VITE_PUBLIC_URL || window.location.origin).toString();
     document.title = fullTitle;
     let meta = document.querySelector('meta[name="description"]');

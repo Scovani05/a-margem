@@ -12,7 +12,7 @@ const SIGNATURES = {
 
 const publicUrl = (req, id) => `${(process.env.API_PUBLIC_URL || `${req.protocol}://${req.get('host')}`).replace(/\/$/, '')}/api/media/${id}`;
 
-// POST /api/admin/media — recebe { name, data } com a imagem em base64 (Data URL ou base64 simples).
+// POST /api/admin/media - recebe { name, data } com a imagem em base64 (Data URL ou base64 simples).
 const upload = async (req, res, next) => {
   try {
     const name = String(req.body?.name || 'imagem').slice(0, 200);
@@ -30,7 +30,7 @@ const upload = async (req, res, next) => {
   } catch (error) { return next(error); }
 };
 
-// GET /api/media/:id — público, para as imagens aparecerem no site.
+// GET /api/media/:id - público, para as imagens aparecerem no site.
 const show = async (req, res, next) => {
   try {
     const id = Number.parseInt(req.params.id, 10);

@@ -8,7 +8,7 @@ import usePageMeta from '../hooks/usePageMeta.js';
 
 const configs = {
   events: { title: 'Eventos', text: 'Concertos, sessões, exposições e encontros para sair de casa.', eyebrow: 'Agenda cultural' },
-  works: { title: 'Obras', text: 'Filmes, álbuns, livros e projetos para encontrar pela primeira vez — ou voltar a ver de outra maneira.', eyebrow: 'Catálogo cultural' },
+  works: { title: 'Obras', text: 'Filmes, álbuns, livros e projetos para encontrar pela primeira vez - ou voltar a ver de outra maneira.', eyebrow: 'Catálogo cultural' },
   artists: { title: 'Artistas', text: 'Criadores e projetos independentes que vale a pena conhecer.', eyebrow: 'Pessoas e práticas' },
   venues: { title: 'Espaços', text: 'Salas, galerias, livrarias e outros lugares onde a cultura ganha corpo.', eyebrow: 'Mapa cultural' },
   articles: { title: 'Revista', text: 'Ensaios, conversas e recomendações para ler com tempo.', eyebrow: 'Ideias para levar contigo' },
@@ -59,7 +59,7 @@ export default function CataloguePage({ resource }) {
         {['events', 'artists', 'venues'].includes(resource) && <><label className="visually-hidden" htmlFor="filter-city">Localização</label><input id="filter-city" className="form-control filter-city" value={searchParams.get('city') || ''} onChange={(event) => update('city', event.target.value)} placeholder="Cidade ou região" /></>}
         {resource === 'events' && <><label className="visually-hidden" htmlFor="filter-from">A partir de</label><input id="filter-from" className="form-control filter-date" type="date" value={searchParams.get('from') || ''} onChange={(event) => update('from', event.target.value)} /><label className="visually-hidden" htmlFor="filter-to">Até</label><input id="filter-to" className="form-control filter-date" type="date" value={searchParams.get('to') || ''} onChange={(event) => update('to', event.target.value)} /></>}
         {resource === 'works' && <><label className="visually-hidden" htmlFor="filter-type">Tipo de obra</label><select id="filter-type" className="form-select" value={searchParams.get('type') || ''} onChange={(event) => update('type', event.target.value)}><option value="">Todos os formatos</option><option value="album">Álbum</option><option value="film">Filme</option><option value="book">Livro</option><option value="photography">Fotografia</option><option value="exhibition">Exposição</option><option value="creative-project">Projeto criativo</option></select></>}
-        <label className="visually-hidden" htmlFor="filter-sort">Ordenar</label><select id="filter-sort" className="form-select filter-sort" value={searchParams.get('sort') || ''} onChange={(event) => update('sort', event.target.value)}><option value="">{resource === 'events' ? 'Em breve' : 'Em destaque'}</option><option value="newest">Mais recentes</option><option value="title">Título A–Z</option></select>
+        <label className="visually-hidden" htmlFor="filter-sort">Ordenar</label><select id="filter-sort" className="form-select filter-sort" value={searchParams.get('sort') || ''} onChange={(event) => update('sort', event.target.value)}><option value="">{resource === 'events' ? 'Em breve' : 'Em destaque'}</option><option value="newest">Mais recentes</option><option value="title">Título A-Z</option></select>
         {queryString && <button className="btn btn-link clear-filters" type="button" onClick={clearFilters}><X size={14} /> Limpar</button>}
       </div>
     </section>

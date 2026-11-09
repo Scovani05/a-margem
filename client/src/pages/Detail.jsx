@@ -85,7 +85,7 @@ export default function DetailPage({ type }) {
   if (error || !item) return <div className="container page-loading"><ErrorState message={error || 'Não encontrámos esta página.'} /></div>;
 
   const location = item.city || item.location;
-  const dateText = item.startsAt ? `${formatDate(item.startsAt, { weekday: 'long' })}${item.endsAt ? ` — ${formatDate(item.endsAt, { weekday: 'long' })}` : ''}` : '';
+  const dateText = item.startsAt ? `${formatDate(item.startsAt, { weekday: 'long' })}${item.endsAt ? ` - ${formatDate(item.endsAt, { weekday: 'long' })}` : ''}` : '';
   const eventIsPast = type === 'events' && item.startsAt && new Date(item.startsAt) < new Date();
   const body = item.body || item.description || item.bio || item.introduction || '';
   const isLongform = type === 'articles' || type === 'collections';

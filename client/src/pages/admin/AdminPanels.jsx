@@ -8,7 +8,7 @@ import { formatDate } from '../../utils/content.js';
 
 export const roleLabels = { cliente: 'Cliente', admin: 'Administrador' };
 const errorText = (err, fallback) => err.response?.data?.message || fallback;
-const when = (date) => (date ? formatDate(date, { hour: '2-digit', minute: '2-digit' }) : '—');
+const when = (date) => (date ? formatDate(date, { hour: '2-digit', minute: '2-digit' }) : '-');
 
 export const actionLabels = {
   'auth.login': 'Início de sessão', 'auth.login_failed': 'Tentativa de login falhada', 'auth.register': 'Nova conta',

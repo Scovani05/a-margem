@@ -75,7 +75,7 @@ router.delete('/admin/newsletter/:id', adminController.deleteNewsletter);
 router.get('/admin/contact', adminController.listContacts);
 router.patch('/admin/contact/:id', adminController.updateContact);
 
-// Acesso à base de dados (PostgreSQL via Sequelize) — exclusivo do perfil admin.
+// Acesso à base de dados (PostgreSQL via Sequelize) - exclusivo do perfil admin.
 router.get('/admin/database', databaseController.overview);
 router.post('/admin/database/query', databaseController.query);
 router.get('/admin/database/:table', databaseController.rows);
