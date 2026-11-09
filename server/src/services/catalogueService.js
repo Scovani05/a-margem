@@ -42,6 +42,8 @@ async function list(resource, params = {}) {
   }
   if (resource === 'works' && params.type) where.type = String(params.type).slice(0, 40);
   if (resource === 'events') {
+    // Em breve ou a decorrer: ainda não começou, ou já começou mas ainda não terminou (ex.: exposições).
+    const upcomingOrOngoing = () => ({ [Op.or]: [{ startsAt: { [Op.gte]: new Date() } }, { endsAt: { [Op.gte]: new Date() } }] });
     if ((params.from && Number.isNaN(Date.parse(params.from))) || (params.to && Number.isNaN(Date.parse(params.to)))) throw Object.assign(new Error('A data indicada não é válida.'), { status: 400 });
     if (params.from && params.to && Date.parse(params.from) > Date.parse(params.to)) throw Object.assign(new Error('A data inicial tem de ser anterior à data final.'), { status: 400 });
     if (params.from && !Number.isNaN(Date.parse(params.from))) where.startsAt = { ...(where.startsAt || {}), [Op.gte]: new Date(params.from) };
@@ -49,13 +51,15 @@ async function list(resource, params = {}) {
     if (params.status && ['upcoming', 'cancelled', 'past'].includes(params.status)) {
       if (params.status === 'cancelled') where.status = 'cancelled';
       else if (params.status === 'past') {
+        // Passados: já começaram e já terminaram (ou não têm data de fim).
         where.status = { [Op.ne]: 'cancelled' };
         where.startsAt = { ...(where.startsAt || {}), [Op.lt]: new Date() };
+        where[Op.and] = [...(where[Op.and] || []), { [Op.or]: [{ endsAt: null }, { endsAt: { [Op.lt]: new Date() } }] }];
       }
-      else { where.status = 'upcoming'; where.startsAt = { ...(where.startsAt || {}), [Op.gte]: new Date() }; }
+      else { where.status = 'upcoming'; where[Op.and] = [...(where[Op.and] || []), upcomingOrOngoing()]; }
     } else {
       where.status = 'upcoming';
-      where.startsAt = { ...(where.startsAt || {}), [Op.gte]: new Date() };
+      where[Op.and] = [...(where[Op.and] || []), upcomingOrOngoing()];
     }
   }
   let order = [['createdAt', 'DESC']];
@@ -86,14 +90,14 @@ async function detail(resource, slug) {
   if (resource === 'artists') {
     const [works, events] = await Promise.all([
       Work.findAll({ where: { published: true, creator: { [Op.iLike]: record.name } }, include: includesFor('works'), limit: 8 }),
-      Event.findAll({ where: { published: true, status: 'upcoming', organizer: { [Op.iLike]: record.name }, startsAt: { [Op.gte]: new Date() } }, include: includesFor('events'), limit: 8 })
+      Event.findAll({ where: { published: true, status: 'upcoming', organizer: { [Op.iLike]: record.name }, [Op.or]: [{ startsAt: { [Op.gte]: new Date() } }, { endsAt: { [Op.gte]: new Date() } }] }, include: includesFor('events'), limit: 8 })
     ]);
     record.setDataValue('works', works);
     record.setDataValue('events', events);
   }
   if (resource === 'venues') {
     const events = await Event.findAll({
-      where: { published: true, status: 'upcoming', venueId: record.id, startsAt: { [Op.gte]: new Date() } },
+      where: { published: true, status: 'upcoming', venueId: record.id, [Op.or]: [{ startsAt: { [Op.gte]: new Date() } }, { endsAt: { [Op.gte]: new Date() } }] },
       include: includesFor('events'), order: [['startsAt', 'ASC']], limit: 8
     });
     record.setDataValue('events', events);
@@ -137,7 +141,7 @@ async function featured(resource, limit = 4) {
   const config = resources[resource];
   if (!config) return [];
   const where = { ...publicWhere(resource), featured: true };
-  if (resource === 'events') { where.status = 'upcoming'; where.startsAt = { [Op.gte]: new Date() }; }
+  if (resource === 'events') { where.status = 'upcoming'; where[Op.or] = [{ startsAt: { [Op.gte]: new Date() } }, { endsAt: { [Op.gte]: new Date() } }]; }
   const rows = await config.model.findAll({
     where,
     include: includesFor(resource),
