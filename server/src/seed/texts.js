@@ -69,6 +69,21 @@ const events = {
     body: 'Nôt é uma peça de dança, música e teatro que se passa de noite, onde sonho e pesadelo, desejo e violência se confundem. Inspira-se em As Mil e Uma Noites, mas não adapta os contos: inventa a sua própria noite.\n\nCom humor e imagens inquietantes, Marlene Monteiro Freitas fala do poder de imaginar e de contar histórias como forma de resistir e sobreviver. A peça estreou no Festival de Avignon, em julho de 2025.',
     ticketInfo: 'Sexta-feira, 11 de dezembro, às 21:30, na Sala Principal do Theatro Circo (Braga). M/12.\n\nBilhete de 12 € (6 € com Cartão Pentágono), à venda na BOL e na Ticketline. Também é possível pedir reserva no site do Theatro Circo, válida só depois de confirmada por email.',
     ticketUrl: 'https://www.bol.pt/Comprar/Bilhetes/180725-not_marlene_monteiro_freitas-theatro_circo/Sessoes'
+  },
+  'hugo-sousa-aqui-entre-nos-aula-magna': {
+    body: 'Aqui Entre Nós é o novo solo de stand-up de Hugo Sousa. O humorista fala da própria vida: histórias de família, relações, memórias, hábitos, diferenças entre gerações e os pequenos momentos embaraçosos do dia a dia.\n\nO espetáculo dura cerca de 60 minutos, sem intervalo, e é para maiores de 16 anos.',
+    ticketInfo: 'Domingo, 15 de novembro, na Aula Magna (Cidade Universitária, Lisboa), em duas sessões: 19:00 e 21:30. M/16.\n\nBilhetes de 18 € a 27 €, conforme a zona (Doutorais 18-27 €, Anfiteatro Inferior 22 €, Anfiteatro Superior e Tribunas 18 €), à venda na BOL.',
+    ticketUrl: 'https://www.bol.pt/Comprar/Bilhetes/179423-lisboa_hugo_sousa_aqui_entre_nos-aula_magna/'
+  },
+  'diogo-faro-massa-mae-trindade': {
+    body: 'Em Massa Mãe, Diogo Faro faz o balanço das suas aventuras, dos podcasts às conversas com a avó, e volta às observações sobre a sociedade atual que marcam o seu humor.\n\nO espetáculo estreou primeiro no Porto e chega a Lisboa no fim do ano, ao Teatro da Trindade, no Chiado.',
+    ticketInfo: 'Terça-feira, 15 de dezembro, às 21:00, no Teatro da Trindade (Largo da Trindade 7A, Chiado, Lisboa). Metro Baixa-Chiado.\n\nBilhetes de 14 € a 21 €, à venda na Ticketline e na bilheteira do teatro.',
+    ticketUrl: 'https://www.ticketline.pt/en/evento/massa-mae-diogo-faro-104844'
+  },
+  'ana-garcia-martins-insuficiente-sa-da-bandeira': {
+    body: 'Insuficiente é o novo solo de stand-up de Ana Garcia Martins. Fala dos sentimentos de inadequação, da autocrítica e da síndrome do impostor que a acompanham desde criança, mesmo quando a vida parece dizer o contrário.\n\nO espetáculo estava marcado para setembro e passou para dezembro; os bilhetes já comprados continuam válidos para as novas datas.',
+    ticketInfo: 'Sexta, 18, e sábado, 19 de dezembro, às 21:00, na Sala Principal do Teatro Sá da Bandeira (Porto). M/16.\n\nBilhetes de 15 € a 30 € (valor facial; a Ticketline acrescenta custos de operação), à venda na Ticketline.',
+    ticketUrl: 'https://www.ticketline.pt/evento/ana-garcia-martins-insuficiente-105482'
   }
 };
 
@@ -126,6 +141,15 @@ const artists = {
   },
   'marlene-monteiro-freitas': {
     body: 'Marlene Monteiro Freitas nasceu em Cabo Verde e vive em Portugal. As suas peças juntam dança, música, máscara e um forte trabalho de expressão facial, e circulam pelos principais festivais internacionais.\n\nNôt, inspirada em As Mil e Uma Noites, estreou no Festival de Avignon em 2025 e chega ao Theatro Circo, em Braga, a 11 de dezembro de 2026.'
+  },
+  'hugo-sousa': {
+    body: 'Hugo Sousa é humorista de stand-up. Em Aqui Entre Nós, o solo que estreou em 2026 e anda em digressão pelo país, transforma em comédia a própria vida, a família e as diferenças entre gerações.\n\nEm Lisboa, atua na Aula Magna a 15 de novembro de 2026.'
+  },
+  'diogo-faro': {
+    body: 'Diogo Faro é humorista e um dos nomes do stand-up português que mais junta comédia e comentário social. Massa Mãe, o novo solo, estreou no Porto e chega ao Teatro da Trindade, em Lisboa, a 15 de dezembro de 2026.'
+  },
+  'ana-garcia-martins': {
+    body: 'Ana Garcia Martins é humorista e autora, conhecida pelo blogue A Pipoca Mais Doce. Em Insuficiente, o novo solo de stand-up, fala de autocrítica e da síndrome do impostor.\n\nApresenta-o no Teatro Sá da Bandeira, no Porto, a 18 e 19 de dezembro de 2026.'
   }
 };
 
@@ -159,6 +183,15 @@ const venues = {
   },
   'batalha-centro-de-cinema': {
     body: 'O antigo Cinema Batalha, um edifício modernista dos anos 1940, reabriu como Batalha Centro de Cinema, o cinema municipal do Porto. Mostra estreias, ciclos, antestreias, cinema português e de autor, e tem várias salas.\n\nBilheteira: no cinema e online na BOL.'
+  },
+  'aula-magna': {
+    body: 'A Aula Magna é o grande auditório da Universidade de Lisboa, no edifício da Reitoria, na Cidade Universitária. É uma das salas grandes da cidade para concertos, conferências e espetáculos de stand-up.\n\nOs bilhetes dos espetáculos vendem-se normalmente na BOL e nos pontos de venda habituais.'
+  },
+  'teatro-da-trindade': {
+    body: 'O Teatro da Trindade abriu em 1867 no Chiado e é gerido pela Fundação INATEL. Programa teatro, música, espetáculos para famílias e stand-up comedy.\n\nBilheteira: no teatro e na Ticketline. Fica perto do metro Baixa-Chiado.'
+  },
+  'teatro-sa-da-bandeira': {
+    body: 'O Teatro Sá da Bandeira, na Baixa do Porto, é um dos teatros mais antigos da cidade. Hoje tem uma das programações de stand-up comedy mais fortes do Porto, na Sala Principal e no Estúdio Latino.\n\nBilheteira: no teatro e na Ticketline.'
   }
 };
 

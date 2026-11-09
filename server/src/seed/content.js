@@ -30,7 +30,10 @@ const img = {
   guitarra2: wm('9/9a', 'Portuguese_guitar_%2853631859481%29.jpg'),
   alfama: wm('0/07', 'Alfama_0001.jpg'),
   ribeira: wm('8/8f', 'Cais_da_Ribeira_in_Porto_%285%29.jpg'),
-  macCcb: wm('8/87', 'MAC_CCB_Museu_de_Arte_Contempor%C3%A2nea_%2853875750868%29.jpg')
+  macCcb: wm('8/87', 'MAC_CCB_Museu_de_Arte_Contempor%C3%A2nea_%2853875750868%29.jpg'),
+  aulaMagna: wm('2/2c', 'Aula_Magna_da_Universidade_de_Lisboa_-_Portugal_%F0%9F%87%B5%F0%9F%87%B9_%2853886407323%29.jpg'),
+  trindade: wm('1/18', 'Teatro_da_Trindade%2C_Lisboa_%2847709760741%29.jpg'),
+  saDaBandeira: wm('e/ef', 'Teatro_Sa_da_Bandeira.jpg')
 };
 
 const RIMAS = 'https://www.rimasebatidas.pt/20-discos-portugueses-que-vao-sair-ate-ao-final-do-ano/';
@@ -95,7 +98,25 @@ const venues = [
     address: 'Praça da Batalha 47, 4000-101 Porto', website: 'https://www.batalhacentrodecinema.pt',
     description: 'Cinema municipal do Porto instalado no antigo Cinema Batalha. Mostra estreias, ciclos e cinema português e de autor.',
     imageUrl: img.batalha
-  }
+  },
+  {
+    slug: 'aula-magna', name: 'Aula Magna', type: 'Auditório', city: 'Lisboa',
+    address: 'Alameda da Universidade, Edifício da Reitoria, 1649-004 Lisboa', website: 'https://www.ulisboa.pt',
+    description: 'Grande auditório da Universidade de Lisboa, na Cidade Universitária. Recebe concertos, conferências e espetáculos de humor.',
+    imageUrl: img.aulaMagna
+  },
+  {
+    slug: 'teatro-da-trindade', name: 'Teatro da Trindade', type: 'Teatro', city: 'Lisboa',
+    address: 'Largo da Trindade 7A, 1200-466 Lisboa', website: 'https://teatrotrindade.inatel.pt',
+    description: 'Teatro histórico do Chiado, gerido pela Fundação INATEL, com teatro, música e stand-up.',
+    imageUrl: img.trindade
+  },
+  {
+    slug: 'teatro-sa-da-bandeira', name: 'Teatro Sá da Bandeira', type: 'Teatro', city: 'Porto',
+    address: 'R. de Sá da Bandeira 108, 4000-427 Porto', website: 'https://teatrosadabandeira.pt',
+    description: 'Um dos teatros mais antigos do Porto, na Baixa, com uma programação forte de stand-up comedy na Sala Principal e no Estúdio Latino.',
+    imageUrl: img.saDaBandeira
+  },
 ];
 
 const artists = [
@@ -143,7 +164,22 @@ const artists = [
     slug: 'marlene-monteiro-freitas', name: 'Marlene Monteiro Freitas', location: 'Lisboa', disciplines: ['Dança', 'Coreografia'],
     bio: 'Coreógrafa e intérprete nascida em Cabo Verde e radicada em Portugal. Em dezembro de 2026 apresenta Nôt no Theatro Circo, peça inspirada em As Mil e Uma Noites.',
     imageUrl: img.theatroCirco
-  }
+  },
+  {
+    slug: 'hugo-sousa', name: 'Hugo Sousa', location: 'Portugal', disciplines: ['Comédia', 'Stand-up'],
+    bio: 'Humorista português de stand-up. Em 2026 estreou Aqui Entre Nós, um solo sobre a vida, a família e as diferenças entre gerações.',
+    imageUrl: img.aulaMagna
+  },
+  {
+    slug: 'diogo-faro', name: 'Diogo Faro', location: 'Lisboa', disciplines: ['Comédia', 'Stand-up'],
+    bio: 'Humorista português conhecido pelo stand-up de observação social. Massa Mãe é o seu novo solo, estreado no Porto em 2026.',
+    imageUrl: img.trindade
+  },
+  {
+    slug: 'ana-garcia-martins', name: 'Ana Garcia Martins', location: 'Lisboa', disciplines: ['Comédia', 'Stand-up', 'Escrita'],
+    bio: 'Humorista e autora, conhecida pelo blogue A Pipoca Mais Doce. Insuficiente é o seu novo solo de stand-up.',
+    imageUrl: img.saDaBandeira
+  },
 ];
 
 const works = [
@@ -267,7 +303,25 @@ const events = [
     city: 'Braga', organizer: 'Theatro Circo', startsAt: '2026-12-11T21:30:00Z', endsAt: null,
     description: 'Espetáculo de dança inspirado em As Mil e Uma Noites, centrado na narração como forma de resistência. M/12, 12 €.',
     officialUrl: 'https://theatrocirco.com/en/event/not-en/', imageUrl: img.theatroCirco
-  }
+  },
+  {
+    slug: 'hugo-sousa-aqui-entre-nos-aula-magna', title: 'Hugo Sousa - Aqui Entre Nós', subtitle: 'Stand-up comedy', category: 'comedia', venue: 'aula-magna',
+    city: 'Lisboa', organizer: 'Aula Magna', startsAt: '2026-11-15T19:00:00Z', endsAt: null,
+    description: 'O novo solo de stand-up de Hugo Sousa, feito de histórias de família, pequenos desastres do dia a dia e diferenças entre gerações. Duas sessões, às 19:00 e às 21:30.',
+    officialUrl: 'https://www.agendalx.pt/events/event/aqui-entre-nos/', imageUrl: img.aulaMagna, featured: true
+  },
+  {
+    slug: 'diogo-faro-massa-mae-trindade', title: 'Diogo Faro - Massa Mãe', subtitle: 'Stand-up comedy', category: 'comedia', venue: 'teatro-da-trindade',
+    city: 'Lisboa', organizer: 'Teatro da Trindade', startsAt: '2026-12-15T21:00:00Z', endsAt: null,
+    description: 'Diogo Faro faz o balanço das suas aventuras, dos podcasts às conversas com a avó, com o olhar sobre a sociedade que o tornou conhecido.',
+    officialUrl: 'https://www.timeout.pt/lisboa/pt/coisas-para-fazer/massa-mae', imageUrl: img.trindade
+  },
+  {
+    slug: 'ana-garcia-martins-insuficiente-sa-da-bandeira', title: 'Ana Garcia Martins - Insuficiente', subtitle: 'Stand-up comedy', category: 'comedia', venue: 'teatro-sa-da-bandeira',
+    city: 'Porto', organizer: 'Teatro Sá da Bandeira', startsAt: '2026-12-18T21:00:00Z', endsAt: '2026-12-19T23:00:00Z',
+    description: 'O novo solo de Ana Garcia Martins é sobre a sensação de não ser suficiente, a autocrítica e a síndrome do impostor. Duas noites, 18 e 19 de dezembro.',
+    officialUrl: 'https://teatrosadabandeira.pt/evento/ana-garcia-martins-insuficiente/', imageUrl: img.saDaBandeira
+  },
 ];
 
 const articles = [
@@ -309,7 +363,13 @@ const collections = [
     introduction: 'Cinco noites de música feita cá, dos coliseus à Casa da Música.\n\nO roteiro começa no Porto, com os 20 anos de Olhos de Mongol dos Linda Martini e o disco mais tradicional de Luísa Sobral, e acaba em Lisboa, com janeiro, a estreia de IOLANDA no Coliseu e o regresso de Rodrigo Leão a Alma Mater. Em cada ficha está a data, a sala, o preço quando foi publicado e a ligação para comprar bilhetes.',
     coverImage: img.coliseuLisboa, featured: true,
     items: [['events', 'linda-martini-coliseu-porto-2026'], ['events', 'luisa-sobral-cartas-de-desamor-casa-da-musica'], ['events', 'janeiro-reticencias-coliseu-lisboa'], ['events', 'iolanda-coliseu-dos-recreios-2026'], ['events', 'rodrigo-leao-alma-mater-misty-fest']]
-  }
+  },
+  {
+    slug: 'comedia-ate-ao-fim-do-ano-2026', title: 'Rir até ao fim do ano', description: 'Três solos de stand-up de humoristas portugueses, em Lisboa e no Porto.',
+    introduction: 'Três humoristas, três solos novos, entre novembro e dezembro.\n\nHugo Sousa leva Aqui Entre Nós à Aula Magna a 15 de novembro, Diogo Faro traz Massa Mãe ao Teatro da Trindade a 15 de dezembro e Ana Garcia Martins apresenta Insuficiente no Teatro Sá da Bandeira, no Porto, a 18 e 19 de dezembro. Em cada ficha estão as horas, os preços e a ligação para comprar bilhetes.',
+    coverImage: img.trindade, featured: true,
+    items: [['events', 'hugo-sousa-aqui-entre-nos-aula-magna'], ['events', 'diogo-faro-massa-mae-trindade'], ['events', 'ana-garcia-martins-insuficiente-sa-da-bandeira']]
+  },
 ];
 
 // Ligações "relacionados" (origem → destino), por slug.
@@ -331,7 +391,10 @@ const relations = [
   ['articles', 'exposicoes-em-lisboa-ate-fevereiro', 'collections', 'exposicoes-lisboa-inverno-2026'],
   ['articles', 'exposicoes-em-lisboa-ate-fevereiro', 'events', 'pedro-cabrita-reis-sem-magoa-no-coracao-maat'],
   ['articles', 'concertos-portugueses-que-fecham-2026', 'collections', 'concertos-portugueses-fim-de-2026'],
-  ['articles', 'concertos-portugueses-que-fecham-2026', 'events', 'iolanda-coliseu-dos-recreios-2026']
+  ['articles', 'concertos-portugueses-que-fecham-2026', 'events', 'iolanda-coliseu-dos-recreios-2026'],
+  ['events', 'hugo-sousa-aqui-entre-nos-aula-magna', 'artists', 'hugo-sousa'],
+  ['events', 'diogo-faro-massa-mae-trindade', 'artists', 'diogo-faro'],
+  ['events', 'ana-garcia-martins-insuficiente-sa-da-bandeira', 'artists', 'ana-garcia-martins'],
 ];
 
 // Créditos das fotografias (Wikimedia Commons).
@@ -349,7 +412,10 @@ const imageCredits = [
   ['Disco de vinil (agulha)', 'Franz van Duns', 'CC BY-SA 4.0'],
   ['Disco de vinil a girar', 'Sulamith Sallmann', 'CC BY-SA 4.0'],
   ['Duas guitarras portuguesas', 'TenIslands', 'Domínio público'],
-  ['Guitarra portuguesa', 'Šarūnas Burdulis', 'CC BY-SA 2.0']
+  ['Guitarra portuguesa', 'Šarūnas Burdulis', 'CC BY-SA 2.0'],
+  ['Aula Magna da Universidade de Lisboa', 'Vitor Oliveira', 'CC BY-SA 2.0'],
+  ['Teatro da Trindade', 'pedrik', 'CC BY 2.0'],
+  ['Teatro Sá da Bandeira', 'Nikolai Ormazablev', 'CC BY 2.0'],
 ];
 
 // Junta a cada conteúdo o texto completo e a informação de bilhetes (texts.js).

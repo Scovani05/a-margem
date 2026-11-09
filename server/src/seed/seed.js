@@ -50,7 +50,8 @@ async function seed() {
     ['Artes visuais', 'artes-visuais', 'Exposições, objetos e práticas visuais.', '#82c8bd', 'shapes'],
     ['Literatura', 'literatura', 'Livros, escrita e edição independente.', '#f2cd79', 'book-open'],
     ['Teatro', 'teatro', 'Palco, performance e artes ao vivo.', '#eea47b', 'drama'],
-    ['Cultura independente', 'cultura-independente', 'Iniciativas locais e espaços autónomos.', '#a8c2ee', 'sparkles']
+    ['Cultura independente', 'cultura-independente', 'Iniciativas locais e espaços autónomos.', '#a8c2ee', 'sparkles'],
+    ['Comédia', 'comedia', 'Stand-up, humor e espetáculos para rir.', '#f4b3c2', 'laugh']
   ].map(([name, slug, description, color, icon], sortOrder) => ensure(Category, { slug }, { name, slug, description, color, icon, sortOrder })));
   const categories = Object.fromEntries(categoryRows.map((item) => [item.slug, item]));
 
