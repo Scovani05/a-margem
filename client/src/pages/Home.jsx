@@ -1,11 +1,11 @@
-import { ArrowDown, ArrowRight, ArrowUpRight, Compass, Sparkles } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { ArrowDown, ArrowRight, ArrowUpRight, CalendarDays, Compass, Search, Sparkles } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import api from '../api/client.js';
 import ContentCard from '../components/ContentCard.jsx';
 import { ErrorState, Loading, SectionHeading } from '../components/States.jsx';
 import usePageMeta from '../hooks/usePageMeta.js';
-import { imageFor } from '../utils/content.js';
+import { formatDate, imageFor } from '../utils/content.js';
 
 function ContentGrid({ type, items, className = '' }) {
   return <div className={`row g-4 content-grid ${className}`}>{items.map((item) => <div className="col-12 col-sm-6 col-lg-3" key={`${type}-${item.id}`}><ContentCard type={type} item={item} /></div>)}</div>;
@@ -15,6 +15,8 @@ export function HomePage() {
   const [data, setData] = useState(null);
   const [error, setError] = useState('');
   const [refresh, setRefresh] = useState(0);
+  const [query, setQuery] = useState('');
+  const navigate = useNavigate();
   usePageMeta('Cultura para descobrir');
 
   useEffect(() => {
@@ -27,23 +29,46 @@ export function HomePage() {
 
   if (!data && !error) return <div className="container page-loading"><Loading /></div>;
   if (error) return <div className="container page-loading"><ErrorState message={error} onRetry={() => setRefresh((value) => value + 1)} /></div>;
-  const hero = data.hero;
-  const heroType = hero?.items ? 'collections' : 'articles';
-  const heroHref = hero ? (heroType === 'collections' ? `/collections/${hero.slug}` : `/magazine/${hero.slug}`) : '/discover';
+  // Destaque da página inicial: o primeiro evento em destaque (com fotografia) e os próximos 3 da agenda.
+  const spotlight = data.events?.[0] || null;
+  const nextUp = data.nextUp || [];
+  const counts = data.counts || null;
+  const monthLabel = new Intl.DateTimeFormat('pt-PT', { month: 'long', year: 'numeric' }).format(new Date());
 
   return <>
     <section className="home-hero container-fluid">
       <div className="home-hero__copy">
-        <p className="eyebrow"><span className="eyebrow-dot" /> A cultura acontece por todo o lado</p>
-        <h1>O próximo<br />fascínio pode<br /><em>estar ao lado.</em></h1>
-        <p className="home-hero__text">Histórias, pessoas e lugares para descobrires com tempo. Um mapa cultural feito à mão, para quem prefere ir um pouco mais longe.</p>
-        <div className="home-hero__actions"><Link className="btn btn-lime" to="/discover">Começar a descobrir <ArrowRight size={17} /></Link><Link className="text-link" to="/magazine">Ler a revista <ArrowUpRight size={16} /></Link></div>
-        <div className="hero-note"><span>01</span><span>Curadoria independente<br />de cultura portuguesa</span></div>
+        <p className="eyebrow"><span className="eyebrow-dot" /> Cultura portuguesa · {monthLabel}</p>
+        <h1>O que se passa<br />na cultura<br /><em>portuguesa.</em></h1>
+        <p className="home-hero__text">Discos novos, exposições e concertos de artistas portugueses, com data, lugar e a ligação para a fonte oficial.</p>
+        <form className="hero-search" role="search" onSubmit={(event) => { event.preventDefault(); if (query.trim()) navigate(`/search?q=${encodeURIComponent(query.trim())}`); }}>
+          <label className="visually-hidden" htmlFor="hero-q">Pesquisar artistas, discos, exposições ou concertos</label>
+          <Search size={18} aria-hidden="true" />
+          <input id="hero-q" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Um artista, um disco, um museu…" autoComplete="off" />
+          <button className="btn btn-lime" type="submit">Pesquisar</button>
+        </form>
+        <div className="hero-quick" aria-label="Pesquisas sugeridas">{['Fado', 'MAAT', 'Coliseu', 'Exposição', 'Porto'].map((word) => <Link key={word} to={`/search?q=${encodeURIComponent(word)}`}>{word}</Link>)}</div>
+        {counts && <dl className="hero-stats">
+          <div><dt>{counts.events}</dt><dd>eventos e exposições</dd></div>
+          <div><dt>{counts.works}</dt><dd>discos e obras</dd></div>
+          <div><dt>{counts.artists}</dt><dd>artistas</dd></div>
+          <div><dt>{counts.venues}</dt><dd>espaços</dd></div>
+        </dl>}
       </div>
-      <div className="home-hero__art" aria-label="Composição gráfica abstrata em tons de azul, vermelho e amarelo">
-        <div className="hero-art__grain" /><div className="hero-art__sun" /><div className="hero-art__arc" /><div className="hero-art__frame"><img src="/images/hero-collage.svg" alt="Colagem editorial abstrata com formas geométricas" /></div>
-        <span className="hero-art__vertical">MARGEM DE DESCOBERTA · 2026</span>
-        {hero && <Link className="hero-feature" to={heroHref}><span className="hero-feature__image"><img src={imageFor(hero)} alt="" /></span><span><small>EM DESTAQUE · {hero.isDemo ? 'DEMONSTRAÇÃO' : 'ESCOLHA EDITORIAL'}</small><strong>{hero.title}</strong></span><ArrowUpRight size={18} /></Link>}
+      <div className="home-hero__art">
+        <div className="hero-art__sun" aria-hidden="true" />
+        {spotlight && <Link className="hero-photo" to={`/events/${spotlight.slug}`}>
+          <img src={imageFor(spotlight)} alt={`Fotografia de ${spotlight.venueName || spotlight.city}`} />
+          <span className="hero-photo__caption"><small>{spotlight.category?.name || 'Em destaque'} · {spotlight.venueName || spotlight.city}</small><strong>{spotlight.title}</strong><span>{spotlight.endsAt && new Date(spotlight.startsAt) < new Date() ? `Até ${formatDate(spotlight.endsAt, { year: undefined })}` : formatDate(spotlight.startsAt)}</span></span>
+        </Link>}
+        {nextUp.length > 0 && <div className="hero-next">
+          <p className="hero-next__title"><CalendarDays size={14} /> A seguir</p>
+          <ol>{nextUp.map((event) => <li key={event.id}><Link to={`/events/${event.slug}`}>
+            <time dateTime={event.startsAt}><b>{new Date(event.startsAt).getDate()}</b>{new Intl.DateTimeFormat('pt-PT', { month: 'short' }).format(new Date(event.startsAt)).replace('.', '')}</time>
+            <span><strong>{event.title}</strong><small>{event.venueName || event.city}</small></span>
+          </Link></li>)}</ol>
+          <Link className="text-link" to="/discover/events">Ver a agenda <ArrowRight size={14} /></Link>
+        </div>}
       </div>
       <div className="home-hero__scroll"><ArrowDown size={15} /> Desce e encontra</div>
     </section>

@@ -9,13 +9,25 @@ const listCategories = async (req, res, next) => {
 
 const home = async (req, res, next) => {
   try {
-    const [categories, articles, collections, works, artists, events] = await Promise.all([
+    const now = new Date();
+    const live = { published: true, status: 'upcoming', [Op.or]: [{ startsAt: { [Op.gte]: now } }, { endsAt: { [Op.gte]: now } }] };
+    const [categories, articles, collections, works, artists, events, nextUp, eventCount, workCount, artistCount, venueCount] = await Promise.all([
       Category.findAll({ order: [['sortOrder', 'ASC'], ['name', 'ASC']] }),
       catalogue.featured('articles', 3), catalogue.featured('collections', 3),
-      catalogue.featured('works', 4), catalogue.featured('artists', 4), catalogue.featured('events', 4)
+      catalogue.featured('works', 4), catalogue.featured('artists', 4), catalogue.featured('events', 4),
+      // Para a página inicial: os próximos 3 eventos que ainda não começaram e os totais do catálogo.
+      Event.findAll({
+        where: { published: true, status: 'upcoming', startsAt: { [Op.gte]: now } },
+        attributes: ['id', 'slug', 'title', 'startsAt', 'city', 'venueName'],
+        include: [{ model: Category, as: 'category', attributes: ['name', 'slug', 'color'] }],
+        order: [['startsAt', 'ASC']], limit: 3
+      }),
+      Event.count({ where: live }), Work.count({ where: { published: true } }),
+      Artist.count({ where: { published: true } }), Venue.count({ where: { published: true } })
     ]);
     const hero = collections[0] || articles[0] || null;
-    res.json({ categories, hero, articles, collections, works, artists, events });
+    const counts = { events: eventCount, works: workCount, artists: artistCount, venues: venueCount };
+    res.json({ categories, hero, articles, collections, works, artists, events, nextUp, counts });
   } catch (error) { next(error); }
 };
 
