@@ -1,4 +1,4 @@
-// Créditos das fotografias usadas no catálogo (Wikimedia Commons).
+// Créditos das fotografias usadas no catálogo (Wikimedia Commons). Não é usado no site; fica como registo das licenças.
 export const imageCredits = [
   [
     "Coliseu do Porto",
