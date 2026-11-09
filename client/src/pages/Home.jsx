@@ -59,7 +59,7 @@ export function HomePage() {
         <div className="hero-art__sun" aria-hidden="true" />
         {spotlight && <Link className="hero-photo" to={`/events/${spotlight.slug}`}>
           <img src={imageFor(spotlight)} alt={`Fotografia de ${spotlight.venueName || spotlight.city}`} />
-          <span className="hero-photo__caption"><small>{spotlight.category?.name || 'Em destaque'} · {spotlight.venueName || spotlight.city}</small><strong>{spotlight.title}</strong><span>{spotlight.endsAt && new Date(spotlight.startsAt) < new Date() ? `Até ${formatDate(spotlight.endsAt, { year: undefined })}` : formatDate(spotlight.startsAt)}</span></span>
+          <span className="hero-photo__caption"><small>{spotlight.category?.name || 'Em destaque'} · {spotlight.venueName || spotlight.city}</small><strong>{spotlight.title}</strong><span>{spotlight.endsAt && new Date(spotlight.startsAt) < new Date() ? `Até ${formatDate(spotlight.endsAt, { month: 'long', year: undefined })}` : formatDate(spotlight.startsAt)}</span></span>
         </Link>}
         {nextUp.length > 0 && <div className="hero-next">
           <p className="hero-next__title"><CalendarDays size={14} /> A seguir</p>
