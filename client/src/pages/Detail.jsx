@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowUpRight, CalendarDays, MapPin, Share2 } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, CalendarDays, MapPin, Share2, Ticket } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import api from '../api/client.js';
@@ -87,7 +87,8 @@ export default function DetailPage({ type }) {
   const location = item.city || item.location;
   const dateText = item.startsAt ? `${formatDate(item.startsAt, { weekday: 'long' })}${item.endsAt ? ` - ${formatDate(item.endsAt, { weekday: 'long' })}` : ''}` : '';
   const eventIsPast = type === 'events' && item.startsAt && new Date(item.startsAt) < new Date();
-  const body = item.body || item.description || item.bio || item.introduction || '';
+  // O resumo (description/bio/excerpt) aparece em destaque no topo; o texto completo fica no corpo.
+  const body = item.body || item.introduction || '';
   const isLongform = type === 'articles' || type === 'collections';
   const infoTitle = type === 'events' ? item.category?.name : type === 'works' ? item.category?.name : type === 'artists' ? (item.disciplines || []).join(' · ') : type === 'venues' ? item.type : item.category?.name;
   const alreadyLinked = new Set([
@@ -121,6 +122,11 @@ export default function DetailPage({ type }) {
           {type === 'venues' && <div className="detail-facts">{location && <InfoRow icon={MapPin}>{item.address ? `${item.address}, ` : ''}{location}</InfoRow>}{item.publicEmail && <InfoRow icon={Share2}><a href={`mailto:${item.publicEmail}`}>{item.publicEmail}</a></InfoRow>}</div>}
           {type === 'artists' && location && <div className="detail-facts"><InfoRow icon={MapPin}>{location}</InfoRow></div>}
           <div className="rich-copy">{body.split(/\n\s*\n/).filter(Boolean).map((paragraph, index) => <p key={index}>{paragraph}</p>)}</div>
+          {type === 'events' && (item.ticketInfo || item.ticketUrl) && <section className="ticket-box" aria-labelledby="ticket-title">
+            <h2 id="ticket-title"><Ticket size={18} /> Bilhetes</h2>
+            {item.ticketInfo && item.ticketInfo.split(/\n\s*\n/).filter(Boolean).map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+            {item.ticketUrl && <a className="btn btn-lime" href={item.ticketUrl} target="_blank" rel="noreferrer">Comprar bilhetes <ArrowUpRight size={16} /></a>}
+          </section>}
           {type === 'events' && item.officialUrl && <a className="btn btn-dark external-action" href={item.officialUrl} target="_blank" rel="noreferrer">Mais informações oficiais <ArrowUpRight size={16} /></a>}
           {type === 'works' && item.officialUrl && <a className="btn btn-dark external-action" href={item.officialUrl} target="_blank" rel="noreferrer">Visitar página oficial <ArrowUpRight size={16} /></a>}
           {type === 'venues' && item.website && <a className="btn btn-dark external-action" href={item.website} target="_blank" rel="noreferrer">Visitar o espaço <ArrowUpRight size={16} /></a>}

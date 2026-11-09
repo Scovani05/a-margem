@@ -6,8 +6,18 @@ const {
 
 const content = require('./content');
 
+// Campos de texto acrescentados depois (migração 004): se o registo já existia sem eles,
+// são preenchidos a partir do content.js. Nunca substitui texto que o admin já tenha escrito.
+const FILL_IF_EMPTY = ['body', 'ticketInfo', 'ticketUrl'];
+
 async function ensure(model, where, defaults) {
-  const [row] = await model.findOrCreate({ where, defaults });
+  const [row, created] = await model.findOrCreate({ where, defaults });
+  if (!created) {
+    const missing = Object.fromEntries(FILL_IF_EMPTY
+      .filter((field) => model.rawAttributes[field] && defaults[field] && !row[field])
+      .map((field) => [field, defaults[field]]));
+    if (Object.keys(missing).length) await row.update(missing);
+  }
   return row;
 }
 

@@ -121,7 +121,7 @@ const artists = [
   },
   {
     slug: 'bruno-pernadas', name: 'Bruno Pernadas', location: 'Lisboa', disciplines: ['Música', 'Jazz', 'Composição'],
-    bio: 'Compositor, guitarrista e produtor que mistura jazz, pop e música do mundo. Apresenta-se na Casa da Música a 19 de novembro de 2026.',
+    bio: 'Compositor, guitarrista e produtor que mistura jazz, pop e música do mundo. Tem concerto anunciado em Lisboa a 30 de novembro de 2026, na Casa Capitão.',
     imageUrl: img.casaDaMusica
   },
   {
@@ -191,28 +191,22 @@ const works = [
 
 const events = [
   {
-    slug: 'linda-martini-coliseu-porto-2026', title: 'Linda Martini', subtitle: 'Ao vivo no Coliseu do Porto', category: 'musica', venue: 'coliseu-porto-ageas',
+    slug: 'linda-martini-coliseu-porto-2026', title: 'Linda Martini', subtitle: '20 anos de Olhos de Mongol', category: 'musica', venue: 'coliseu-porto-ageas',
     city: 'Porto', organizer: 'Coliseu Porto Ageas', startsAt: '2026-11-11T21:00:00Z', endsAt: null,
-    description: 'A banda lisboeta regressa ao Coliseu do Porto. Confirma o horário e os preços na bilheteira do Coliseu.',
-    officialUrl: 'https://www.coliseu.pt/agenda', imageUrl: img.coliseuPorto, featured: true
+    description: 'A banda lisboeta toca na íntegra Olhos de Mongol, o primeiro disco, 20 anos depois da edição. No Coliseu Box, o formato mais próximo do Coliseu do Porto.',
+    officialUrl: 'https://www.coliseu.pt/evento/20261111-linda-martini-son-estrella-galicia', imageUrl: img.coliseuPorto, featured: true
   },
   {
     slug: 'luisa-sobral-cartas-de-desamor-casa-da-musica', title: 'Luísa Sobral - Cartas de Desamor', subtitle: 'Concerto', category: 'musica', venue: 'casa-da-musica',
-    city: 'Porto', organizer: 'Casa da Música', startsAt: '2026-11-16T21:00:00Z', endsAt: null,
-    description: 'A cantautora apresenta o espetáculo Cartas de Desamor na Casa da Música. Confirma o horário e os preços no site da sala.',
-    officialUrl: 'https://casadamusica.com', imageUrl: img.casaDaMusica
+    city: 'Porto', organizer: 'Casa da Música', startsAt: '2026-11-16T21:30:00Z', endsAt: null,
+    description: 'Luísa Sobral apresenta Cartas de Desamor, o oitavo álbum, em que se aproxima da música tradicional portuguesa. Na Sala Suggia.',
+    officialUrl: 'https://casadamusica.com/event/luisa-sobral/', imageUrl: img.casaDaMusica
   },
   {
     slug: 'janeiro-reticencias-coliseu-lisboa', title: 'janeiro - Reticências', subtitle: 'Uma nova versão de nós', category: 'musica', venue: 'coliseu-dos-recreios',
     city: 'Lisboa', organizer: 'Coliseu dos Recreios', startsAt: '2026-11-18T21:00:00Z', endsAt: null,
-    description: 'O cantautor janeiro sobe ao palco do Coliseu dos Recreios com o espetáculo Reticências. Confirma o horário na bilheteira.',
+    description: 'janeiro apresenta em Lisboa Reticências, o novo álbum, no Coliseu Club do Coliseu dos Recreios.',
     officialUrl: 'https://coliseulisboa.com', imageUrl: img.coliseuLisboa
-  },
-  {
-    slug: 'bruno-pernadas-casa-da-musica-2026', title: 'Bruno Pernadas', subtitle: 'Concerto', category: 'musica', venue: 'casa-da-musica',
-    city: 'Porto', organizer: 'Casa da Música', startsAt: '2026-11-19T21:00:00Z', endsAt: null,
-    description: 'Concerto de Bruno Pernadas, entre o jazz, a pop e a música do mundo. Confirma o horário e os preços no site da sala.',
-    officialUrl: 'https://casadamusica.com', imageUrl: img.casaDaMusica
   },
   {
     slug: 'iolanda-coliseu-dos-recreios-2026', title: 'IOLANDA', subtitle: 'Apresentação de Quebranto', category: 'musica', venue: 'coliseu-dos-recreios',
@@ -223,8 +217,8 @@ const events = [
   {
     slug: 'rodrigo-leao-alma-mater-misty-fest', title: 'Rodrigo Leão - Alma Mater', subtitle: 'Misty Fest', category: 'musica', venue: 'coliseu-dos-recreios',
     city: 'Lisboa', organizer: 'Misty Fest', startsAt: '2026-12-18T21:00:00Z', endsAt: null,
-    description: 'Rodrigo Leão apresenta Alma Mater no Coliseu dos Recreios, no âmbito do Misty Fest. Confirma o horário e os preços na bilheteira.',
-    officialUrl: 'https://coliseulisboa.com', imageUrl: img.coliseuLisboa
+    description: 'Rodrigo Leão toca Alma Mater na íntegra, com ensemble, coro e as convidadas Adriana Calcanhotto e Lula Pena. Duas sessões, às 18:00 e às 21:00.',
+    officialUrl: 'https://www.rodrigoleao.pt/en/rodrigo-leao-revisita-alma-mater-no-misty-fest-2026/', imageUrl: img.coliseuLisboa
   },
   {
     slug: 'pedro-cabrita-reis-sem-magoa-no-coracao-maat', title: 'Pedro Cabrita Reis - sem mágoa no coração', subtitle: 'Exposição no MAAT', category: 'artes-visuais', venue: 'maat',
@@ -291,8 +285,8 @@ const articles = [
   },
   {
     slug: 'concertos-portugueses-que-fecham-2026', title: 'Os concertos portugueses que fecham 2026', subtitle: 'Agenda', category: 'musica',
-    excerpt: 'Linda Martini, Bruno Pernadas, IOLANDA, Rodrigo Leão e outros nomes nos coliseus e na Casa da Música.',
-    body: 'Novembro abre com Linda Martini no Coliseu do Porto (11 de novembro). Na Casa da Música, Luísa Sobral apresenta Cartas de Desamor (16 de novembro) e Bruno Pernadas toca a 19.\n\nEm Lisboa, o Coliseu dos Recreios recebe janeiro com Reticências (18 de novembro), IOLANDA com as canções de Quebranto (7 de dezembro) e Rodrigo Leão com Alma Mater, no Misty Fest (18 de dezembro).\n\nAs horas e os preços podem mudar: confirma sempre na bilheteira de cada sala.',
+    excerpt: 'Linda Martini, Luísa Sobral, janeiro, IOLANDA e Rodrigo Leão nos coliseus e na Casa da Música.',
+    body: 'Novembro abre no Porto com Linda Martini, que a 11 de novembro tocam na íntegra Olhos de Mongol, 20 anos depois, no Coliseu Box (15 € em pré-venda, à venda em coliseu.pt). A 16, Luísa Sobral apresenta Cartas de Desamor na Sala Suggia da Casa da Música, com bilhetes de 25 € a 35 € no site da Casa da Música.\n\nEm Lisboa, o Coliseu dos Recreios recebe janeiro com Reticências no Coliseu Club (18 de novembro), IOLANDA com as canções de Quebranto num palco a 360 graus (7 de dezembro, de 18 € a 35 €) e Rodrigo Leão com Alma Mater no Misty Fest (18 de dezembro, às 18:00 e às 21:00). Os bilhetes do Coliseu vendem-se na bilheteira, em coliseulisboa.com e na BOL.\n\nFora desta lista, Bruno Pernadas tem concerto anunciado em Lisboa a 30 de novembro, na Casa Capitão.\n\nAs horas e os preços podem mudar: confirma sempre na página de cada concerto, que está ligada em cada ficha.',
     imageUrl: img.coliseuPorto, publishedAt: '2026-11-09T11:00:00Z'
   }
 ];
@@ -300,28 +294,27 @@ const articles = [
 const collections = [
   {
     slug: 'discos-portugueses-outono-2026', title: 'Discos portugueses do outono', description: 'Os álbuns portugueses editados entre setembro e novembro de 2026.',
-    introduction: 'Eletrónica, canção, pop e tradição: sete discos novos feitos em Portugal.',
+    introduction: 'Eletrónica, canção, pop e tradição: sete discos novos feitos em Portugal.\n\nHá a eletrónica com raízes tradicionais de Ana Lua Caiano e de Pedro da Linha, a pop com fado e viola braguesa de IOLANDA, a canção de Benjamim, a estreia de mokina e dois discos da Príncipe Discos, dos Niagara e de A.K.Adrix. Todos saíram entre setembro e novembro de 2026 e estão nas plataformas de streaming.',
     coverImage: img.vinil2, featured: true,
     items: [['works', 'devagar-que-a-vida-e-curta-ana-lua-caiano'], ['works', 'quebranto-iolanda'], ['works', 'cronicas-do-monte-zeus-benjamim'], ['works', 'catedral-gotica-niagara'], ['works', '333-ak-adrix'], ['works', 'jardim-celeste-mokina'], ['works', 'musica-menor-mas-feliz-pedro-da-linha']]
   },
   {
     slug: 'exposicoes-lisboa-inverno-2026', title: 'Exposições em Lisboa neste inverno', description: 'Artistas e figuras da cultura portuguesa nos museus de Lisboa.',
-    introduction: 'Do MAAT à Casa Fernando Pessoa, cinco exposições para ver antes que fechem.',
+    introduction: 'Do MAAT à Casa Fernando Pessoa, cinco exposições para ver antes que fechem.\n\nDuas fecham já em dezembro: A Arca Eterna, na Casa Fernando Pessoa (6 de dezembro), e Variações para Carlos Paredes, no Museu do Fado (30 de dezembro). As outras três ficam até fevereiro de 2027. Os bilhetes vão dos 3 € do Atelier-Museu Júlio Pomar aos 11 € do MAAT, e todos se compram no próprio museu ou online.',
     coverImage: img.maat, featured: true,
     items: [['events', 'pedro-cabrita-reis-sem-magoa-no-coracao-maat'], ['events', 'venus-joana-vasconcelos-valentino-maat'], ['events', 'tragedia-e-farsa-pomar-abrantes'], ['events', 'variacoes-para-carlos-paredes-museu-do-fado'], ['events', 'a-arca-eterna-fernando-pessoa']]
   },
   {
     slug: 'concertos-portugueses-fim-de-2026', title: 'Concertos portugueses até ao fim do ano', description: 'Música portuguesa ao vivo em Lisboa e no Porto, de novembro a dezembro.',
-    introduction: 'Seis noites de música feita cá, dos coliseus à Casa da Música.',
+    introduction: 'Cinco noites de música feita cá, dos coliseus à Casa da Música.\n\nO roteiro começa no Porto, com os 20 anos de Olhos de Mongol dos Linda Martini e o disco mais tradicional de Luísa Sobral, e acaba em Lisboa, com janeiro, a estreia de IOLANDA no Coliseu e o regresso de Rodrigo Leão a Alma Mater. Em cada ficha está a data, a sala, o preço quando foi publicado e a ligação para comprar bilhetes.',
     coverImage: img.coliseuLisboa, featured: true,
-    items: [['events', 'linda-martini-coliseu-porto-2026'], ['events', 'luisa-sobral-cartas-de-desamor-casa-da-musica'], ['events', 'janeiro-reticencias-coliseu-lisboa'], ['events', 'bruno-pernadas-casa-da-musica-2026'], ['events', 'iolanda-coliseu-dos-recreios-2026'], ['events', 'rodrigo-leao-alma-mater-misty-fest']]
+    items: [['events', 'linda-martini-coliseu-porto-2026'], ['events', 'luisa-sobral-cartas-de-desamor-casa-da-musica'], ['events', 'janeiro-reticencias-coliseu-lisboa'], ['events', 'iolanda-coliseu-dos-recreios-2026'], ['events', 'rodrigo-leao-alma-mater-misty-fest']]
   }
 ];
 
 // Ligações "relacionados" (origem → destino), por slug.
 const relations = [
   ['events', 'linda-martini-coliseu-porto-2026', 'artists', 'linda-martini'],
-  ['events', 'bruno-pernadas-casa-da-musica-2026', 'artists', 'bruno-pernadas'],
   ['events', 'iolanda-coliseu-dos-recreios-2026', 'artists', 'iolanda'],
   ['events', 'iolanda-coliseu-dos-recreios-2026', 'works', 'quebranto-iolanda'],
   ['events', 'pedro-cabrita-reis-sem-magoa-no-coracao-maat', 'artists', 'pedro-cabrita-reis'],
@@ -358,5 +351,11 @@ const imageCredits = [
   ['Duas guitarras portuguesas', 'TenIslands', 'Domínio público'],
   ['Guitarra portuguesa', 'Šarūnas Burdulis', 'CC BY-SA 2.0']
 ];
+
+// Junta a cada conteúdo o texto completo e a informação de bilhetes (texts.js).
+const texts = require('./texts');
+for (const [list, key] of [[events, 'events'], [works, 'works'], [artists, 'artists'], [venues, 'venues']]) {
+  for (const item of list) Object.assign(item, texts[key][item.slug] || {});
+}
 
 module.exports = { venues, artists, works, events, articles, collections, relations, imageCredits };

@@ -9,6 +9,7 @@ module.exports = sequelize.define('Artist', {
   disciplines: { type: DataTypes.ARRAY(DataTypes.STRING), allowNull: false, defaultValue: [] },
   links: { type: DataTypes.JSONB, allowNull: false, defaultValue: {} },
   imageUrl: { type: DataTypes.TEXT, allowNull: true },
+  body: { type: DataTypes.TEXT, allowNull: true },
   featured: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
   published: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
   isDemo: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false }

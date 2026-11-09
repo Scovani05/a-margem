@@ -12,6 +12,7 @@ module.exports = sequelize.define('Venue', {
   publicEmail: { type: DataTypes.STRING(254), allowNull: true },
   links: { type: DataTypes.JSONB, allowNull: false, defaultValue: {} },
   imageUrl: { type: DataTypes.TEXT, allowNull: true },
+  body: { type: DataTypes.TEXT, allowNull: true },
   featured: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
   published: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
   isDemo: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false }

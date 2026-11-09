@@ -10,6 +10,7 @@ module.exports = sequelize.define('Work', {
   categoryId: { type: DataTypes.INTEGER, allowNull: false },
   creator: { type: DataTypes.STRING(180), allowNull: true },
   imageUrl: { type: DataTypes.TEXT, allowNull: true },
+  body: { type: DataTypes.TEXT, allowNull: true },
   releasedAt: { type: DataTypes.DATEONLY, allowNull: true },
   officialUrl: { type: DataTypes.TEXT, allowNull: true },
   featured: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },

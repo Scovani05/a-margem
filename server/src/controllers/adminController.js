@@ -7,16 +7,16 @@ const audit = require('../utils/audit');
 
 const managed = {
   categories: { model: Category, fields: ['name', 'slug', 'description', 'color', 'icon', 'sortOrder'], slugSource: 'name' },
-  events: { model: Event, fields: ['title', 'slug', 'subtitle', 'description', 'categoryId', 'venueId', 'venueName', 'city', 'organizer', 'imageUrl', 'startsAt', 'endsAt', 'officialUrl', 'status', 'featured', 'published', 'isDemo'], slugSource: 'title' },
-  works: { model: Work, fields: ['title', 'slug', 'subtitle', 'description', 'type', 'categoryId', 'creator', 'imageUrl', 'releasedAt', 'officialUrl', 'featured', 'published', 'isDemo'], slugSource: 'title' },
-  artists: { model: Artist, fields: ['name', 'slug', 'bio', 'location', 'disciplines', 'links', 'imageUrl', 'featured', 'published', 'isDemo'], slugSource: 'name' },
-  venues: { model: Venue, fields: ['name', 'slug', 'type', 'description', 'address', 'city', 'website', 'publicEmail', 'links', 'imageUrl', 'featured', 'published', 'isDemo'], slugSource: 'name' },
+  events: { model: Event, fields: ['title', 'slug', 'subtitle', 'description', 'categoryId', 'venueId', 'venueName', 'city', 'organizer', 'imageUrl', 'startsAt', 'endsAt', 'officialUrl', 'body', 'ticketInfo', 'ticketUrl', 'status', 'featured', 'published', 'isDemo'], slugSource: 'title' },
+  works: { model: Work, fields: ['title', 'slug', 'subtitle', 'description', 'type', 'categoryId', 'creator', 'imageUrl', 'releasedAt', 'officialUrl', 'body', 'featured', 'published', 'isDemo'], slugSource: 'title' },
+  artists: { model: Artist, fields: ['name', 'slug', 'bio', 'body', 'location', 'disciplines', 'links', 'imageUrl', 'featured', 'published', 'isDemo'], slugSource: 'name' },
+  venues: { model: Venue, fields: ['name', 'slug', 'type', 'description', 'address', 'city', 'website', 'publicEmail', 'links', 'imageUrl', 'body', 'featured', 'published', 'isDemo'], slugSource: 'name' },
   articles: { model: Article, fields: ['title', 'slug', 'subtitle', 'excerpt', 'body', 'categoryId', 'authorName', 'imageUrl', 'status', 'featured', 'publishedAt', 'isDemo'], slugSource: 'title' },
   collections: { model: Collection, fields: ['title', 'slug', 'description', 'introduction', 'coverImage', 'featured', 'published', 'isDemo'], slugSource: 'title' }
 };
 
 const valuesFor = (config, body) => Object.fromEntries(config.fields.filter((field) => Object.hasOwn(body, field)).map((field) => [field, body[field]]));
-const validUrlFields = ['officialUrl', 'website'];
+const validUrlFields = ['officialUrl', 'website', 'ticketUrl'];
 const contentModels = { events: Event, works: Work, artists: Artist, venues: Venue, articles: Article, collections: Collection };
 
 function relationInput(body) {

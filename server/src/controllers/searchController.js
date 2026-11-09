@@ -2,10 +2,10 @@ const { Op, fn, col, where: sqlWhere } = require('sequelize');
 const { Category, Event, Work, Artist, Venue, Article, Collection } = require('../models');
 
 const groups = [
-  { type: 'events', model: Event, title: 'title', fields: ['title', 'subtitle', 'description', 'city', 'venueName', 'organizer'], where: () => ({ published: true, status: 'upcoming', [Op.or]: [{ startsAt: { [Op.gte]: new Date() } }, { endsAt: { [Op.gte]: new Date() } }] }) },
-  { type: 'works', model: Work, title: 'title', fields: ['title', 'subtitle', 'description', 'creator'], where: () => ({ published: true }) },
-  { type: 'artists', model: Artist, title: 'name', fields: ['name', 'bio', 'location'], where: () => ({ published: true }) },
-  { type: 'venues', model: Venue, title: 'name', fields: ['name', 'description', 'city', 'type', 'address'], where: () => ({ published: true }) },
+  { type: 'events', model: Event, title: 'title', fields: ['title', 'subtitle', 'description', 'city', 'venueName', 'organizer', 'body'], where: () => ({ published: true, status: 'upcoming', [Op.or]: [{ startsAt: { [Op.gte]: new Date() } }, { endsAt: { [Op.gte]: new Date() } }] }) },
+  { type: 'works', model: Work, title: 'title', fields: ['title', 'subtitle', 'description', 'creator', 'body'], where: () => ({ published: true }) },
+  { type: 'artists', model: Artist, title: 'name', fields: ['name', 'bio', 'location', 'body'], where: () => ({ published: true }) },
+  { type: 'venues', model: Venue, title: 'name', fields: ['name', 'description', 'city', 'type', 'address', 'body'], where: () => ({ published: true }) },
   { type: 'articles', model: Article, title: 'title', fields: ['title', 'subtitle', 'excerpt', 'body', 'authorName'], where: () => ({ status: 'published' }) },
   { type: 'collections', model: Collection, title: 'title', fields: ['title', 'description', 'introduction'], where: () => ({ published: true }) }
 ];
