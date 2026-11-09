@@ -5,8 +5,9 @@ const publicController = require('./controllers/publicController');
 
 const app = express();
 app.disable('x-powered-by');
-// O Render coloca a API atrás de um proxy: necessário para obter o IP real (limitação de pedidos e auditoria).
-app.set('trust proxy', Number(process.env.TRUST_PROXY ?? 1));
+// O Render coloca a API atrás de proxies internos (rede 10.x). Confiamos só nesses endereços privados,
+// para req.ip ser o IP real do visitante (usado na limitação de pedidos e na auditoria).
+app.set('trust proxy', process.env.TRUST_PROXY || 'loopback, linklocal, uniquelocal');
 
 // Cabeçalhos de segurança HTTP (equivalentes aos do Helmet). A API só devolve JSON.
 app.use((req, res, next) => {
