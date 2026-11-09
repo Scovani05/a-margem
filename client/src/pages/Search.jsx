@@ -8,7 +8,7 @@ import usePageMeta from '../hooks/usePageMeta.js';
 import { resourceLabels } from '../utils/content.js';
 
 const types = ['events', 'works', 'artists', 'venues', 'articles', 'collections'];
-const quickIdeas = ['Theatro Circo', 'Casa da Música', 'dança', 'cinema', 'Braga', 'Porto'];
+const quickIdeas = ['IOLANDA', 'MAAT', 'fado', 'Coliseu', 'exposição', 'Lisboa'];
 
 export default function SearchPage() {
   const [params, setParams] = useSearchParams();

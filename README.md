@@ -40,6 +40,7 @@ O perfil é validado no servidor em todos os pedidos: `requireAuth` + `requireAd
 ## Funcionalidades recentes
 
 - **Imagens do computador:** nos formulários do backoffice, o botão "Escolher do computador" envia a imagem (JPG, PNG, WebP ou GIF, até 2,5 MB) para a API, que valida o tipo pelo conteúdo real do ficheiro e a guarda na tabela `media` do PostgreSQL (o disco do Render é apagado a cada deploy). A imagem fica disponível em `/api/media/:id`.
+- **Conteúdo real:** o catálogo é sobre cultura portuguesa (discos portugueses de 2026, exposições em Lisboa, concertos de artistas portugueses até ao fim do ano), com ligação para a fonte em cada ficha (`server/src/seed/content.js`). As fotografias são de edifícios e objetos, com licença livre (Wikimedia Commons); os créditos estão na página Sobre. Não são usadas fotografias de pessoas nem capas de discos, por terem direitos de autor.
 - **Pesquisa:** sugestões enquanto se escreve na barra do cabeçalho (setas, Enter, Esc e atalho `/`), pesquisa que ignora acentos (`unaccent`) e exige todas as palavras, filtros por tipo com contagens e resultados atualizados enquanto se escreve.
 
 ## Segurança

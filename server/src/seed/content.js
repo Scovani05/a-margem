@@ -1,194 +1,362 @@
-// Conteúdo real do catálogo (programação de novembro e dezembro de 2026 no Porto e em Braga).
-// Fontes: páginas oficiais dos espaços (Casa da Música, Teatro Nacional São João, Batalha Centro
-// de Cinema, Theatro Circo), Festival de Cannes e Agenda Cultural do Porto, consultadas a 9/11/2026.
-// As imagens são capas gráficas do próprio projeto (não usamos fotografias com direitos de autor).
-// Horas em UTC (Portugal continental está em UTC+0 em novembro e dezembro).
+// Conteúdo real do catálogo: cultura portuguesa no outono/inverno de 2026 — discos novos,
+// exposições e concertos de artistas portugueses. Fontes consultadas a 9/11/2026: Rimas e Batidas
+// ("20 discos portugueses que vão sair até ao final do ano"), agenda musica.com.pt, Coliseu dos
+// Recreios, MAAT, Museu do Fado, Casa Fernando Pessoa, RTP, Teatro Nacional São João, Theatro Circo
+// e Batalha Centro de Cinema. Horas em UTC (Portugal continental está em UTC+0 nesta época).
+//
+// Imagens: fotografias reais dos edifícios e de objetos, com licença livre, alojadas no Wikimedia
+// Commons (os créditos estão em imageCredits, no fim do ficheiro, e no README). Não usamos
+// fotografias de pessoas nem capas de discos/cartazes, que têm direitos de autor.
 
-const cover = (name) => `/images/${name}.svg`;
+const wm = (path, file, original = false) => (original
+  ? `https://upload.wikimedia.org/wikipedia/commons/${path}/${file}`
+  : `https://upload.wikimedia.org/wikipedia/commons/thumb/${path}/${file}/1280px-${file}`);
+
+const img = {
+  coliseuPorto: wm('4/4a', 'Coliseu_do_Porto_-_Portugal_%2832759753402%29.jpg'),
+  coliseuLisboa: wm('8/8d', 'Lisboa_-_Panorama_-_06_-_Vista_desde_el_Jard%C3%ADn_de_San_Pedro_de_Alc%C3%A1ntara_%28cropped%29_Coliseu.jpg', true),
+  casaDaMusica: wm('d/d6', 'Casa_da_Musica_Porto_2018.jpg'),
+  maat: wm('1/10', 'MAAT_building_%2829881354613%29.jpg'),
+  maatNoite: wm('1/16', 'MAAT_night_perspective_building%282016%29_-_Amanda_Levete_%2844463379030%29.jpg'),
+  museuFado: wm('5/56', 'Museu_do_Fado_-_Lisboa_-_Portugal_%2850733179817%29.jpg'),
+  tnsj: wm('1/1f', 'Teatro_Nacional_Sao_Joao_in_Porto_%283%29.jpg'),
+  theatroCirco: wm('0/09', 'Theatro_Circo_2025_15.jpg'),
+  batalha: wm('b/b2', 'Cinema_Batalha_-_Porto_-_Portugal_%2832991530692%29.jpg'),
+  pomar: wm('3/35', 'Atelier-Museu_J%C3%BAlio_Pomar.jpg'),
+  pessoa: wm('8/88', 'Casa_Fernando_Pessoa_Fachada.jpg'),
+  vinil: wm('4/4c', 'Groove_and_needle_in_close_embrace_from_beginning_to_end.jpg'),
+  vinil2: wm('c/c1', 'Das_Vinyl_dreht_sich.jpg'),
+  guitarra: wm('0/01', '2_Portuguese_guitars.jpg'),
+  guitarra2: wm('9/9a', 'Portuguese_guitar_%2853631859481%29.jpg'),
+  alfama: wm('0/07', 'Alfama_0001.jpg'),
+  ribeira: wm('8/8f', 'Cais_da_Ribeira_in_Porto_%285%29.jpg'),
+  macCcb: wm('8/87', 'MAC_CCB_Museu_de_Arte_Contempor%C3%A2nea_%2853875750868%29.jpg')
+};
+
+const RIMAS = 'https://www.rimasebatidas.pt/20-discos-portugueses-que-vao-sair-ate-ao-final-do-ano/';
 
 const venues = [
   {
+    slug: 'coliseu-dos-recreios', name: 'Coliseu dos Recreios', type: 'Sala de espetáculos', city: 'Lisboa',
+    address: 'Rua das Portas de Santo Antão 96, 1150-269 Lisboa', website: 'https://coliseulisboa.com',
+    description: 'Uma das maiores salas de espetáculos de Lisboa, inaugurada em 1890. Recebe concertos, ópera, bailado e o tradicional circo de Natal.',
+    imageUrl: img.coliseuLisboa, featured: true
+  },
+  {
+    slug: 'coliseu-porto-ageas', name: 'Coliseu Porto Ageas', type: 'Sala de espetáculos', city: 'Porto',
+    address: 'Rua de Passos Manuel 137, 4000-385 Porto', website: 'https://www.coliseu.pt',
+    description: 'Sala histórica da Baixa do Porto, com fachada art déco. É um dos palcos principais para concertos de música portuguesa na cidade.',
+    imageUrl: img.coliseuPorto, featured: true
+  },
+  {
     slug: 'casa-da-musica', name: 'Casa da Música', type: 'Sala de concertos', city: 'Porto',
     address: 'Av. da Boavista 604-610, 4149-071 Porto', website: 'https://casadamusica.com',
-    description: 'Sala de concertos do Porto, casa da Orquestra Sinfónica do Porto e do Remix Ensemble. Programa música clássica, contemporânea, jazz e outros géneros ao longo de todo o ano.',
-    imageUrl: cover('cover-music'), featured: true
+    description: 'Sala de concertos do Porto, projetada por Rem Koolhaas. Programa música clássica, contemporânea, jazz, pop e música portuguesa ao longo de todo o ano.',
+    imageUrl: img.casaDaMusica, featured: true
+  },
+  {
+    slug: 'maat', name: 'MAAT — Museu de Arte, Arquitetura e Tecnologia', type: 'Museu', city: 'Lisboa',
+    address: 'Av. Brasília, Central Tejo, 1300-598 Lisboa', website: 'https://www.maat.pt',
+    description: 'Museu da Fundação EDP à beira do Tejo, em Belém. Em 2026 celebra 10 anos com exposições de Pedro Cabrita Reis e Joana Vasconcelos.',
+    imageUrl: img.maat, featured: true
+  },
+  {
+    slug: 'museu-do-fado', name: 'Museu do Fado', type: 'Museu', city: 'Lisboa',
+    address: 'Largo do Chafariz de Dentro 1, 1100-139 Lisboa', website: 'https://www.museudofado.pt',
+    description: 'Museu dedicado ao fado e à guitarra portuguesa, em Alfama. Tem exposição permanente, exposições temporárias e uma escola de guitarra.',
+    imageUrl: img.museuFado
+  },
+  {
+    slug: 'atelier-museu-julio-pomar', name: 'Atelier-Museu Júlio Pomar', type: 'Museu', city: 'Lisboa',
+    address: 'Rua do Vale 7, 1200-472 Lisboa', website: 'https://www.ateliermuseujuliopomar.pt',
+    description: 'Antigo armazém transformado em museu por Álvaro Siza, onde se mostra a obra de Júlio Pomar em diálogo com artistas contemporâneos.',
+    imageUrl: img.pomar
+  },
+  {
+    slug: 'casa-fernando-pessoa', name: 'Casa Fernando Pessoa', type: 'Casa-museu', city: 'Lisboa',
+    address: 'Rua Coelho da Rocha 16, 1250-088 Lisboa', website: 'https://www.casafernandopessoa.pt',
+    description: 'Casa onde Fernando Pessoa viveu os últimos 15 anos da sua vida, em Campo de Ourique. Hoje é museu, biblioteca e centro de poesia.',
+    imageUrl: img.pessoa
   },
   {
     slug: 'teatro-nacional-sao-joao', name: 'Teatro Nacional São João', type: 'Teatro', city: 'Porto',
     address: 'Praça da Batalha, 4000-102 Porto', website: 'https://www.tnsj.pt',
-    description: 'Teatro nacional sediado no Porto, na Praça da Batalha. Produz e acolhe teatro, dança e coproduções internacionais, e gere também o Mosteiro de São Bento da Vitória.',
-    imageUrl: cover('cover-venue'), featured: true
-  },
-  {
-    slug: 'batalha-centro-de-cinema', name: 'Batalha Centro de Cinema', type: 'Cinema', city: 'Porto',
-    address: 'Praça da Batalha 47, 4000-101 Porto', website: 'https://www.batalhacentrodecinema.pt',
-    description: 'Cinema municipal do Porto instalado no antigo Cinema Batalha. Mostra estreias, ciclos, antestreias e cinema de autor, português e internacional.',
-    imageUrl: cover('cover-cinema')
+    description: 'Teatro nacional sediado no Porto, na Praça da Batalha. Produz e acolhe teatro, dança e coproduções internacionais.',
+    imageUrl: img.tnsj
   },
   {
     slug: 'theatro-circo', name: 'Theatro Circo', type: 'Teatro', city: 'Braga',
     address: 'Av. da Liberdade 697, 4710-251 Braga', website: 'https://theatrocirco.com',
-    description: 'Teatro histórico de Braga, com programação de música, teatro, dança, cinema e atividades para famílias e escolas.',
-    imageUrl: cover('cover-north'), featured: true
+    description: 'Teatro histórico de Braga, com programação de música, teatro, dança e cinema.',
+    imageUrl: img.theatroCirco
+  },
+  {
+    slug: 'batalha-centro-de-cinema', name: 'Batalha Centro de Cinema', type: 'Cinema', city: 'Porto',
+    address: 'Praça da Batalha 47, 4000-101 Porto', website: 'https://www.batalhacentrodecinema.pt',
+    description: 'Cinema municipal do Porto instalado no antigo Cinema Batalha. Mostra estreias, ciclos e cinema português e de autor.',
+    imageUrl: img.batalha
   }
 ];
 
 const artists = [
   {
-    slug: 'marlene-monteiro-freitas', name: 'Marlene Monteiro Freitas', location: 'Lisboa', disciplines: ['Dança', 'Coreografia'],
-    bio: 'Coreógrafa e intérprete nascida em Cabo Verde. Os seus espetáculos misturam dança, música e máscara. Em dezembro de 2026 apresenta Nôt no Theatro Circo, peça inspirada em As Mil e Uma Noites.',
-    imageUrl: cover('cover-artist'), featured: true
+    slug: 'ana-lua-caiano', name: 'Ana Lua Caiano', location: 'Lisboa', disciplines: ['Música', 'Eletrónica'],
+    bio: 'Cantora e produtora que junta eletrónica e sons da música tradicional portuguesa. Lançou a 6 de novembro de 2026 o segundo álbum, Devagar Que A Vida É Curta, pela Glitterbeat Records.',
+    imageUrl: img.vinil, featured: true
   },
   {
-    slug: 'victor-hugo-pontes', name: 'Victor Hugo Pontes', location: 'Porto', disciplines: ['Dança', 'Coreografia'],
-    bio: 'Coreógrafo português. Com a Companhia Maior, formada por intérpretes mais velhos, criou A esta hora, na infância neva, peça em que dançam juntos corpos de várias idades.',
-    imageUrl: cover('cover-art')
+    slug: 'iolanda', name: 'IOLANDA', location: 'Portugal', disciplines: ['Música', 'Pop'],
+    bio: 'Cantora que representou Portugal no Festival Eurovisão da Canção de 2024 com "Grito". O álbum Quebranto (outubro de 2026) cruza pop urbana com o fado e a viola braguesa. Atua no Coliseu dos Recreios a 7 de dezembro.',
+    imageUrl: img.guitarra2, featured: true
   },
   {
-    slug: 'remix-ensemble', name: 'Remix Ensemble Casa da Música', location: 'Porto', disciplines: ['Música contemporânea'],
-    bio: 'Agrupamento de música contemporânea da Casa da Música. No fim de 2026 leva ao Porto e a Braga um programa que junta Pierre Boulez e Frank Zappa, dirigido por Susanne Blumenthal.',
-    imageUrl: cover('cover-music'), featured: true
+    slug: 'benjamim', name: 'Benjamim', location: 'Lisboa', disciplines: ['Música', 'Canção'],
+    bio: 'Músico e produtor português. Crónicas do Monte Zeus (setembro de 2026) é o quinto álbum e marca o regresso à canção depois do instrumental As Berlengas.',
+    imageUrl: img.vinil2
+  },
+  {
+    slug: 'linda-martini', name: 'Linda Martini', location: 'Lisboa', disciplines: ['Música', 'Rock'],
+    bio: 'Banda rock de Lisboa, formada em 2003, uma das mais marcantes do rock alternativo cantado em português. Toca no Coliseu do Porto a 11 de novembro de 2026.',
+    imageUrl: img.coliseuPorto, featured: true
+  },
+  {
+    slug: 'bruno-pernadas', name: 'Bruno Pernadas', location: 'Lisboa', disciplines: ['Música', 'Jazz', 'Composição'],
+    bio: 'Compositor, guitarrista e produtor que mistura jazz, pop e música do mundo. Apresenta-se na Casa da Música a 19 de novembro de 2026.',
+    imageUrl: img.casaDaMusica
+  },
+  {
+    slug: 'pedro-cabrita-reis', name: 'Pedro Cabrita Reis', location: 'Lisboa', disciplines: ['Artes visuais', 'Escultura', 'Pintura'],
+    bio: 'Artista nascido em Lisboa em 1956, com obra em escultura, pintura e desenho. Representou Portugal na Bienal de Veneza de 2003. No MAAT mostra quase 200 obras inéditas.',
+    imageUrl: img.maatNoite, featured: true
+  },
+  {
+    slug: 'joana-vasconcelos', name: 'Joana Vasconcelos', location: 'Lisboa', disciplines: ['Artes visuais', 'Escultura'],
+    bio: 'Artista plástica de Lisboa conhecida pelas esculturas monumentais e pelo uso de têxteis e objetos do quotidiano. No MAAT cruza a sua obra com a alta-costura de Valentino.',
+    imageUrl: img.maat
   },
   {
     slug: 'tiago-guedes', name: 'Tiago Guedes', location: 'Portugal', disciplines: ['Cinema', 'Realização'],
     bio: 'Realizador português. O seu filme Aquí, inspirado na trilogia de Jesus de J. M. Coetzee, estreou na Cannes Première, no Festival de Cannes de 2026.',
-    imageUrl: cover('cover-cinema'), featured: true
+    imageUrl: img.batalha
   },
   {
-    slug: 'marta-pazos', name: 'Marta Pazos', location: 'Galiza', disciplines: ['Teatro', 'Encenação'],
-    bio: 'Encenadora galega. Assina uma nova leitura do Auto da Barca do Inferno, de Gil Vicente, em coprodução do Teatro Nacional São João com o Centro Dramático Galego.',
-    imageUrl: cover('cover-venue')
-  },
-  {
-    slug: 'lambchop', name: 'Lambchop', location: 'Nashville, EUA', disciplines: ['Música'],
-    bio: 'Banda norte-americana de Nashville liderada por Kurt Wagner. Apresenta em Braga o disco Punching the Clown, com influências de gospel, soul, jazz e country.',
-    imageUrl: cover('cover-music')
+    slug: 'marlene-monteiro-freitas', name: 'Marlene Monteiro Freitas', location: 'Lisboa', disciplines: ['Dança', 'Coreografia'],
+    bio: 'Coreógrafa e intérprete nascida em Cabo Verde e radicada em Portugal. Em dezembro de 2026 apresenta Nôt no Theatro Circo, peça inspirada em As Mil e Uma Noites.',
+    imageUrl: img.theatroCirco
   }
 ];
 
 const works = [
   {
+    slug: 'devagar-que-a-vida-e-curta-ana-lua-caiano', title: 'Devagar Que A Vida É Curta', subtitle: 'Ana Lua Caiano (2026)', type: 'album', category: 'musica', creator: 'Ana Lua Caiano',
+    description: 'Segundo álbum de Ana Lua Caiano, editado pela Glitterbeat Records. Mantém a mistura de eletrónica com a música tradicional portuguesa, agora com mais teclas, sopros e harmonias vocais.',
+    officialUrl: RIMAS, imageUrl: img.vinil, releasedAt: '2026-11-06', featured: true
+  },
+  {
+    slug: 'quebranto-iolanda', title: 'Quebranto', subtitle: 'IOLANDA (2026)', type: 'album', category: 'musica', creator: 'IOLANDA',
+    description: 'Pop urbana contemporânea com raízes na música tradicional portuguesa, do fado à viola braguesa.',
+    officialUrl: RIMAS, imageUrl: img.guitarra2, releasedAt: '2026-10-08', featured: true
+  },
+  {
+    slug: 'cronicas-do-monte-zeus-benjamim', title: 'Crónicas do Monte Zeus', subtitle: 'Benjamim (2026)', type: 'album', category: 'musica', creator: 'Benjamim',
+    description: 'Quinto álbum de estúdio de Benjamim, editado pela Discos Submarinos. Um regresso à escrita de canções depois do disco instrumental As Berlengas.',
+    officialUrl: RIMAS, imageUrl: img.vinil2, releasedAt: '2026-09-18', featured: true
+  },
+  {
+    slug: 'catedral-gotica-niagara', title: 'Catedral Gótica', subtitle: 'Niagara (2026)', type: 'album', category: 'musica', creator: 'Niagara',
+    description: 'Novo disco do trio de música eletrónica Niagara, editado pela Príncipe Discos. Sucede a De Motu (2024).',
+    officialUrl: RIMAS, imageUrl: img.vinil, releasedAt: '2026-10-23'
+  },
+  {
+    slug: '333-ak-adrix', title: '333', subtitle: 'A.K.Adrix (2026)', type: 'album', category: 'musica', creator: 'A.K.Adrix',
+    description: 'Primeiro álbum do produtor em cerca de seis anos, depois de Código de Barras. Edição da Príncipe Discos.',
+    officialUrl: RIMAS, imageUrl: img.vinil2, releasedAt: '2026-10-23'
+  },
+  {
+    slug: 'jardim-celeste-mokina', title: 'Jardim Celeste', subtitle: 'mokina (2026)', type: 'album', category: 'musica', creator: 'mokina',
+    description: 'Álbum de estreia de mokina: indie pop etéreo com texturas de eletrónica, lo-fi, R&B e soul.',
+    officialUrl: RIMAS, imageUrl: img.vinil, releasedAt: '2026-11-06'
+  },
+  {
+    slug: 'musica-menor-mas-feliz-pedro-da-linha', title: 'Música Menor Mas Feliz', subtitle: 'Pedro da Linha (2026)', type: 'album', category: 'musica', creator: 'Pedro da Linha',
+    description: 'Disco que junta batidas eletrónicas a referências da música tradicional portuguesa.',
+    officialUrl: RIMAS, imageUrl: img.guitarra, releasedAt: '2026-10-02'
+  },
+  {
     slug: 'aqui-tiago-guedes', title: 'Aquí', subtitle: 'Filme de Tiago Guedes (2026)', type: 'film', category: 'cinema', creator: 'Tiago Guedes',
-    description: 'Simón conhece um rapaz, David, numa travessia por mar até uma terra sem nome. Com Inés, formam uma família pouco convencional, enquanto a sociedade tenta encaixar David nas suas regras. Com Albano Jerónimo, Patricia López Arnaiz e Manolo Solo. Coprodução Portugal–França, falada em espanhol.',
-    officialUrl: 'https://www.festival-cannes.com/en/f/aqui/', imageUrl: cover('cover-cinema'), releasedAt: null, featured: true
-  },
-  {
-    slug: 'punching-the-clown-lambchop', title: 'Punching the Clown', subtitle: 'Disco de Lambchop', type: 'album', category: 'musica', creator: 'Lambchop',
-    description: 'Disco da banda de Kurt Wagner, apresentado ao vivo no Theatro Circo a 21 de novembro de 2026. Junta influências de gospel, soul, jazz e country.',
-    officialUrl: 'https://theatrocirco.com/en/event/lambchop-en/', imageUrl: cover('cover-music'), releasedAt: null, featured: true
-  },
-  {
-    slug: 'le-marteau-sans-maitre', title: 'Le marteau sans maître', subtitle: 'Pierre Boulez (1955)', type: 'creative-project', category: 'musica', creator: 'Pierre Boulez',
-    description: 'Obra para voz e ensemble sobre poemas de René Char, estreada em 1955. Combina voz e instrumentos num mundo de timbres e ritmos em constante mudança. Interpretada pelo Remix Ensemble no Porto e em Braga em dezembro de 2026.',
-    officialUrl: 'https://casadamusica.com/event/boulez-e-zappa/?selected_session=44156', imageUrl: cover('cover-book'), releasedAt: null
-  },
-  {
-    slug: 'memorias-do-carcere-sergio-graciano', title: 'Memórias do Cárcere', subtitle: 'Filme de Sérgio Graciano (2026)', type: 'film', category: 'cinema', creator: 'Sérgio Graciano',
-    description: 'Filme português de 2026 sobre Camilo Castelo Branco, em destaque no ciclo Cinema no Theatro, no Theatro Circo, em dezembro de 2026.',
-    officialUrl: 'https://theatrocirco.com/en/programme/', imageUrl: cover('cover-photo'), releasedAt: null
+    description: 'Simón conhece um rapaz, David, numa travessia por mar até uma terra sem nome. Com Inés, formam uma família pouco convencional. Com Albano Jerónimo, Patricia López Arnaiz e Manolo Solo. Coprodução Portugal–França.',
+    officialUrl: 'https://www.festival-cannes.com/en/f/aqui/', imageUrl: img.batalha, releasedAt: null
   }
 ];
 
 const events = [
   {
+    slug: 'linda-martini-coliseu-porto-2026', title: 'Linda Martini', subtitle: 'Ao vivo no Coliseu do Porto', category: 'musica', venue: 'coliseu-porto-ageas',
+    city: 'Porto', organizer: 'Coliseu Porto Ageas', startsAt: '2026-11-11T21:00:00Z', endsAt: null,
+    description: 'A banda lisboeta regressa ao Coliseu do Porto. Confirma o horário e os preços na bilheteira do Coliseu.',
+    officialUrl: 'https://www.coliseu.pt/agenda', imageUrl: img.coliseuPorto, featured: true
+  },
+  {
+    slug: 'luisa-sobral-cartas-de-desamor-casa-da-musica', title: 'Luísa Sobral — Cartas de Desamor', subtitle: 'Concerto', category: 'musica', venue: 'casa-da-musica',
+    city: 'Porto', organizer: 'Casa da Música', startsAt: '2026-11-16T21:00:00Z', endsAt: null,
+    description: 'A cantautora apresenta o espetáculo Cartas de Desamor na Casa da Música. Confirma o horário e os preços no site da sala.',
+    officialUrl: 'https://casadamusica.com', imageUrl: img.casaDaMusica
+  },
+  {
+    slug: 'janeiro-reticencias-coliseu-lisboa', title: 'janeiro — Reticências', subtitle: 'Uma nova versão de nós', category: 'musica', venue: 'coliseu-dos-recreios',
+    city: 'Lisboa', organizer: 'Coliseu dos Recreios', startsAt: '2026-11-18T21:00:00Z', endsAt: null,
+    description: 'O cantautor janeiro sobe ao palco do Coliseu dos Recreios com o espetáculo Reticências. Confirma o horário na bilheteira.',
+    officialUrl: 'https://coliseulisboa.com', imageUrl: img.coliseuLisboa
+  },
+  {
+    slug: 'bruno-pernadas-casa-da-musica-2026', title: 'Bruno Pernadas', subtitle: 'Concerto', category: 'musica', venue: 'casa-da-musica',
+    city: 'Porto', organizer: 'Casa da Música', startsAt: '2026-11-19T21:00:00Z', endsAt: null,
+    description: 'Concerto de Bruno Pernadas, entre o jazz, a pop e a música do mundo. Confirma o horário e os preços no site da sala.',
+    officialUrl: 'https://casadamusica.com', imageUrl: img.casaDaMusica
+  },
+  {
+    slug: 'iolanda-coliseu-dos-recreios-2026', title: 'IOLANDA', subtitle: 'Apresentação de Quebranto', category: 'musica', venue: 'coliseu-dos-recreios',
+    city: 'Lisboa', organizer: 'Coliseu dos Recreios', startsAt: '2026-12-07T21:00:00Z', endsAt: null,
+    description: 'IOLANDA leva ao Coliseu dos Recreios as canções de Quebranto, o disco editado em outubro. Confirma o horário e os preços na bilheteira.',
+    officialUrl: 'https://coliseulisboa.com', imageUrl: img.coliseuLisboa, featured: true
+  },
+  {
+    slug: 'rodrigo-leao-alma-mater-misty-fest', title: 'Rodrigo Leão — Alma Mater', subtitle: 'Misty Fest', category: 'musica', venue: 'coliseu-dos-recreios',
+    city: 'Lisboa', organizer: 'Misty Fest', startsAt: '2026-12-18T21:00:00Z', endsAt: null,
+    description: 'Rodrigo Leão apresenta Alma Mater no Coliseu dos Recreios, no âmbito do Misty Fest. Confirma o horário e os preços na bilheteira.',
+    officialUrl: 'https://coliseulisboa.com', imageUrl: img.coliseuLisboa
+  },
+  {
+    slug: 'pedro-cabrita-reis-sem-magoa-no-coracao-maat', title: 'Pedro Cabrita Reis — sem mágoa no coração', subtitle: 'Exposição no MAAT', category: 'artes-visuais', venue: 'maat',
+    city: 'Lisboa', organizer: 'MAAT', startsAt: '2026-09-16T10:00:00Z', endsAt: '2027-02-15T19:00:00Z',
+    description: 'Quase 200 obras, muitas nunca mostradas, entre pintura, desenho e escultura, feitas para a Galeria Oval do MAAT. Curadoria de João Pinharanda. O título vem de Hesíodo e da sua Idade de Ouro.',
+    officialUrl: 'https://www.maat.pt/en/event/pedro-cabrita-reis-without-sorrow-heart', imageUrl: img.maatNoite, featured: true
+  },
+  {
+    slug: 'venus-joana-vasconcelos-valentino-maat', title: 'VENUS — Valentino pelo olhar de Joana Vasconcelos', subtitle: 'Exposição no MAAT', category: 'artes-visuais', venue: 'maat',
+    city: 'Lisboa', organizer: 'MAAT', startsAt: '2026-10-02T10:00:00Z', endsAt: '2027-02-22T19:00:00Z',
+    description: 'Diálogo entre arte e alta-costura: obras de Joana Vasconcelos, antigas e novas, ao lado de cerca de 30 criações de Valentino Garavani. Faz parte dos 10 anos do MAAT.',
+    officialUrl: 'https://www.maat.pt/en/news/venus-valentino-garavani-through-eyes-joana-vasconcelos-maat-october', imageUrl: img.maat, featured: true
+  },
+  {
+    slug: 'tragedia-e-farsa-pomar-abrantes', title: 'Tragédia e Farsa', subtitle: 'Júlio Pomar e Gabriel Abrantes', category: 'artes-visuais', venue: 'atelier-museu-julio-pomar',
+    city: 'Lisboa', organizer: 'Atelier-Museu Júlio Pomar', startsAt: '2026-11-05T10:00:00Z', endsAt: '2027-02-28T18:00:00Z',
+    description: 'Cerca de 100 pinturas e desenhos que põem o neorrealismo de Júlio Pomar, dos anos 1940, a conversar com o olhar de Gabriel Abrantes sobre o trabalho precário de hoje — do trolha ao estafeta.',
+    officialUrl: 'https://www.ateliermuseujuliopomar.pt', imageUrl: img.pomar
+  },
+  {
+    slug: 'variacoes-para-carlos-paredes-museu-do-fado', title: 'Variações para Carlos Paredes', subtitle: 'Exposição no Museu do Fado', category: 'musica', venue: 'museu-do-fado',
+    city: 'Lisboa', organizer: 'Museu do Fado', startsAt: '2025-06-07T10:00:00Z', endsAt: '2026-12-30T18:00:00Z',
+    description: 'Exposição do centenário de Carlos Paredes, mestre da guitarra portuguesa: instrumentos, discos, documentos e filmes. Curadoria de Ivan Dias e António Manuel Nunes. Últimas semanas.',
+    officialUrl: 'https://www.museudofado.pt/exposicao/variacoes-para-carlos-paredes', imageUrl: img.guitarra
+  },
+  {
+    slug: 'a-arca-eterna-fernando-pessoa', title: 'A Arca Eterna: Fernando Pessoa e a Posteridade', subtitle: 'Exposição na Casa Fernando Pessoa', category: 'literatura', venue: 'casa-fernando-pessoa',
+    city: 'Lisboa', organizer: 'Casa Fernando Pessoa', startsAt: '2025-11-27T10:00:00Z', endsAt: '2026-12-06T18:00:00Z',
+    description: 'Como cresceu a lenda de Pessoa depois de 1935, a partir da famosa arca de inéditos. Curadoria de Antonio Sáez Delgado. Últimas semanas.',
+    officialUrl: 'https://www.casafernandopessoa.pt/pt/cfp/visita/exposicao-temporaria/arca-eterna-fernando-pessoa-e-posteridade', imageUrl: img.pessoa
+  },
+  {
     slug: 'auto-da-barca-do-inferno-marta-pazos-tnsj', title: 'Auto da Barca do Inferno', subtitle: 'Gil Vicente, encenação de Marta Pazos', category: 'teatro', venue: 'teatro-nacional-sao-joao',
     city: 'Porto', organizer: 'Teatro Nacional São João e Centro Dramático Galego', startsAt: '2026-11-12T19:00:00Z', endsAt: '2026-12-13T21:00:00Z',
-    description: 'Nova leitura do texto de Gil Vicente que junta teatro, dança e artes visuais. As personagens chegam a um cais onde um Anjo e um Diabo decidem o destino de cada alma. Cerca de 90 minutos, M/12, bilhetes de 10 € a 16 €.',
-    officialUrl: 'https://www.bol.pt/Comprar/Bilhetes/182996-auto_da_barca_do_inferno_gil_vicente-teatro_nacional_sao_joao/', imageUrl: cover('cover-venue'), featured: true
-  },
-  {
-    slug: 'a-esta-hora-na-infancia-neva-theatro-circo', title: 'A esta hora, na infância neva', subtitle: 'Victor Hugo Pontes e Companhia Maior', category: 'teatro', venue: 'theatro-circo',
-    city: 'Braga', organizer: 'Theatro Circo', startsAt: '2026-11-13T21:30:00Z', endsAt: null,
-    description: 'Espetáculo de dança em que intérpretes de diferentes idades dançam juntos, dando destaque à expressividade dos corpos maduros. Sala Principal, M/12, 12 €.',
-    officialUrl: 'https://theatrocirco.com/en/event/at-this-time-its-snowing-in-childhood/', imageUrl: cover('cover-art')
-  },
-  {
-    slug: 'an-evening-with-lambchop-theatro-circo', title: 'An evening with Lambchop', subtitle: 'Apresentação de Punching the Clown', category: 'musica', venue: 'theatro-circo',
-    city: 'Braga', organizer: 'Theatro Circo', startsAt: '2026-11-21T21:30:00Z', endsAt: null,
-    description: 'Concerto de apresentação do disco Punching the Clown, com influências de gospel, soul, jazz e country. Sala Principal, M/6, 20 €.',
-    officialUrl: 'https://theatrocirco.com/en/event/lambchop-en/', imageUrl: cover('cover-music'), featured: true
-  },
-  {
-    slug: 'caterina-barbieri-eliane-radigue-onceim-theatro-circo', title: 'Caterina Barbieri & Éliane Radigue', subtitle: 'Contraponto, por ONCEIM', category: 'musica', venue: 'theatro-circo',
-    city: 'Braga', organizer: 'Theatro Circo', startsAt: '2026-11-28T21:30:00Z', endsAt: null,
-    description: 'O ensemble ONCEIM interpreta obras de Éliane Radigue (Occam Ocean) e uma nova criação de Caterina Barbieri. Ciclo Contraponto, Sala Principal, M/6, 12 €.',
-    officialUrl: 'https://theatrocirco.com/en/event/contraponto-caterina-barbieri-eliane-radigue-en/', imageUrl: cover('cover-music')
+    description: 'Nova leitura do texto de Gil Vicente que junta teatro, dança e artes visuais. As personagens chegam a um cais onde um Anjo e um Diabo decidem o destino de cada alma. M/12, bilhetes de 10 € a 16 €.',
+    officialUrl: 'https://www.tnsj.pt', imageUrl: img.tnsj
   },
   {
     slug: 'aqui-antestreia-batalha', title: 'Aquí — antestreia', subtitle: 'Filme de Tiago Guedes', category: 'cinema', venue: 'batalha-centro-de-cinema',
     city: 'Porto', organizer: 'Batalha Centro de Cinema', startsAt: '2026-12-01T17:15:00Z', endsAt: null,
-    description: 'Antestreia no Porto do novo filme de Tiago Guedes, depois da passagem pelo Festival de Cannes. Sala 1, falado em espanhol com legendas em português, M/14, 5 €.',
-    officialUrl: 'https://batalhacentrocinema.bol.pt/Comprar/Bilhetes/182102/1966418/Sectores', imageUrl: cover('cover-cinema'), featured: true
-  },
-  {
-    slug: 'boulez-e-zappa-casa-da-musica', title: 'Boulez e Zappa', subtitle: 'Remix Ensemble Casa da Música', category: 'musica', venue: 'casa-da-musica',
-    city: 'Porto', organizer: 'Casa da Música', startsAt: '2026-12-02T19:30:00Z', endsAt: null,
-    description: 'Le marteau sans maître, de Pierre Boulez, e The Perfect Stranger, de Frank Zappa. Remix Ensemble dirigido por Susanne Blumenthal, com a soprano Christina Bock. Bilhetes de 22 € a 26 €.',
-    officialUrl: 'https://casadamusica.com/event/boulez-e-zappa/?selected_session=44156', imageUrl: cover('cover-music')
+    description: 'Antestreia no Porto do novo filme de Tiago Guedes, depois da passagem pelo Festival de Cannes. M/14, 5 €.',
+    officialUrl: 'https://www.batalhacentrodecinema.pt', imageUrl: img.batalha
   },
   {
     slug: 'not-marlene-monteiro-freitas-theatro-circo', title: 'Nôt', subtitle: 'Marlene Monteiro Freitas', category: 'teatro', venue: 'theatro-circo',
     city: 'Braga', organizer: 'Theatro Circo', startsAt: '2026-12-11T21:30:00Z', endsAt: null,
-    description: 'Espetáculo de dança inspirado em As Mil e Uma Noites, centrado na narração como forma de resistência. Sala Principal, M/12, 12 €.',
-    officialUrl: 'https://theatrocirco.com/en/event/not-en/', imageUrl: cover('cover-art'), featured: true
+    description: 'Espetáculo de dança inspirado em As Mil e Uma Noites, centrado na narração como forma de resistência. M/12, 12 €.',
+    officialUrl: 'https://theatrocirco.com/en/event/not-en/', imageUrl: img.theatroCirco
   }
 ];
 
 const articles = [
   {
-    slug: 'sete-propostas-para-o-fim-de-2026-entre-porto-e-braga', title: 'Sete propostas para o fim de 2026 entre o Porto e Braga', subtitle: 'Guia', category: 'cultura-independente',
-    excerpt: 'Teatro, dança, cinema e música contemporânea: uma seleção da programação de novembro e dezembro nos dois lados do Minho e do Douro.',
-    body: 'Novembro e dezembro trazem programação forte ao Porto e a Braga. Reunimos sete propostas, todas com ligação para a página oficial.\n\nNo Porto, o Teatro Nacional São João estreia a 12 de novembro o Auto da Barca do Inferno encenado por Marta Pazos, em cena até 13 de dezembro. A 1 de dezembro, o Batalha Centro de Cinema mostra em antestreia Aquí, de Tiago Guedes, e no dia seguinte a Casa da Música junta Boulez e Zappa num programa do Remix Ensemble.\n\nEm Braga, o Theatro Circo abre com A esta hora, na infância neva, de Victor Hugo Pontes e da Companhia Maior (13 de novembro), recebe Lambchop (21 de novembro) e o ensemble ONCEIM com música de Caterina Barbieri e Éliane Radigue (28 de novembro). A 11 de dezembro, Marlene Monteiro Freitas apresenta Nôt.\n\nAs datas e os preços podem mudar: confirma sempre na página do espaço antes de saíres.',
-    imageUrl: cover('cover-collection'), featured: true, publishedAt: '2026-11-09T10:00:00Z'
+    slug: 'sete-discos-portugueses-para-este-outono', title: 'Sete discos portugueses para ouvir neste outono', subtitle: 'Música', category: 'musica',
+    excerpt: 'Da eletrónica da Príncipe Discos ao pop com raízes de IOLANDA: os álbuns portugueses que marcam o fim de 2026.',
+    body: 'O fim de 2026 está cheio de música portuguesa nova. Escolhemos sete discos já editados.\n\nAna Lua Caiano lançou a 6 de novembro Devagar Que A Vida É Curta, pela Glitterbeat, e no mesmo dia chegou Jardim Celeste, a estreia de mokina. Em outubro, IOLANDA editou Quebranto, que cruza pop urbana com fado e viola braguesa, e Pedro da Linha mostrou Música Menor Mas Feliz.\n\nA Príncipe Discos editou no mesmo dia, 23 de outubro, Catedral Gótica, dos Niagara, e 333, o regresso de A.K.Adrix. Em setembro, Benjamim voltou à canção com Crónicas do Monte Zeus.\n\nFonte: Rimas e Batidas, "20 discos portugueses que vão sair até ao final do ano".',
+    imageUrl: img.vinil, featured: true, publishedAt: '2026-11-09T10:00:00Z'
   },
   {
-    slug: 'boulez-e-zappa-no-porto-e-em-braga', title: 'Boulez e Zappa, o mesmo programa no Porto e em Braga', subtitle: 'Música contemporânea', category: 'musica',
-    excerpt: 'O Remix Ensemble toca Le marteau sans maître e The Perfect Stranger na Casa da Música a 2 de dezembro e no Theatro Circo a 4 de dezembro.',
-    body: 'Pierre Boulez e Frank Zappa parecem vir de mundos diferentes, mas cruzaram-se: em 1984, Boulez dirigiu música de Zappa. É esse encontro que o Remix Ensemble Casa da Música revisita, sob a direção de Susanne Blumenthal.\n\nDe um lado está Le marteau sans maître, obra de Boulez para voz e ensemble sobre poemas de René Char. Do outro, The Perfect Stranger, em que Zappa leva a irreverência do rock para o contexto orquestral.\n\nO programa passa pela Casa da Música a 2 de dezembro, com a soprano Christina Bock, e pelo Theatro Circo a 4 de dezembro, no ciclo Contraponto.',
-    imageUrl: cover('cover-music'), featured: true, publishedAt: '2026-11-09T10:30:00Z'
+    slug: 'exposicoes-em-lisboa-ate-fevereiro', title: 'Cinco exposições portuguesas para ver em Lisboa', subtitle: 'Artes visuais', category: 'artes-visuais',
+    excerpt: 'Cabrita Reis e Joana Vasconcelos nos 10 anos do MAAT, Pomar e Abrantes, Carlos Paredes e Fernando Pessoa.',
+    body: 'O MAAT faz 10 anos e celebra com duas exposições de artistas portugueses: Pedro Cabrita Reis mostra quase 200 obras inéditas em sem mágoa no coração (até 15 de fevereiro de 2027) e Joana Vasconcelos junta a sua obra à alta-costura de Valentino em VENUS (até 22 de fevereiro).\n\nNo Atelier-Museu Júlio Pomar, Tragédia e Farsa (desde 5 de novembro) põe o neorrealismo de Pomar ao lado da pintura de Gabriel Abrantes sobre o trabalho precário.\n\nCorre para as últimas semanas de duas exposições: A Arca Eterna, na Casa Fernando Pessoa, fecha a 6 de dezembro, e Variações para Carlos Paredes, no Museu do Fado, a 30 de dezembro.',
+    imageUrl: img.maatNoite, featured: true, publishedAt: '2026-11-09T10:30:00Z'
   },
   {
-    slug: 'gil-vicente-segundo-marta-pazos', title: 'Gil Vicente segundo Marta Pazos', subtitle: 'Teatro', category: 'teatro',
-    excerpt: 'O Auto da Barca do Inferno volta ao palco do Teatro Nacional São João numa coprodução com o Centro Dramático Galego.',
-    body: 'O Auto da Barca do Inferno é um dos textos mais conhecidos do teatro português. A encenadora galega Marta Pazos propõe uma leitura que junta teatro, dança e artes visuais e que procura a energia popular, crítica e satírica do original.\n\nA estrutura mantém-se: Fidalgo, Onzeneiro, Parvo, Sapateiro, Frade e Alcoviteira chegam a um cais onde o Anjo e o Diabo decidem o destino de cada alma.\n\nO espetáculo, coproduzido pelo Teatro Nacional São João e pelo Centro Dramático Galego, está em cena no Porto de 12 de novembro a 13 de dezembro de 2026.',
-    imageUrl: cover('cover-venue'), publishedAt: '2026-11-09T11:00:00Z'
+    slug: 'concertos-portugueses-que-fecham-2026', title: 'Os concertos portugueses que fecham 2026', subtitle: 'Agenda', category: 'musica',
+    excerpt: 'Linda Martini, Bruno Pernadas, IOLANDA, Rodrigo Leão e outros nomes nos coliseus e na Casa da Música.',
+    body: 'Novembro abre com Linda Martini no Coliseu do Porto (11 de novembro). Na Casa da Música, Luísa Sobral apresenta Cartas de Desamor (16 de novembro) e Bruno Pernadas toca a 19.\n\nEm Lisboa, o Coliseu dos Recreios recebe janeiro com Reticências (18 de novembro), IOLANDA com as canções de Quebranto (7 de dezembro) e Rodrigo Leão com Alma Mater, no Misty Fest (18 de dezembro).\n\nAs horas e os preços podem mudar: confirma sempre na bilheteira de cada sala.',
+    imageUrl: img.coliseuPorto, publishedAt: '2026-11-09T11:00:00Z'
   }
 ];
 
 const collections = [
   {
-    slug: 'dezembro-no-porto-2026', title: 'Dezembro no Porto', description: 'Teatro, cinema e música contemporânea para fechar 2026 no Porto.',
-    introduction: 'Uma seleção curta da programação de dezembro nas salas do Porto, com o Auto da Barca do Inferno ainda em cena.',
-    coverImage: cover('cover-collection'), featured: true,
-    items: [['events', 'auto-da-barca-do-inferno-marta-pazos-tnsj'], ['events', 'aqui-antestreia-batalha'], ['events', 'boulez-e-zappa-casa-da-musica'], ['works', 'aqui-tiago-guedes']]
+    slug: 'discos-portugueses-outono-2026', title: 'Discos portugueses do outono', description: 'Os álbuns portugueses editados entre setembro e novembro de 2026.',
+    introduction: 'Eletrónica, canção, pop e tradição: sete discos novos feitos em Portugal.',
+    coverImage: img.vinil2, featured: true,
+    items: [['works', 'devagar-que-a-vida-e-curta-ana-lua-caiano'], ['works', 'quebranto-iolanda'], ['works', 'cronicas-do-monte-zeus-benjamim'], ['works', 'catedral-gotica-niagara'], ['works', '333-ak-adrix'], ['works', 'jardim-celeste-mokina'], ['works', 'musica-menor-mas-feliz-pedro-da-linha']]
   },
   {
-    slug: 'theatro-circo-fim-de-2026', title: 'Theatro Circo no fim de 2026', description: 'Dança e música no Theatro Circo, em Braga, entre novembro e dezembro.',
-    introduction: 'Quatro noites no Theatro Circo, da dança de Victor Hugo Pontes e de Marlene Monteiro Freitas à música de Lambchop e do ONCEIM.',
-    coverImage: cover('cover-north'), featured: true,
-    items: [['events', 'a-esta-hora-na-infancia-neva-theatro-circo'], ['events', 'an-evening-with-lambchop-theatro-circo'], ['events', 'caterina-barbieri-eliane-radigue-onceim-theatro-circo'], ['events', 'not-marlene-monteiro-freitas-theatro-circo']]
+    slug: 'exposicoes-lisboa-inverno-2026', title: 'Exposições em Lisboa neste inverno', description: 'Artistas e figuras da cultura portuguesa nos museus de Lisboa.',
+    introduction: 'Do MAAT à Casa Fernando Pessoa, cinco exposições para ver antes que fechem.',
+    coverImage: img.maat, featured: true,
+    items: [['events', 'pedro-cabrita-reis-sem-magoa-no-coracao-maat'], ['events', 'venus-joana-vasconcelos-valentino-maat'], ['events', 'tragedia-e-farsa-pomar-abrantes'], ['events', 'variacoes-para-carlos-paredes-museu-do-fado'], ['events', 'a-arca-eterna-fernando-pessoa']]
+  },
+  {
+    slug: 'concertos-portugueses-fim-de-2026', title: 'Concertos portugueses até ao fim do ano', description: 'Música portuguesa ao vivo em Lisboa e no Porto, de novembro a dezembro.',
+    introduction: 'Seis noites de música feita cá, dos coliseus à Casa da Música.',
+    coverImage: img.coliseuLisboa, featured: true,
+    items: [['events', 'linda-martini-coliseu-porto-2026'], ['events', 'luisa-sobral-cartas-de-desamor-casa-da-musica'], ['events', 'janeiro-reticencias-coliseu-lisboa'], ['events', 'bruno-pernadas-casa-da-musica-2026'], ['events', 'iolanda-coliseu-dos-recreios-2026'], ['events', 'rodrigo-leao-alma-mater-misty-fest']]
   }
 ];
 
 // Ligações "relacionados" (origem → destino), por slug.
 const relations = [
-  ['events', 'auto-da-barca-do-inferno-marta-pazos-tnsj', 'artists', 'marta-pazos'],
-  ['events', 'a-esta-hora-na-infancia-neva-theatro-circo', 'artists', 'victor-hugo-pontes'],
-  ['events', 'an-evening-with-lambchop-theatro-circo', 'artists', 'lambchop'],
-  ['events', 'an-evening-with-lambchop-theatro-circo', 'works', 'punching-the-clown-lambchop'],
+  ['events', 'linda-martini-coliseu-porto-2026', 'artists', 'linda-martini'],
+  ['events', 'bruno-pernadas-casa-da-musica-2026', 'artists', 'bruno-pernadas'],
+  ['events', 'iolanda-coliseu-dos-recreios-2026', 'artists', 'iolanda'],
+  ['events', 'iolanda-coliseu-dos-recreios-2026', 'works', 'quebranto-iolanda'],
+  ['events', 'pedro-cabrita-reis-sem-magoa-no-coracao-maat', 'artists', 'pedro-cabrita-reis'],
+  ['events', 'venus-joana-vasconcelos-valentino-maat', 'artists', 'joana-vasconcelos'],
   ['events', 'aqui-antestreia-batalha', 'artists', 'tiago-guedes'],
   ['events', 'aqui-antestreia-batalha', 'works', 'aqui-tiago-guedes'],
-  ['events', 'boulez-e-zappa-casa-da-musica', 'artists', 'remix-ensemble'],
-  ['events', 'boulez-e-zappa-casa-da-musica', 'works', 'le-marteau-sans-maitre'],
   ['events', 'not-marlene-monteiro-freitas-theatro-circo', 'artists', 'marlene-monteiro-freitas'],
+  ['works', 'devagar-que-a-vida-e-curta-ana-lua-caiano', 'artists', 'ana-lua-caiano'],
+  ['works', 'quebranto-iolanda', 'artists', 'iolanda'],
+  ['works', 'cronicas-do-monte-zeus-benjamim', 'artists', 'benjamim'],
   ['works', 'aqui-tiago-guedes', 'artists', 'tiago-guedes'],
-  ['works', 'punching-the-clown-lambchop', 'artists', 'lambchop'],
-  ['articles', 'boulez-e-zappa-no-porto-e-em-braga', 'events', 'boulez-e-zappa-casa-da-musica'],
-  ['articles', 'boulez-e-zappa-no-porto-e-em-braga', 'works', 'le-marteau-sans-maitre'],
-  ['articles', 'gil-vicente-segundo-marta-pazos', 'events', 'auto-da-barca-do-inferno-marta-pazos-tnsj'],
-  ['articles', 'gil-vicente-segundo-marta-pazos', 'artists', 'marta-pazos'],
-  ['articles', 'sete-propostas-para-o-fim-de-2026-entre-porto-e-braga', 'collections', 'dezembro-no-porto-2026'],
-  ['articles', 'sete-propostas-para-o-fim-de-2026-entre-porto-e-braga', 'collections', 'theatro-circo-fim-de-2026']
+  ['articles', 'sete-discos-portugueses-para-este-outono', 'collections', 'discos-portugueses-outono-2026'],
+  ['articles', 'sete-discos-portugueses-para-este-outono', 'works', 'devagar-que-a-vida-e-curta-ana-lua-caiano'],
+  ['articles', 'exposicoes-em-lisboa-ate-fevereiro', 'collections', 'exposicoes-lisboa-inverno-2026'],
+  ['articles', 'exposicoes-em-lisboa-ate-fevereiro', 'events', 'pedro-cabrita-reis-sem-magoa-no-coracao-maat'],
+  ['articles', 'concertos-portugueses-que-fecham-2026', 'collections', 'concertos-portugueses-fim-de-2026'],
+  ['articles', 'concertos-portugueses-que-fecham-2026', 'events', 'iolanda-coliseu-dos-recreios-2026']
 ];
 
-module.exports = { venues, artists, works, events, articles, collections, relations };
+// Créditos das fotografias (Wikimedia Commons).
+const imageCredits = [
+  ['Coliseu do Porto', 'Vitor Oliveira', 'CC BY-SA 2.0'],
+  ['Coliseu dos Recreios (vista de São Pedro de Alcântara)', 'Xosema', 'CC BY-SA 4.0'],
+  ['Casa da Música', 'I.shevtsov', 'CC BY-SA 4.0'],
+  ['MAAT (dia e noite)', 'Pedro Ribeiro Simões', 'CC BY 2.0'],
+  ['Museu do Fado', 'Vitor Oliveira', 'CC BY-SA 2.0'],
+  ['Teatro Nacional São João', 'Krzysztof Golik', 'CC BY-SA 4.0'],
+  ['Theatro Circo', 'Joseolgon', 'CC BY 4.0'],
+  ['Cinema Batalha', 'Vitor Oliveira', 'CC BY-SA 2.0'],
+  ['Atelier-Museu Júlio Pomar', 'GualdimG', 'CC BY-SA 4.0'],
+  ['Casa Fernando Pessoa', 'José Frade', 'CC BY-SA 4.0'],
+  ['Disco de vinil (agulha)', 'Franz van Duns', 'CC BY-SA 4.0'],
+  ['Disco de vinil a girar', 'Sulamith Sallmann', 'CC BY-SA 4.0'],
+  ['Duas guitarras portuguesas', 'TenIslands', 'Domínio público'],
+  ['Guitarra portuguesa', 'Šarūnas Burdulis', 'CC BY-SA 2.0']
+];
+
+module.exports = { venues, artists, works, events, articles, collections, relations, imageCredits };
