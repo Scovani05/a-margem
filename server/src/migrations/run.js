@@ -10,7 +10,8 @@ const sequelize = require('../config/database');
 // Ordem de aplicação das migrações (adicionar novas no fim da lista).
 const migrations = [
   ['001-initial-schema', require('./001-initial-schema')],
-  ['002-roles-security-audit', require('./002-roles-security-audit')]
+  ['002-roles-security-audit', require('./002-roles-security-audit')],
+  ['003-media-search', require('./003-media-search')]
 ];
 
 async function run() {

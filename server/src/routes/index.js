@@ -8,6 +8,7 @@ const submissionController = require('../controllers/submissionController');
 const newsletterController = require('../controllers/newsletterController');
 const adminController = require('../controllers/adminController');
 const databaseController = require('../controllers/databaseController');
+const mediaController = require('../controllers/mediaController');
 const { requireAuth, optionalAuth, requireAdmin } = require('../middleware/auth');
 const rateLimit = require('../middleware/rateLimit');
 
@@ -21,6 +22,8 @@ router.get('/health', (req, res) => res.json({ ok: true, name: 'À Margem API' }
 router.get('/home', publicController.home);
 router.get('/categories', publicController.listCategories);
 router.get('/search', searchController.search);
+router.get('/search/suggest', searchController.suggest);
+router.get('/media/:id', mediaController.show);
 
 for (const resource of ['events', 'works', 'artists', 'venues', 'articles', 'collections']) {
   router.get(`/${resource}`, catalogue.list(resource));
@@ -66,6 +69,7 @@ router.post('/admin/users', adminController.createUser);
 router.patch('/admin/users/:id', adminController.updateUserRole);
 router.delete('/admin/users/:id', adminController.deleteUser);
 router.get('/admin/audit', adminController.listAudit);
+router.post('/admin/media', mediaController.upload);
 router.get('/admin/newsletter', adminController.listNewsletter);
 router.delete('/admin/newsletter/:id', adminController.deleteNewsletter);
 router.get('/admin/contact', adminController.listContacts);

@@ -7,6 +7,7 @@ import { useAuth } from '../context/AuthContext.jsx';
 import usePageMeta from '../hooks/usePageMeta.js';
 import { formatDate } from '../utils/content.js';
 import DatabaseExplorer from './admin/DatabaseExplorer.jsx';
+import ImageField from '../components/ImageField.jsx';
 import { ActivityPanel, Dashboard, UsersPanel } from './admin/AdminPanels.jsx';
 
 const labels = { overview: 'Visão geral', database: 'Base de dados', activity: 'Atividade', events: 'Eventos', works: 'Obras', artists: 'Artistas', venues: 'Espaços', articles: 'Artigos', collections: 'Coleções', categories: 'Categorias', submissions: 'Sugestões', users: 'Utilizadores', newsletter: 'Newsletter', contact: 'Mensagens' };
@@ -22,22 +23,22 @@ const schemas = {
     ['name', 'Nome'], ['slug', 'Slug'], ['description', 'Descrição'], ['color', 'Cor', 'color'], ['icon', 'Ícone'], ['sortOrder', 'Ordem', 'number']
   ],
   events: [
-    ['title', 'Título'], ['slug', 'Slug'], ['subtitle', 'Subtítulo'], ['description', 'Descrição', 'textarea'], ['categoryId', 'Categoria', 'category'], ['venueId', 'Espaço relacionado', 'venue'], ['venueName', 'Nome do espaço'], ['city', 'Cidade'], ['organizer', 'Organização'], ['startsAt', 'Data e hora', 'datetime-local'], ['endsAt', 'Fim', 'datetime-local'], ['officialUrl', 'Ligação oficial', 'url'], ['imageUrl', 'Imagem (URL ou caminho local)'], ['relatedText', 'Outros conteúdos relacionados (tipo:id por linha)', 'textarea'], ['status', 'Estado', 'select', [['upcoming', 'Próximo'], ['past', 'Passado'], ['cancelled', 'Cancelado']]], ['featured', 'Em destaque', 'checkbox'], ['published', 'Publicado', 'checkbox'], ['isDemo', 'Demonstração', 'checkbox']
+    ['title', 'Título'], ['slug', 'Slug'], ['subtitle', 'Subtítulo'], ['description', 'Descrição', 'textarea'], ['categoryId', 'Categoria', 'category'], ['venueId', 'Espaço relacionado', 'venue'], ['venueName', 'Nome do espaço'], ['city', 'Cidade'], ['organizer', 'Organização'], ['startsAt', 'Data e hora', 'datetime-local'], ['endsAt', 'Fim', 'datetime-local'], ['officialUrl', 'Ligação oficial', 'url'], ['imageUrl', 'Imagem'], ['relatedText', 'Outros conteúdos relacionados (tipo:id por linha)', 'textarea'], ['status', 'Estado', 'select', [['upcoming', 'Próximo'], ['past', 'Passado'], ['cancelled', 'Cancelado']]], ['featured', 'Em destaque', 'checkbox'], ['published', 'Publicado', 'checkbox'], ['isDemo', 'Demonstração', 'checkbox']
   ],
   works: [
-    ['title', 'Título'], ['slug', 'Slug'], ['subtitle', 'Subtítulo'], ['description', 'Descrição', 'textarea'], ['type', 'Formato'], ['categoryId', 'Categoria', 'category'], ['creator', 'Criador ou artista', 'artist'], ['releasedAt', 'Data de edição', 'date'], ['officialUrl', 'Ligação oficial', 'url'], ['imageUrl', 'Imagem (URL ou caminho local)'], ['relatedText', 'Outros conteúdos relacionados (tipo:id por linha)', 'textarea'], ['featured', 'Em destaque', 'checkbox'], ['published', 'Publicado', 'checkbox'], ['isDemo', 'Demonstração', 'checkbox']
+    ['title', 'Título'], ['slug', 'Slug'], ['subtitle', 'Subtítulo'], ['description', 'Descrição', 'textarea'], ['type', 'Formato'], ['categoryId', 'Categoria', 'category'], ['creator', 'Criador ou artista', 'artist'], ['releasedAt', 'Data de edição', 'date'], ['officialUrl', 'Ligação oficial', 'url'], ['imageUrl', 'Imagem'], ['relatedText', 'Outros conteúdos relacionados (tipo:id por linha)', 'textarea'], ['featured', 'Em destaque', 'checkbox'], ['published', 'Publicado', 'checkbox'], ['isDemo', 'Demonstração', 'checkbox']
   ],
   artists: [
-    ['name', 'Nome'], ['slug', 'Slug'], ['bio', 'Biografia', 'textarea'], ['location', 'Localização'], ['disciplines', 'Disciplinas (separadas por vírgula)'], ['links', 'Ligações em JSON', 'textarea'], ['imageUrl', 'Imagem (URL ou caminho local)'], ['relatedText', 'Outros conteúdos relacionados (tipo:id por linha)', 'textarea'], ['featured', 'Em destaque', 'checkbox'], ['published', 'Publicado', 'checkbox'], ['isDemo', 'Demonstração', 'checkbox']
+    ['name', 'Nome'], ['slug', 'Slug'], ['bio', 'Biografia', 'textarea'], ['location', 'Localização'], ['disciplines', 'Disciplinas (separadas por vírgula)'], ['links', 'Ligações em JSON', 'textarea'], ['imageUrl', 'Imagem'], ['relatedText', 'Outros conteúdos relacionados (tipo:id por linha)', 'textarea'], ['featured', 'Em destaque', 'checkbox'], ['published', 'Publicado', 'checkbox'], ['isDemo', 'Demonstração', 'checkbox']
   ],
   venues: [
-    ['name', 'Nome'], ['slug', 'Slug'], ['type', 'Tipo de espaço'], ['description', 'Descrição', 'textarea'], ['address', 'Morada pública'], ['city', 'Cidade'], ['website', 'Site oficial', 'url'], ['publicEmail', 'Email público'], ['imageUrl', 'Imagem (URL ou caminho local)'], ['relatedText', 'Outros conteúdos relacionados (tipo:id por linha)', 'textarea'], ['featured', 'Em destaque', 'checkbox'], ['published', 'Publicado', 'checkbox'], ['isDemo', 'Demonstração', 'checkbox']
+    ['name', 'Nome'], ['slug', 'Slug'], ['type', 'Tipo de espaço'], ['description', 'Descrição', 'textarea'], ['address', 'Morada pública'], ['city', 'Cidade'], ['website', 'Site oficial', 'url'], ['publicEmail', 'Email público'], ['imageUrl', 'Imagem'], ['relatedText', 'Outros conteúdos relacionados (tipo:id por linha)', 'textarea'], ['featured', 'Em destaque', 'checkbox'], ['published', 'Publicado', 'checkbox'], ['isDemo', 'Demonstração', 'checkbox']
   ],
   articles: [
-    ['title', 'Título'], ['slug', 'Slug'], ['subtitle', 'Subtítulo'], ['excerpt', 'Introdução', 'textarea'], ['body', 'Corpo do artigo', 'textarea'], ['categoryId', 'Categoria', 'category'], ['authorName', 'Autoria'], ['imageUrl', 'Imagem (URL ou caminho local)'], ['relatedText', 'Conteúdos relacionados (tipo:id por linha)', 'textarea'], ['status', 'Estado editorial', 'select', [['draft', 'Rascunho'], ['published', 'Publicado']]], ['publishedAt', 'Data de publicação', 'datetime-local'], ['featured', 'Em destaque', 'checkbox'], ['isDemo', 'Demonstração', 'checkbox']
+    ['title', 'Título'], ['slug', 'Slug'], ['subtitle', 'Subtítulo'], ['excerpt', 'Introdução', 'textarea'], ['body', 'Corpo do artigo', 'textarea'], ['categoryId', 'Categoria', 'category'], ['authorName', 'Autoria'], ['imageUrl', 'Imagem'], ['relatedText', 'Conteúdos relacionados (tipo:id por linha)', 'textarea'], ['status', 'Estado editorial', 'select', [['draft', 'Rascunho'], ['published', 'Publicado']]], ['publishedAt', 'Data de publicação', 'datetime-local'], ['featured', 'Em destaque', 'checkbox'], ['isDemo', 'Demonstração', 'checkbox']
   ],
   collections: [
-    ['title', 'Título'], ['slug', 'Slug'], ['description', 'Descrição', 'textarea'], ['introduction', 'Introdução editorial', 'textarea'], ['coverImage', 'Capa (URL ou caminho local)'], ['itemsText', 'Itens da coleção: um por linha, ex. works:12'], ['relatedText', 'Outros conteúdos relacionados (tipo:id por linha)', 'textarea'], ['featured', 'Em destaque', 'checkbox'], ['published', 'Publicado', 'checkbox'], ['isDemo', 'Demonstração', 'checkbox']
+    ['title', 'Título'], ['slug', 'Slug'], ['description', 'Descrição', 'textarea'], ['introduction', 'Introdução editorial', 'textarea'], ['coverImage', 'Capa'], ['itemsText', 'Itens da coleção: um por linha, ex. works:12'], ['relatedText', 'Outros conteúdos relacionados (tipo:id por linha)', 'textarea'], ['featured', 'Em destaque', 'checkbox'], ['published', 'Publicado', 'checkbox'], ['isDemo', 'Demonstração', 'checkbox']
   ]
 };
 const requiredFields = {
@@ -139,6 +140,9 @@ function ResourceEditor({ resource }) {
       <div className="admin-editor__grid">{config.map(([key, label, kind, options]) => {
         const wide = kind === 'textarea' || key === 'itemsText' || key === 'relatedText';
         let control;
+        if (key === 'imageUrl' || key === 'coverImage') {
+          return <div key={key} className="admin-field admin-field--wide"><ImageField id={`admin-${key}`} label={label.replace(' (URL ou caminho local)', '')} value={form[key]} onChange={(value) => update(key, value)} /></div>;
+        }
         if (kind === 'checkbox') {
           control = <label className="form-check"><input className="form-check-input" type="checkbox" checked={Boolean(form[key])} onChange={(event) => update(key, event.target.checked)} /><span>{label}</span></label>;
         } else if (kind === 'textarea' || key === 'itemsText') {

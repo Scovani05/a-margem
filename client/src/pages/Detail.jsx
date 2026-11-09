@@ -112,7 +112,7 @@ export default function DetailPage({ type }) {
           <p className="detail-lede">{item.excerpt || item.description || item.bio}</p>
           <div className="detail-actions"><SaveButton type={type} item={item} /><button type="button" className="btn btn-outline-dark" onClick={share}><Share2 size={16} /> Partilhar</button>{shareMessage && <span className="form-note" role="status">{shareMessage}</span>}</div>
         </div>
-        <div className="detail-hero__visual"><img src={imageFor(item)} alt={item.imageAlt || ''} /><span className="detail-hero__image-caption">{item.isDemo ? 'Imagem gráfica de demonstração' : item.imageAlt || 'Imagem de destaque'}</span></div>
+        <div className="detail-hero__visual"><img src={imageFor(item)} alt={item.imageAlt || ''} /><span className="detail-hero__image-caption">{item.isDemo ? 'Imagem gráfica de demonstração' : item.imageAlt || (String(imageFor(item)).startsWith('/images/') ? 'Ilustração gráfica da À Margem' : 'Imagem de destaque')}</span></div>
       </div>
 
       <div className={`container detail-body ${isLongform ? 'detail-body--longform' : ''}`}>

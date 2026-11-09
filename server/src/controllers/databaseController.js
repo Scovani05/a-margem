@@ -5,7 +5,7 @@ const audit = require('../utils/audit');
 // Explorador da base de dados para administradores.
 // Usa os modelos Sequelize como "lista branca": só tabelas e colunas conhecidas são acessíveis.
 
-const HIDDEN_FIELDS = new Set(['passwordHash', 'resetTokenHash', 'resetTokenExpiresAt', 'tokenVersion', 'unsubscribeToken']);
+const HIDDEN_FIELDS = new Set(['passwordHash', 'resetTokenHash', 'resetTokenExpiresAt', 'tokenVersion', 'unsubscribeToken', 'data']);
 const READ_ONLY_TABLES = new Set(['audit_logs']);
 // Na tabela de utilizadores só se editam dados de perfil. Perfis e palavras-passe geram-se nas áreas próprias.
 const EDITABLE_OVERRIDE = { users: new Set(['name', 'bio']) };

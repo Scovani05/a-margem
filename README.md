@@ -4,7 +4,7 @@ A À Margem é uma plataforma de descoberta cultural e revista digital independe
 
 Projeto da unidade curricular **Aplicações para a Internet II** (ESTGV, 2025/2026).
 
-Todos os registos iniciais do catálogo estão marcados como **Demonstração** na interface. São exemplos fictícios, não eventos, espaços ou pessoas reais.
+O catálogo tem programação real de novembro e dezembro de 2026 no Porto e em Braga (Casa da Música, Teatro Nacional São João, Batalha Centro de Cinema e Theatro Circo), recolhida nas páginas oficiais e com ligação para a fonte em cada ficha. As capas são ilustrações gráficas do projeto.
 
 ## Versão online
 
@@ -36,6 +36,11 @@ O plano gratuito do Render adormece a API quando não há tráfego: o primeiro p
 | **Admin** | Criado pelo seed (`ADMIN_EMAIL`/`ADMIN_PASSWORD`) ou promovido por outro admin | Tudo o que o cliente faz + backoffice em `/admin`: conteúdos, moderação de sugestões, utilizadores e perfis, newsletter, mensagens, **explorador da base de dados** (tabelas, pesquisa, edição, exportação CSV, consola SQL só de leitura) e registo de atividade. |
 
 O perfil é validado no servidor em todos os pedidos: `requireAuth` + `requireAdmin` são aplicados a todo o prefixo `/api/admin`. Esconder botões no React é apenas conforto visual, não é a proteção.
+
+## Funcionalidades recentes
+
+- **Imagens do computador:** nos formulários do backoffice, o botão "Escolher do computador" envia a imagem (JPG, PNG, WebP ou GIF, até 2,5 MB) para a API, que valida o tipo pelo conteúdo real do ficheiro e a guarda na tabela `media` do PostgreSQL (o disco do Render é apagado a cada deploy). A imagem fica disponível em `/api/media/:id`.
+- **Pesquisa:** sugestões enquanto se escreve na barra do cabeçalho (setas, Enter, Esc e atalho `/`), pesquisa que ignora acentos (`unaccent`) e exige todas as palavras, filtros por tipo com contagens e resultados atualizados enquanto se escreve.
 
 ## Segurança
 

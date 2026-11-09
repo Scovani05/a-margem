@@ -29,6 +29,8 @@ app.use(cors({
   },
   credentials: false
 }));
+// Só o carregamento de imagens aceita pedidos maiores (imagem em base64, até 2,5 MB).
+app.use('/api/admin/media', express.json({ limit: '4mb' }));
 app.use(express.json({ limit: '300kb' }));
 app.use(express.urlencoded({ extended: false, limit: '300kb' }));
 // Respostas com dados de conta ou de administração nunca devem ficar em cache.
