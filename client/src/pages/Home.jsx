@@ -90,7 +90,7 @@ export function HomePage() {
 
     <section className="section-pad section-wash"><div className="container"><SectionHeading eyebrow="À volta de nós" title="Pessoas a fazer coisas" href="/discover/artists" /><ContentGrid type="artists" items={data.artists || []} /></div></section>
 
-    <section className="section-pad container magazine-preview"><div className="magazine-preview__intro"><p className="eyebrow">A revista À Margem</p><h2>Olhar melhor<br />é um bom começo.</h2><p>Ensaios, conversas e pequenas descobertas para ler fora da pressa.</p><Link className="btn btn-outline-dark" to="/magazine">Entrar na revista <ArrowRight size={16} /></Link></div><div className="magazine-preview__grid">{(data.articles || []).slice(0, 2).map((item) => <ContentCard type="articles" item={item} key={item.id} variant="content-card--editorial" />)}</div></section>
+    <section className="section-pad container magazine-preview"><div className="magazine-preview__intro"><p className="eyebrow">A revista À Margem</p><h2>Últimas<br />notícias.</h2><p>O que se passa na cultura portuguesa, da notícia mais recente para a mais antiga.</p><Link className="btn btn-outline-dark" to="/magazine">Ver todas as notícias <ArrowRight size={16} /></Link></div><div className="magazine-preview__grid">{(data.articles || []).slice(0, 2).map((item) => <ContentCard type="articles" item={item} key={item.id} variant="content-card--editorial" />)}</div></section>
 
     <section className="section-pad section-lime"><div className="container"><SectionHeading eyebrow="Guarda para mais tarde" title="Uma boa lista puxa outra" href="/collections" /><ContentGrid type="collections" items={data.collections || []} className="content-grid--collections" /></div></section>
 

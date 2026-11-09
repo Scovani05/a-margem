@@ -11,6 +11,7 @@ import DetailPage from './pages/Detail.jsx';
 import DiscoverPage from './pages/Discover.jsx';
 import { ContactPage, SubmitPage, UnsubscribePage } from './pages/Forms.jsx';
 import { HomePage } from './pages/Home.jsx';
+import MagazinePage from './pages/Magazine.jsx';
 import SearchPage from './pages/Search.jsx';
 import { AboutPage, NotFoundPage, PrivacyPage, TermsPage } from './pages/SitePages.jsx';
 
@@ -43,7 +44,7 @@ function RoutedApp() {
       <Route path="/artists/:slug" element={<DetailPage type="artists" />} />
       <Route path="/venues/:slug" element={<DetailPage type="venues" />} />
       <Route path="/search" element={<SearchPage />} />
-      <Route path="/magazine" element={<CataloguePage resource="articles" />} />
+      <Route path="/magazine" element={<MagazinePage />} />
       <Route path="/magazine/:slug" element={<DetailPage type="articles" />} />
       <Route path="/collections" element={<CataloguePage resource="collections" />} />
       <Route path="/collections/:slug" element={<DetailPage type="collections" />} />

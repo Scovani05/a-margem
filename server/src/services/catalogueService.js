@@ -62,10 +62,12 @@ async function list(resource, params = {}) {
       where[Op.and] = [...(where[Op.and] || []), upcomingOrOngoing()];
     }
   }
-  let order = [['createdAt', 'DESC']];
+  // Revista: as notícias mais recentes primeiro (pela data de publicação).
+  const newest = resource === 'articles' ? [['publishedAt', 'DESC'], ['createdAt', 'DESC']] : [['createdAt', 'DESC']];
+  let order = newest;
   if (resource === 'events') order = [['featured', 'DESC'], ['startsAt', 'ASC']];
   if (params.sort === 'title') order = [[['artists', 'venues'].includes(resource) ? 'name' : 'title', 'ASC']];
-  if (params.sort === 'newest') order = [['createdAt', 'DESC']];
+  if (params.sort === 'newest') order = newest;
   if (params.sort === 'featured') order = [['featured', 'DESC'], ['createdAt', 'DESC']];
   const { rows, count } = await config.model.findAndCountAll({
     where, include: includesFor(resource), order, limit, offset: (page - 1) * limit,
@@ -145,7 +147,7 @@ async function featured(resource, limit = 4) {
   const rows = await config.model.findAll({
     where,
     include: includesFor(resource),
-    order: resource === 'events' ? [['startsAt', 'ASC']] : [['createdAt', 'DESC']],
+    order: resource === 'events' ? [['startsAt', 'ASC']] : resource === 'articles' ? [['publishedAt', 'DESC']] : [['createdAt', 'DESC']],
     limit
   });
   if (resource === 'collections' && rows.length) {

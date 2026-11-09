@@ -13,7 +13,8 @@ const home = async (req, res, next) => {
     const live = { published: true, status: 'upcoming', [Op.or]: [{ startsAt: { [Op.gte]: now } }, { endsAt: { [Op.gte]: now } }] };
     const [categories, articles, collections, works, artists, events, nextUp, eventCount, workCount, artistCount, venueCount] = await Promise.all([
       Category.findAll({ order: [['sortOrder', 'ASC'], ['name', 'ASC']] }),
-      catalogue.featured('articles', 3), catalogue.featured('collections', 3),
+      // Revista: as 3 notícias mais recentes (não só as marcadas como destaque).
+      catalogue.list('articles', { limit: 3 }).then((result) => result.rows), catalogue.featured('collections', 3),
       catalogue.featured('works', 4), catalogue.featured('artists', 4), catalogue.featured('events', 4),
       // Para a página inicial: os próximos 3 eventos que ainda não começaram e os totais do catálogo.
       Event.findAll({

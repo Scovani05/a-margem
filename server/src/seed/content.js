@@ -33,7 +33,11 @@ const img = {
   macCcb: wm('8/87', 'MAC_CCB_Museu_de_Arte_Contempor%C3%A2nea_%2853875750868%29.jpg'),
   aulaMagna: wm('2/2c', 'Aula_Magna_da_Universidade_de_Lisboa_-_Portugal_%F0%9F%87%B5%F0%9F%87%B9_%2853886407323%29.jpg'),
   trindade: wm('1/18', 'Teatro_da_Trindade%2C_Lisboa_%2847709760741%29.jpg'),
-  saDaBandeira: wm('e/ef', 'Teatro_Sa_da_Bandeira.jpg')
+  saDaBandeira: wm('e/ef', 'Teatro_Sa_da_Bandeira.jpg'),
+  saoJorge: wm('3/32', 'Cinema_S%C3%A3o_Jorge.jpg', true),
+  culturgest: wm('f/f5', 'Culturgest%2C_Edif%C3%ADcio-sede_da_Caixa_Geral_de_Dep%C3%B3sitos_01.jpg', true),
+  serralves: wm('7/74', 'Museu_Serralves_exterior_%28Porto%29.jpg'),
+  lello: wm('a/aa', 'Interior_view_of_Livraria_Lello_08.jpg')
 };
 
 const RIMAS = 'https://www.rimasebatidas.pt/20-discos-portugueses-que-vao-sair-ate-ao-final-do-ano/';
@@ -342,6 +346,43 @@ const articles = [
     excerpt: 'Linda Martini, Luísa Sobral, janeiro, IOLANDA e Rodrigo Leão nos coliseus e na Casa da Música.',
     body: 'Novembro abre no Porto com Linda Martini, que a 11 de novembro tocam na íntegra Olhos de Mongol, 20 anos depois, no Coliseu Box (15 € em pré-venda, à venda em coliseu.pt). A 16, Luísa Sobral apresenta Cartas de Desamor na Sala Suggia da Casa da Música, com bilhetes de 25 € a 35 € no site da Casa da Música.\n\nEm Lisboa, o Coliseu dos Recreios recebe janeiro com Reticências no Coliseu Club (18 de novembro), IOLANDA com as canções de Quebranto num palco a 360 graus (7 de dezembro, de 18 € a 35 €) e Rodrigo Leão com Alma Mater no Misty Fest (18 de dezembro, às 18:00 e às 21:00). Os bilhetes do Coliseu vendem-se na bilheteira, em coliseulisboa.com e na BOL.\n\nFora desta lista, Bruno Pernadas tem concerto anunciado em Lisboa a 30 de novembro, na Casa Capitão.\n\nAs horas e os preços podem mudar: confirma sempre na página de cada concerto, que está ligada em cada ficha.',
     imageUrl: img.coliseuPorto, publishedAt: '2026-11-09T11:00:00Z'
+  },
+  // Notícias (secção Revista): factos confirmados nas fontes indicadas no fim de cada texto.
+  {
+    slug: 'leffest-2026-abre-com-paper-tiger', title: 'LEFFEST abre a 20.ª edição com Paper Tiger, de James Gray', subtitle: 'Notícia', category: 'cinema',
+    excerpt: 'O Lisboa Film Festival decorre até 15 de novembro, com mais de 150 filmes e a antestreia de Aquí, de Tiago Guedes.',
+    body: 'O LEFFEST - Lisboa Film Festival abriu a 6 de novembro a sua 20.ª edição com Paper Tiger, de James Gray, um drama sobre dois irmãos apanhados num esquema com a máfia russa, com Adam Driver, Scarlett Johansson e Miles Teller. O festival dirigido por Paulo Branco decorre até 15 de novembro.\n\nSão mais de 150 filmes entre antestreias, filmes premiados e retrospetivas, no Cinema São Jorge, no Nimas, na Culturgest, no Teatro do Bairro e, pela primeira vez, numa sala do NOS Vasco da Gama.\n\nDo lado português, Tiago Guedes apresenta a antestreia de Aquí e é alvo de uma retrospetiva. Entre os convidados anunciados estão David Cronenberg, Albert Serra, Willem Dafoe, Abel Ferrara e o músico Dino d\'Santiago.\n\nFonte: Sábado, 6 de novembro de 2026.',
+    imageUrl: img.saoJorge, featured: true, publishedAt: '2026-11-06T12:00:00Z'
+  },
+  {
+    slug: 'fundo-de-fomento-cultural-um-milhao-internacionalizacao', title: 'Um milhão de euros para levar a cultura portuguesa lá fora', subtitle: 'Notícia', category: 'cultura-independente',
+    excerpt: 'O Fundo de Fomento Cultural abriu candidaturas a 2 de novembro para festivais, digressões, residências e feiras no estrangeiro em 2027.',
+    body: 'O Fundo de Fomento Cultural tem um milhão de euros para apoiar a internacionalização da cultura portuguesa em 2027. As candidaturas abriram a 2 de novembro e fecham a 4 de janeiro de 2027, no portal gov.pt.\n\nO apoio é a fundo perdido e cobre até 80% das despesas elegíveis, com um limite de 50 mil euros por candidatura. Podem candidatar-se entidades privadas com sede em Portugal e mais de um ano de atividade.\n\nEntram festivais, feiras, bienais, exposições, mercados internacionais, digressões, residências artísticas e encontros profissionais, desde que aconteçam no estrangeiro entre 1 de janeiro e 31 de dezembro de 2027. É preciso mostrar uma oportunidade concreta, como um convite ou um contrato de uma entidade estrangeira.\n\nFonte: AICEP / Portugal Global, 30 de outubro de 2026.',
+    imageUrl: '/images/cover-art.svg', publishedAt: '2026-10-30T12:00:00Z'
+  },
+  {
+    slug: 'doclisboa-2026-premios-manuel-mozos', title: 'Manuel Mozos vence a competição portuguesa do Doclisboa', subtitle: 'Notícia', category: 'cinema',
+    excerpt: 'A Voz de Todos - Jornal do Fundão foi escolhido por unanimidade; João Pedro Rodrigues e João Rui Guerra da Mata ganharam o prémio de realização.',
+    body: 'A 24.ª edição do Doclisboa anunciou os premiados a 24 de outubro. Na competição portuguesa, o prémio de melhor filme foi para A Voz de Todos - Jornal do Fundão, de Manuel Mozos, por unanimidade. O prémio do júri distinguiu Hipogeus, de Raul Domingues, e Povo e Poder, de Ico Costa, recebeu o prémio Escola - ETIC.\n\nNa competição internacional, o Grande Prémio foi para Car la Lune, de Éric Baudelaire. João Pedro Rodrigues e João Rui Guerra da Mata receberam o prémio de melhor realização por 13 Alfinetes.\n\nO público escolheu Os continuadores da revolução, de Pedro Neves, e Casa do Artista: Não é permitido envelhecer, de Solveig Nordlund. A 25.ª edição está marcada para 14 a 24 de outubro de 2027.\n\nFonte: RTP / Lusa, 24 de outubro de 2026.',
+    imageUrl: img.culturgest, publishedAt: '2026-10-25T10:00:00Z'
+  },
+  {
+    slug: 'serralves-anri-sala-holzer-lee-ufan-alice-neel', title: 'O que ver em Serralves até janeiro', subtitle: 'Notícia', category: 'artes-visuais',
+    excerpt: 'Anri Sala chega à ala oeste do museu em novembro; Jenny Holzer, Lee Ufan e Alice Neel continuam até janeiro de 2027.',
+    body: 'O Museu de Serralves, no Porto, recebe a partir de novembro uma instalação pensada para o espaço por Anri Sala, na ala oeste do museu, que fica até maio de 2027.\n\nContinuam abertas até janeiro de 2027 três exposições do programa deste ano: Wrong Answers, de Jenny Holzer, que se estende também à biblioteca; Lee Ufan, na casa e no parque; e Beautifully Imperfect, de Alice Neel, com microcoreografias de Vera Mantero em resposta às pinturas.\n\nNa Casa do Cinema Manoel de Oliveira, Manoel de Oliveira e o Cinema Português III olha para as últimas três décadas do realizador e fica até setembro de 2027.\n\nFonte: programação de Serralves para 2026, apresentada a 16 de dezembro de 2025 (DN / Lusa).',
+    imageUrl: img.serralves, publishedAt: '2026-11-02T10:00:00Z'
+  },
+  {
+    slug: 'lidia-jorge-premio-camoes-2026', title: 'Lídia Jorge vence o Prémio Camões 2026', subtitle: 'Notícia', category: 'literatura',
+    excerpt: 'A autora de A Costa dos Murmúrios e Misericórdia recebe o maior prémio da língua portuguesa, no valor de 100 mil euros.',
+    body: 'Lídia Jorge é a vencedora do Prémio Camões 2026, anunciado a 2 de julho. O júri decidiu por unanimidade. O prémio, o mais importante da literatura em língua portuguesa, vale 100 mil euros e é atribuído em conjunto por Portugal e pelo Brasil.\n\nA obra da escritora começa em 1980 com O Dia dos Prodígios e inclui O Cais das Merendas, Notícia da Cidade Silvestre, A Costa dos Murmúrios, Estuário e Misericórdia, que venceu vários prémios em Portugal e o Prix Médicis Étranger em França, em 2023.\n\n"É um prémio que se sabe que existe, mas ninguém imagina que vai ter", disse a autora.\n\nFonte: Diário de Notícias, 2 de julho de 2026.',
+    imageUrl: img.lello, publishedAt: '2026-07-02T15:00:00Z'
+  },
+  {
+    slug: 'goncalo-m-tavares-premio-formentor-2026', title: 'Gonçalo M. Tavares é o primeiro português a vencer o Prémio Formentor', subtitle: 'Notícia', category: 'literatura',
+    excerpt: 'O prémio espanhol, no valor de 50 mil euros, distingue a "ousadia" de uma narrativa "alheia às tentações do óbvio".',
+    body: 'Gonçalo M. Tavares venceu o Prémio Formentor das Letras 2026, atribuído pela fundação espanhola Formentor. É o primeiro escritor português a receber este prémio, no valor de 50 mil euros. A decisão do júri foi unânime e foi anunciada a 3 de março.\n\nSegundo a ata, o prémio reconhece a ousadia com que o autor construiu uma narrativa alheia às tentações do óbvio, numa tradição literária que conta o reverso da realidade.\n\nFonte: RTP / Lusa, 3 de março de 2026.',
+    imageUrl: img.lello, publishedAt: '2026-03-03T12:00:00Z'
   }
 ];
 
@@ -399,6 +440,10 @@ const relations = [
 
 // Créditos das fotografias (Wikimedia Commons).
 const imageCredits = [
+  ['Cinema São Jorge', 'Miguel Teixeira', 'CC BY-SA 2.0'],
+  ['Culturgest (edifício-sede da CGD)', 'GualdimG', 'CC BY-SA 4.0'],
+  ['Museu de Serralves', 'theginjaninja1979', 'CC BY-SA 2.0'],
+  ['Livraria Lello (interior)', 'John Samuel', 'CC BY-SA 4.0'],
   ['Coliseu do Porto', 'Vitor Oliveira', 'CC BY-SA 2.0'],
   ['Coliseu dos Recreios (vista de São Pedro de Alcântara)', 'Xosema', 'CC BY-SA 4.0'],
   ['Casa da Música', 'I.shevtsov', 'CC BY-SA 4.0'],
