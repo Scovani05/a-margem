@@ -38,7 +38,7 @@ export function HomePage() {
         <h1>O próximo<br />fascínio pode<br /><em>estar ao lado.</em></h1>
         <p className="home-hero__text">Histórias, pessoas e lugares para descobrires com tempo. Um mapa cultural feito à mão, para quem prefere ir um pouco mais longe.</p>
         <div className="home-hero__actions"><Link className="btn btn-lime" to="/discover">Começar a descobrir <ArrowRight size={17} /></Link><Link className="text-link" to="/magazine">Ler a revista <ArrowUpRight size={16} /></Link></div>
-        <div className="hero-note"><span>01</span><span>Curadoria independente<br />do Norte de Portugal</span></div>
+        <div className="hero-note"><span>01</span><span>Curadoria independente<br />de cultura portuguesa</span></div>
       </div>
       <div className="home-hero__art" aria-label="Composição gráfica abstrata em tons de azul, vermelho e amarelo">
         <div className="hero-art__grain" /><div className="hero-art__sun" /><div className="hero-art__arc" /><div className="hero-art__frame"><img src="/images/hero-collage.svg" alt="Colagem editorial abstrata com formas geométricas" /></div>
