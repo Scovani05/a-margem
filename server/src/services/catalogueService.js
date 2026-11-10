@@ -118,7 +118,7 @@ async function detail(resource, slug) {
         ? { id: entry.contentId, status: 'published' }
         : { id: entry.contentId, published: true };
       const item = await model.findOne({ where });
-      return item ? { type: entry.contentType, ...item.toJSON() } : null;
+      return item ? { type: entry.contentType, ...item.toJSON(), contentType: entry.contentType } : null;
     }));
     record.setDataValue('items', items.filter(Boolean));
   }
@@ -143,7 +143,7 @@ async function detail(resource, slug) {
       where: { id: other.id, ...publicWhere(other.type) },
       include: includesFor(other.type)
     });
-    return target ? { type: other.type, ...target.toJSON() } : null;
+    return target ? { type: other.type, ...target.toJSON(), contentType: other.type } : null;
   }));
   record.setDataValue('relatedContent', relatedContent.filter(Boolean));
   return record;
