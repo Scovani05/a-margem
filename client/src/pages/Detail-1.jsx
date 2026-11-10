@@ -101,8 +101,10 @@ export default function DetailPage({ type }) {
     ...(type === 'venues' ? (item.events || []).map((entry) => `events:${entry.id}`) : []),
     ...(type === 'events' && item.venue ? [`venues:${item.venue.id}`] : [])
   ]);
-  const relatedGroups = (item.relatedContent || []).filter((entry) => !alreadyLinked.has(`${entry.type}:${entry.id}`)).reduce((groups, entry) => {
-    (groups[entry.type] ||= []).push(entry);
+  // contentType diz o tipo de conteúdo (uma obra tem também um campo "type" próprio, ex.: album).
+  const kindOf = (entry) => entry.contentType || entry.type;
+  const relatedGroups = (item.relatedContent || []).filter((entry) => !alreadyLinked.has(`${kindOf(entry)}:${entry.id}`)).reduce((groups, entry) => {
+    (groups[kindOf(entry)] ||= []).push(entry);
     return groups;
   }, {});
 
@@ -135,7 +137,7 @@ export default function DetailPage({ type }) {
           {type === 'venues' && item.website && <a className="btn btn-dark external-action" href={item.website} target="_blank" rel="noreferrer">Visitar o espaço <ArrowUpRight size={16} /></a>}
           {type === 'artists' && item.links && Object.entries(item.links).map(([label, url]) => <a key={label} className="detail-social-link" href={url} target="_blank" rel="noreferrer">{label} <ArrowUpRight size={14} /></a>)}
           {type === 'articles' && <div className="article-share"><span>Passa a palavra</span><button className="text-link" onClick={share}><Share2 size={15} /> Partilhar este artigo</button></div>}
-          {type === 'collections' && item.items?.length > 0 && <div className="collection-detail-items"><h2>Dentro desta coleção</h2><div className="row g-4">{item.items.map((entry) => <div className="col-12 col-sm-6" key={`${entry.type}-${entry.id}`}><ContentCard type={entry.type} item={entry} /></div>)}</div></div>}
+          {type === 'collections' && item.items?.length > 0 && <div className="collection-detail-items"><h2>Dentro desta coleção</h2><div className="row g-4">{item.items.map((entry) => <div className="col-12 col-sm-6" key={`${kindOf(entry)}-${entry.id}`}><ContentCard type={kindOf(entry)} item={entry} /></div>)}</div></div>}
         </div>
         <aside className="detail-body__aside"><span className="eyebrow">Na margem</span><p>Uma seleção independente para descobrires ao teu ritmo.</p><Link to="/discover" className="text-link">Ver mais descobertas <ArrowUpRight size={15} /></Link>{item.isDemo && <div className="demo-explainer"><strong>Exemplo editorial</strong><p>Esta ficha é conteúdo fictício de demonstração. Confirma fontes, datas e direitos antes de publicar dados reais.</p></div>}</aside>
       </div>
