@@ -122,18 +122,28 @@ async function detail(resource, slug) {
     }));
     record.setDataValue('items', items.filter(Boolean));
   }
+  // As relações valem nos dois sentidos: um artigo ligado a um artista aparece na ficha do artista e vice-versa.
   const relationRows = await ContentRelation.findAll({
-    where: { sourceType: resource, sourceId: record.id }, order: [['sortOrder', 'ASC']], limit: 24
+    where: { [Op.or]: [{ sourceType: resource, sourceId: record.id }, { targetType: resource, targetId: record.id }] },
+    order: [['sortOrder', 'ASC']], limit: 48
   });
+  const others = [];
+  const seen = new Set();
+  for (const relation of relationRows) {
+    const outgoing = relation.sourceType === resource && relation.sourceId === record.id;
+    const other = outgoing ? { type: relation.targetType, id: relation.targetId } : { type: relation.sourceType, id: relation.sourceId };
+    const key = `${other.type}:${other.id}`;
+    if (!seen.has(key)) { seen.add(key); others.push(other); }
+  }
   const models = { events: Event, works: Work, artists: Artist, venues: Venue, articles: Article, collections: Collection };
-  const relatedContent = await Promise.all(relationRows.map(async (relation) => {
-    const model = models[relation.targetType];
+  const relatedContent = await Promise.all(others.map(async (other) => {
+    const model = models[other.type];
     if (!model) return null;
     const target = await model.findOne({
-      where: { id: relation.targetId, ...publicWhere(relation.targetType) },
-      include: includesFor(relation.targetType)
+      where: { id: other.id, ...publicWhere(other.type) },
+      include: includesFor(other.type)
     });
-    return target ? { type: relation.targetType, ...target.toJSON() } : null;
+    return target ? { type: other.type, ...target.toJSON() } : null;
   }));
   record.setDataValue('relatedContent', relatedContent.filter(Boolean));
   return record;

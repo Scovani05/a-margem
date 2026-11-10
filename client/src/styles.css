@@ -873,3 +873,10 @@ a.admin-stat:hover { transform: translateY(-2px); }
   .news-item__thumb { display: none; }
   .news-search { min-width: 0; width: 100%; }
 }
+
+/* Backoffice: ligar conteúdos a partir de uma lista */
+.relation-picker { display: grid; gap: 10px; }
+.relation-picker__chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.relation-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 8px 6px 11px; background: color-mix(in srgb, var(--lime) 55%, var(--paper)); border: 1px solid rgba(23,32,28,.12); font-size: 13px; }
+.relation-chip button { display: inline-grid; place-items: center; border: 0; background: transparent; padding: 2px; color: var(--ink); }
+.relation-chip button:hover { background: rgba(23,32,28,.1); }

@@ -48,8 +48,10 @@ async function validateRelations(sourceType, sourceId, input) {
   return normalized;
 }
 
+// As relações não têm sentido: o formulário mostra todas as ligações deste conteúdo (feitas a partir dele
+// ou a partir do outro lado), por isso ao gravar apagam-se as dos dois sentidos e criam-se as escolhidas.
 async function replaceContentRelations(sourceType, sourceId, relations) {
-  await ContentRelation.destroy({ where: { sourceType, sourceId } });
+  await ContentRelation.destroy({ where: { [Op.or]: [{ sourceType, sourceId }, { targetType: sourceType, targetId: sourceId }] } });
   if (relations?.length) await ContentRelation.bulkCreate(relations.map((item) => ({ sourceType, sourceId, ...item })));
 }
 
@@ -115,11 +117,20 @@ const listResources = (resource) => async (req, res, next) => {
       }
       for (const row of rows) row.setDataValue('items', byCollection.get(row.id) || []);
     }
-    const relations = await ContentRelation.findAll({ where: { sourceType: resource, sourceId: rows.map((row) => row.id) }, order: [['sortOrder', 'ASC']] });
+    const ids = rows.map((row) => row.id);
+    const relations = await ContentRelation.findAll({
+      where: { [Op.or]: [{ sourceType: resource, sourceId: ids }, { targetType: resource, targetId: ids }] }, order: [['sortOrder', 'ASC']]
+    });
+    // Para cada registo, o "outro lado" de cada relação (em qualquer sentido).
     const relatedBySource = new Map();
+    const add = (ownId, targetType, targetId) => {
+      if (!relatedBySource.has(ownId)) relatedBySource.set(ownId, []);
+      const list = relatedBySource.get(ownId);
+      if (!list.some((entry) => entry.targetType === targetType && entry.targetId === targetId)) list.push({ targetType, targetId });
+    };
     for (const relation of relations) {
-      if (!relatedBySource.has(relation.sourceId)) relatedBySource.set(relation.sourceId, []);
-      relatedBySource.get(relation.sourceId).push(relation);
+      if (relation.sourceType === resource) add(relation.sourceId, relation.targetType, relation.targetId);
+      if (relation.targetType === resource) add(relation.targetId, relation.sourceType, relation.sourceId);
     }
     for (const row of rows) row.setDataValue('relatedContent', relatedBySource.get(row.id) || []);
     return res.json(rows);

@@ -415,6 +415,14 @@ const collections = [
 
 // Ligações "relacionados" (origem → destino), por slug.
 const relations = [
+  ['articles', 'sete-discos-portugueses-para-este-outono', 'artists', 'ana-lua-caiano'],
+  ['articles', 'sete-discos-portugueses-para-este-outono', 'artists', 'iolanda'],
+  ['articles', 'sete-discos-portugueses-para-este-outono', 'artists', 'benjamim'],
+  ['articles', 'concertos-portugueses-que-fecham-2026', 'artists', 'linda-martini'],
+  ['articles', 'concertos-portugueses-que-fecham-2026', 'artists', 'iolanda'],
+  ['articles', 'exposicoes-em-lisboa-ate-fevereiro', 'artists', 'pedro-cabrita-reis'],
+  ['articles', 'exposicoes-em-lisboa-ate-fevereiro', 'artists', 'joana-vasconcelos'],
+  ['articles', 'leffest-2026-abre-com-paper-tiger', 'artists', 'tiago-guedes'],
   ['events', 'linda-martini-coliseu-porto-2026', 'artists', 'linda-martini'],
   ['events', 'iolanda-coliseu-dos-recreios-2026', 'artists', 'iolanda'],
   ['events', 'iolanda-coliseu-dos-recreios-2026', 'works', 'quebranto-iolanda'],

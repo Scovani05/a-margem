@@ -35,12 +35,27 @@ const schemas = {
     ['name', 'Nome'], ['slug', 'Slug'], ['type', 'Tipo de espaço'], ['description', 'Resumo (uma ou duas frases)', 'textarea'], ['body', 'Texto completo e informação de visita/bilheteira', 'textarea'], ['address', 'Morada pública'], ['city', 'Cidade'], ['website', 'Site oficial', 'url'], ['publicEmail', 'Email público'], ['imageUrl', 'Imagem'], ['relatedText', 'Outros conteúdos relacionados (tipo:id por linha)', 'textarea'], ['featured', 'Em destaque', 'checkbox'], ['published', 'Publicado', 'checkbox'], ['isDemo', 'Demonstração', 'checkbox']
   ],
   articles: [
-    ['title', 'Título'], ['slug', 'Slug'], ['subtitle', 'Subtítulo'], ['excerpt', 'Introdução', 'textarea'], ['body', 'Corpo do artigo', 'textarea'], ['categoryId', 'Categoria', 'category'], ['authorName', 'Autoria'], ['imageUrl', 'Imagem'], ['relatedText', 'Conteúdos relacionados (tipo:id por linha)', 'textarea'], ['status', 'Estado editorial', 'select', [['draft', 'Rascunho'], ['published', 'Publicado']]], ['publishedAt', 'Data de publicação', 'datetime-local'], ['featured', 'Em destaque', 'checkbox'], ['isDemo', 'Demonstração', 'checkbox']
+    ['title', 'Título'], ['slug', 'Slug'], ['subtitle', 'Subtítulo'], ['excerpt', 'Introdução', 'textarea'], ['body', 'Corpo do artigo', 'textarea'], ['categoryId', 'Categoria', 'category'], ['authorName', 'Autoria'], ['imageUrl', 'Imagem'], ['relatedText', 'Outros conteúdos relacionados (tipo:id por linha)', 'textarea'], ['status', 'Estado editorial', 'select', [['draft', 'Rascunho'], ['published', 'Publicado']]], ['publishedAt', 'Data de publicação', 'datetime-local'], ['featured', 'Em destaque', 'checkbox'], ['isDemo', 'Demonstração', 'checkbox']
   ],
   collections: [
     ['title', 'Título'], ['slug', 'Slug'], ['description', 'Descrição', 'textarea'], ['introduction', 'Introdução editorial', 'textarea'], ['coverImage', 'Capa'], ['itemsText', 'Itens da coleção: um por linha, ex. works:12'], ['relatedText', 'Outros conteúdos relacionados (tipo:id por linha)', 'textarea'], ['featured', 'Em destaque', 'checkbox'], ['published', 'Publicado', 'checkbox'], ['isDemo', 'Demonstração', 'checkbox']
   ]
 };
+// Ligações escolhidas numa lista (drop down). Ex.: num artigo escolhe-se o artista e o artigo passa a aparecer
+// na ficha do artista; na ficha do artigo aparece o artista. As restantes ligações ficam em "tipo:id".
+const pickers = {
+  articles: [['artists', 'Artistas relacionados'], ['events', 'Eventos relacionados'], ['works', 'Obras relacionadas']],
+  artists: [['articles', 'Artigos da revista sobre este artista'], ['events', 'Eventos deste artista']],
+  events: [['artists', 'Artistas neste evento'], ['articles', 'Artigos da revista sobre este evento']],
+  works: [['articles', 'Artigos da revista sobre esta obra']],
+  venues: [['articles', 'Artigos da revista sobre este espaço']]
+};
+const pickerKey = (type) => `rel_${type}`;
+for (const [resource, list] of Object.entries(pickers)) {
+  const at = schemas[resource].findIndex(([key]) => key === 'relatedText');
+  schemas[resource].splice(at < 0 ? schemas[resource].length : at, 0, ...list.map(([type, label]) => [pickerKey(type), label, 'relation', type]));
+}
+
 const requiredFields = {
   categories: ['name'], events: ['title', 'description', 'categoryId', 'city', 'startsAt'],
   works: ['title', 'description', 'type', 'categoryId'], artists: ['name', 'bio'],
@@ -73,9 +88,11 @@ function AdminShell({ children, section }) {
     <main className="admin-main"><header className="admin-topbar"><div><span className="eyebrow">À Margem / Backoffice</span><h1>{labels[section]}</h1></div><Link className="text-link" to="/">Abrir site <ArrowUpRight size={15} /></Link></header>{children}</main></div>;
 }
 
-function initialValue(field, item) {
+function initialValue(field, item, resource) {
+  const picked = (pickers[resource] || []).map(([type]) => type);
+  if (field.startsWith('rel_')) return (item?.relatedContent || []).filter((entry) => entry.targetType === field.slice(4)).map((entry) => entry.targetId);
   if (field === 'itemsText') return (item?.items || []).map((entry) => `${entry.contentType}:${entry.contentId}`).join('\n');
-  if (field === 'relatedText') return (item?.relatedContent || []).map((entry) => `${entry.targetType}:${entry.targetId}`).join('\n');
+  if (field === 'relatedText') return (item?.relatedContent || []).filter((entry) => !picked.includes(entry.targetType)).map((entry) => `${entry.targetType}:${entry.targetId}`).join('\n');
   const value = item?.[field];
   if (field === 'links') return JSON.stringify(value || {}, null, 2);
   if (['startsAt', 'endsAt', 'publishedAt'].includes(field) && value) return new Date(value).toISOString().slice(0, 16);
@@ -91,10 +108,17 @@ function ResourceEditor({ resource }) {
   useEffect(() => { if (['events', 'works', 'articles'].includes(resource)) api.get('/categories').then(({ data }) => setCategories(data)).catch(() => setCategories([])); }, [resource]);
   useEffect(() => { if (resource === 'events') api.get('/admin/resources/venues').then(({ data }) => setVenues(data)).catch(() => setVenues([])); }, [resource]);
   useEffect(() => { if (resource === 'works') api.get('/admin/resources/artists').then(({ data }) => setArtists(data)).catch(() => setArtists([])); }, [resource]);
+  const [relOptions, setRelOptions] = useState({});
+  useEffect(() => {
+    setRelOptions({});
+    for (const [type] of pickers[resource] || []) {
+      api.get(`/admin/resources/${type}`).then(({ data }) => setRelOptions((current) => ({ ...current, [type]: [...data].sort((a, b) => titleFor(a).localeCompare(titleFor(b), 'pt')) }))).catch(() => {});
+    }
+  }, [resource]);
   const startCreate = () => {
     setEditing(null);
     setForm(Object.fromEntries(config.map(([key]) => {
-      let value = initialValue(key, null);
+      let value = initialValue(key, null, resource);
       if (key === 'status') value = resource === 'articles' ? 'draft' : 'upcoming';
       if (key === 'type' && resource === 'works') value = 'creative-project';
       if (key === 'type' && resource === 'venues') value = 'Espaço cultural';
@@ -107,7 +131,7 @@ function ResourceEditor({ resource }) {
     })));
     setError(''); setMessage('');
   };
-  const startEdit = (item) => { setEditing(item); setForm(Object.fromEntries(config.map(([key]) => [key, initialValue(key, item)]))); setError(''); setMessage(''); };
+  const startEdit = (item) => { setEditing(item); setForm(Object.fromEntries(config.map(([key]) => [key, initialValue(key, item, resource)]))); setError(''); setMessage(''); };
   const update = (key, value) => setForm((current) => ({ ...current, [key]: value }));
   const payload = () => {
     const result = { ...form };
@@ -120,6 +144,11 @@ function ResourceEditor({ resource }) {
     if (typeof result.links === 'string') result.links = result.links.trim() ? JSON.parse(result.links) : {};
     if (resource === 'collections') result.items = String(result.itemsText || '').split('\n').map((line) => line.trim()).filter(Boolean).map((line) => { const [type, id] = line.split(':'); return { type, id: Number(id) }; });
     delete result.itemsText;
+    const chosen = Object.keys(result).filter((key) => key.startsWith('rel_')).flatMap((key) => (result[key] || []).map((id) => ({ type: key.slice(4), id: Number(id) })));
+    const typed = String(result.relatedText || '').split('\n').map((line) => line.trim()).filter(Boolean).map((line) => { const [type, id] = line.split(':'); return { type, id: Number(id) }; });
+    if ('relatedText' in result || chosen.length) result.relatedContent = [...chosen, ...typed];
+    for (const key of Object.keys(result)) if (key.startsWith('rel_')) delete result[key];
+    delete result.relatedText;
     return result;
   };
   const save = async (event) => {
@@ -138,7 +167,7 @@ function ResourceEditor({ resource }) {
     {form && Object.keys(form).length > 0 && <form className="admin-editor" onSubmit={save}>
       <div className="admin-editor__heading"><div><p className="eyebrow">{editing ? 'Editar conteúdo' : 'Novo conteúdo'}</p><h2>{editing ? titleFor(editing) : `Criar ${labels[resource]?.toLowerCase()}`}</h2></div><button type="button" className="admin-icon-button" onClick={() => { setForm({}); setEditing(null); }} aria-label="Fechar formulário"><X size={18} /></button></div>
       <div className="admin-editor__grid">{config.map(([key, label, kind, options]) => {
-        const wide = kind === 'textarea' || key === 'itemsText' || key === 'relatedText';
+        const wide = kind === 'textarea' || kind === 'relation' || key === 'itemsText' || key === 'relatedText';
         let control;
         if (key === 'imageUrl' || key === 'coverImage') {
           return <div key={key} className="admin-field admin-field--wide"><ImageField id={`admin-${key}`} label={label.replace(' (URL ou caminho local)', '')} value={form[key]} onChange={(value) => update(key, value)} /></div>;
@@ -153,6 +182,17 @@ function ResourceEditor({ resource }) {
           control = <select id={`admin-${key}`} className="form-select" value={form[key] || ''} onChange={(event) => update(key, event.target.value)} required><option value="">Escolher categoria</option>{categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}</select>;
         } else if (kind === 'venue') {
           control = <select id={`admin-${key}`} className="form-select" value={form[key] || ''} onChange={(event) => update(key, event.target.value)}><option value="">Sem ficha de espaço ligada</option>{venues.map((venue) => <option key={venue.id} value={venue.id}>{venue.name} · {venue.city}</option>)}</select>;
+        } else if (kind === 'relation') {
+          const list = relOptions[key.slice(4)] || [];
+          const selected = (form[key] || []).map(Number);
+          const nameOf = (id) => { const found = list.find((entry) => entry.id === id); return found ? titleFor(found) : `#${id}`; };
+          control = <div className="relation-picker">
+            <select id={`admin-${key}`} className="form-select" value="" onChange={(event) => { if (event.target.value) update(key, [...selected, Number(event.target.value)]); }}>
+              <option value="">{list.length ? 'Escolher da lista…' : 'A carregar…'}</option>
+              {list.filter((entry) => !selected.includes(entry.id) && !(entry.id === editing?.id && key.slice(4) === resource)).map((entry) => <option key={entry.id} value={entry.id}>{titleFor(entry)}</option>)}
+            </select>
+            {selected.length > 0 && <div className="relation-picker__chips">{selected.map((id) => <span className="relation-chip" key={id}>{nameOf(id)}<button type="button" aria-label={`Retirar ${nameOf(id)}`} onClick={() => update(key, selected.filter((value) => value !== id))}><X size={13} /></button></span>)}</div>}
+          </div>;
         } else if (kind === 'artist') {
           control = <><input id={`admin-${key}`} className="form-control" list="admin-artist-options" value={form[key] ?? ''} onChange={(event) => update(key, event.target.value)} required={requiredFields[resource]?.includes(key)} /><datalist id="admin-artist-options">{artists.map((artist) => <option key={artist.id} value={artist.name} />)}</datalist></>;
         } else {

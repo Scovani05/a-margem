@@ -8,6 +8,9 @@ import { ErrorState, Loading } from '../components/States.jsx';
 import usePageMeta from '../hooks/usePageMeta.js';
 import { formatDate, getContentTitle, imageFor } from '../utils/content.js';
 
+// Títulos das secções de conteúdos ligados (as ligações valem nos dois sentidos).
+const relatedTitles = { articles: 'Na revista', artists: 'Artistas', events: 'Eventos', works: 'Obras', venues: 'Espaços', collections: 'Em coleções' };
+const relatedTitle = (type, relatedType) => (type === 'articles' && relatedType === 'artists' ? 'Artistas nesta notícia' : relatedTitles[relatedType] || 'Também relacionado');
 const labels = { events: 'Evento', works: 'Obra', artists: 'Artista', venues: 'Espaço', articles: 'Revista', collections: 'Coleção' };
 const urls = { events: '/events', works: '/works', artists: '/artists', venues: '/venues', articles: '/articles', collections: '/collections' };
 
@@ -141,6 +144,6 @@ export default function DetailPage({ type }) {
     {type === 'works' && <RelatedSection type="artists" items={item.artists} title="Quem está por trás" />}
     {type === 'venues' && <RelatedSection type="events" items={item.events} title="O que acontece por aqui" />}
     {type === 'events' && item.venue?.slug && <section className="detail-venue-link container"><p className="eyebrow">O lugar</p><Link to={`/venues/${item.venue.slug}`}>{item.venue.name} <ArrowUpRight size={16} /></Link><p>{item.venue.city}</p></section>}
-    {Object.entries(relatedGroups).map(([relatedType, relatedItems]) => <RelatedSection key={relatedType} type={relatedType} items={relatedItems} title={`Também relacionado · ${labels[relatedType]?.toLowerCase() || 'conteúdo'}`} />)}
+    {Object.entries(relatedGroups).map(([relatedType, relatedItems]) => <RelatedSection key={relatedType} type={relatedType} items={relatedItems} title={relatedTitle(type, relatedType)} />)}
   </>;
 }
