@@ -94,9 +94,18 @@ export default function DetailPage({ type }) {
   const body = item.body || item.introduction || '';
   const isLongform = type === 'articles' || type === 'collections';
   const infoTitle = type === 'events' ? item.category?.name : type === 'works' ? item.category?.name : type === 'artists' ? (item.disciplines || []).join(' · ') : type === 'venues' ? item.type : item.category?.name;
+  // Obras e eventos de um artista: os encontrados pelo nome (criador/organização) mais os ligados no backoffice.
+  const kindOfEntry = (entry) => entry.contentType || entry.type;
+  const mergeById = (base, kind) => {
+    const list = [...(base || [])];
+    for (const entry of item.relatedContent || []) if (kindOfEntry(entry) === kind && !list.some((existing) => existing.id === entry.id)) list.push(entry);
+    return list;
+  };
+  const artistWorks = type === 'artists' ? mergeById(item.works, 'works') : [];
+  const artistEvents = type === 'artists' ? mergeById(item.events, 'events') : [];
   const alreadyLinked = new Set([
-    ...(type === 'artists' ? (item.works || []).map((entry) => `works:${entry.id}`) : []),
-    ...(type === 'artists' ? (item.events || []).map((entry) => `events:${entry.id}`) : []),
+    ...artistWorks.map((entry) => `works:${entry.id}`),
+    ...artistEvents.map((entry) => `events:${entry.id}`),
     ...(type === 'works' ? (item.artists || []).map((entry) => `artists:${entry.id}`) : []),
     ...(type === 'venues' ? (item.events || []).map((entry) => `events:${entry.id}`) : []),
     ...(type === 'events' && item.venue ? [`venues:${item.venue.id}`] : [])
@@ -142,7 +151,7 @@ export default function DetailPage({ type }) {
         <aside className="detail-body__aside"><span className="eyebrow">Na margem</span><p>Uma seleção independente para descobrires ao teu ritmo.</p><Link to="/discover" className="text-link">Ver mais descobertas <ArrowUpRight size={15} /></Link>{item.isDemo && <div className="demo-explainer"><strong>Exemplo editorial</strong><p>Esta ficha é conteúdo fictício de demonstração. Confirma fontes, datas e direitos antes de publicar dados reais.</p></div>}</aside>
       </div>
     </article>
-    {type === 'artists' && <><RelatedSection type="works" items={item.works} title="Obras e projetos" /><RelatedSection type="events" items={item.events} title="Também podes encontrá-los aqui" />{!item.works?.length && !item.events?.length && <p className="container quiet-note">Ainda não existem obras ou eventos associados a este perfil.</p>}</>}
+    {type === 'artists' && <><RelatedSection type="works" items={artistWorks} title="Obras e projetos" /><RelatedSection type="events" items={artistEvents} title="Também podes encontrá-los aqui" />{!artistWorks.length && !artistEvents.length && <p className="container quiet-note">Ainda não existem obras ou eventos associados a este perfil.</p>}</>}
     {type === 'works' && <RelatedSection type="artists" items={item.artists} title="Quem está por trás" />}
     {type === 'venues' && <RelatedSection type="events" items={item.events} title="O que acontece por aqui" />}
     {type === 'events' && item.venue?.slug && <section className="detail-venue-link container"><p className="eyebrow">O lugar</p><Link to={`/venues/${item.venue.slug}`}>{item.venue.name} <ArrowUpRight size={16} /></Link><p>{item.venue.city}</p></section>}
