@@ -880,3 +880,9 @@ a.admin-stat:hover { transform: translateY(-2px); }
 .relation-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 8px 6px 11px; background: color-mix(in srgb, var(--lime) 55%, var(--paper)); border: 1px solid rgba(23,32,28,.12); font-size: 13px; }
 .relation-chip button { display: inline-grid; place-items: center; border: 0; background: transparent; padding: 2px; color: var(--ink); }
 .relation-chip button:hover { background: rgba(23,32,28,.1); }
+
+/* Ficha: atalho para o artista */
+.detail-artists { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: 0 0 18px; }
+.detail-artists span { color: var(--muted); font: 500 10px var(--mono); letter-spacing: .12em; text-transform: uppercase; margin-right: 4px; }
+.detail-artists a { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px 8px 14px; background: color-mix(in srgb, var(--lime) 60%, var(--paper)); border: 1px solid rgba(23,32,28,.14); color: var(--ink); text-decoration: none; font-weight: 600; font-size: 15px; transition: background .2s; }
+.detail-artists a:hover { background: var(--lime); }

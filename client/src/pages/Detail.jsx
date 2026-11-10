@@ -101,6 +101,8 @@ export default function DetailPage({ type }) {
     for (const entry of item.relatedContent || []) if (kindOfEntry(entry) === kind && !list.some((existing) => existing.id === entry.id)) list.push(entry);
     return list;
   };
+  // Artistas ligados a este conteúdo (evento, obra ou artigo): aparecem no topo, com ligação direta à ficha.
+  const linkedArtists = type === 'artists' ? [] : mergeById(item.artists, 'artists');
   const artistWorks = type === 'artists' ? mergeById(item.works, 'works') : [];
   const artistEvents = type === 'artists' ? mergeById(item.events, 'events') : [];
   const alreadyLinked = new Set([
@@ -123,7 +125,8 @@ export default function DetailPage({ type }) {
       <div className={`container detail-hero ${isLongform ? 'detail-hero--longform' : ''}`}>
         <div className="detail-hero__copy"><div className="detail-badges">{item.isDemo && <span className="demo-badge">Conteúdo de demonstração</span>}{item.status === 'cancelled' && <span className="status-badge status-badge--cancelled">Cancelado</span>}{eventIsPast && item.status !== 'cancelled' && <span className="status-badge">Evento passado</span>}</div>
           <h1>{item.title || item.name}</h1>{item.subtitle && <p className="detail-subtitle">{item.subtitle}</p>}
-          <div className="detail-meta">{item.authorName && <span>Por {item.authorName}</span>}{item.creator && <span>Por {item.creator}</span>}{item.publishedAt && <span>{formatDate(item.publishedAt)}</span>}{item.releasedAt && <span>{formatDate(item.releasedAt, { month: 'long', year: 'numeric' })}</span>}{item.category && <span>{item.category.name}</span>}</div>
+          {linkedArtists.length > 0 && <p className="detail-artists"><span>{linkedArtists.length > 1 ? 'Artistas' : 'Artista'}</span>{linkedArtists.map((artist) => <Link key={artist.id} to={`/artists/${artist.slug}`}>{artist.name} <ArrowUpRight size={15} /></Link>)}</p>}
+          <div className="detail-meta">{item.authorName && <span>Por {item.authorName}</span>}{item.creator && !linkedArtists.some((artist) => artist.name === item.creator) && <span>Por {item.creator}</span>}{item.publishedAt && <span>{formatDate(item.publishedAt)}</span>}{item.releasedAt && <span>{formatDate(item.releasedAt, { month: 'long', year: 'numeric' })}</span>}{item.category && <span>{item.category.name}</span>}</div>
           <p className="detail-lede">{item.excerpt || item.description || item.bio}</p>
           <div className="detail-actions"><SaveButton type={type} item={item} /><button type="button" className="btn btn-outline-dark" onClick={share}><Share2 size={16} /> Partilhar</button>{shareMessage && <span className="form-note" role="status">{shareMessage}</span>}</div>
         </div>
