@@ -6,3 +6,7 @@ dist/
 npm-debug.log*
 *.log
 *.err
+# cópias duplicadas criadas ao descarregar ficheiros (ex.: styles-1.css)
+*-1.css
+*-1.js
+*-1.jsx

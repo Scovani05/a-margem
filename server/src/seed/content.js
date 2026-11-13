@@ -37,7 +37,18 @@ const img = {
   saoJorge: wm('3/32', 'Cinema_S%C3%A3o_Jorge.jpg', true),
   culturgest: wm('f/f5', 'Culturgest%2C_Edif%C3%ADcio-sede_da_Caixa_Geral_de_Dep%C3%B3sitos_01.jpg', true),
   serralves: wm('7/74', 'Museu_Serralves_exterior_%28Porto%29.jpg'),
-  lello: wm('a/aa', 'Interior_view_of_Livraria_Lello_08.jpg')
+  lello: wm('a/aa', 'Interior_view_of_Livraria_Lello_08.jpg'),
+  // Imagens ligadas a cada artista ou obra (instrumentos, obras públicas, festivais), sem pessoas.
+  adufe: wm('3/3b', 'Adufe%2C_Botanical_Garden_of_Lisbon%2C_Portugal_03.jpg'),
+  adufe2: wm('d/d2', 'Adufe%2C_Botanical_Garden_of_Lisbon%2C_Portugal_02.jpg'),
+  violaBraguesa: wm('3/39', 'Viola_Braguesa.jpg'),
+  linhaDoMar: wm('0/02', 'A_Linha_do_Mar_de_Pedro_Cabrita_Reis%2C_2020.jpg'),
+  solitario: wm('0/05', 'Solit%C3%A1rio_n%C2%BA1%2C_Joana_Vasconcelos%2C_MAAT%2C_Lisboa_02.jpg'),
+  cannes: wm('5/56', 'Cannes_Palais_des_Festivals_et_des_Congr%C3%A8s.jpg', true),
+  avignon: wm('6/69', 'Stage_Cour_d%27Honneur_%40_Palais_des_Papes_d%27Avignon_05.jpg'),
+  caixasDeRitmos: wm('0/09', 'Drum_machines_%26_submixer_%40_Sarlacc_Studios.jpg', true),
+  culturgestEntrada: wm('d/d5', 'Culturgest_Entrada_01.jpg'),
+  saoMamede: wm('c/c6', 'Teatro_S%C3%A3o_Mamede.jpg')
 };
 
 const RIMAS = 'https://www.rimasebatidas.pt/20-discos-portugueses-que-vao-sair-ate-ao-final-do-ano/';
@@ -127,12 +138,12 @@ const artists = [
   {
     slug: 'ana-lua-caiano', name: 'Ana Lua Caiano', location: 'Lisboa', disciplines: ['Música', 'Eletrónica'],
     bio: 'Cantora e produtora que junta eletrónica e sons da música tradicional portuguesa. Lançou a 6 de novembro de 2026 o segundo álbum, Devagar Que A Vida É Curta, pela Glitterbeat Records.',
-    imageUrl: img.vinil, featured: true
+    imageUrl: img.adufe, featured: true
   },
   {
     slug: 'iolanda', name: 'IOLANDA', location: 'Portugal', disciplines: ['Música', 'Pop'],
     bio: 'Cantora que representou Portugal no Festival Eurovisão da Canção de 2024 com "Grito". O álbum Quebranto (outubro de 2026) cruza pop urbana com o fado e a viola braguesa. Atua no Coliseu dos Recreios a 7 de dezembro.',
-    imageUrl: img.guitarra2, featured: true
+    imageUrl: img.violaBraguesa, featured: true
   },
   {
     slug: 'benjamim', name: 'Benjamim', location: 'Lisboa', disciplines: ['Música', 'Canção'],
@@ -147,32 +158,32 @@ const artists = [
   {
     slug: 'bruno-pernadas', name: 'Bruno Pernadas', location: 'Lisboa', disciplines: ['Música', 'Jazz', 'Composição'],
     bio: 'Compositor, guitarrista e produtor que mistura jazz, pop e música do mundo. Tem concerto anunciado em Lisboa a 30 de novembro de 2026, na Casa Capitão.',
-    imageUrl: img.casaDaMusica
+    imageUrl: img.vinil2
   },
   {
     slug: 'pedro-cabrita-reis', name: 'Pedro Cabrita Reis', location: 'Lisboa', disciplines: ['Artes visuais', 'Escultura', 'Pintura'],
     bio: 'Artista nascido em Lisboa em 1956, com obra em escultura, pintura e desenho. Representou Portugal na Bienal de Veneza de 2003. No MAAT mostra quase 200 obras inéditas.',
-    imageUrl: img.maatNoite, featured: true
+    imageUrl: img.linhaDoMar, featured: true
   },
   {
     slug: 'joana-vasconcelos', name: 'Joana Vasconcelos', location: 'Lisboa', disciplines: ['Artes visuais', 'Escultura'],
     bio: 'Artista plástica de Lisboa conhecida pelas esculturas monumentais e pelo uso de têxteis e objetos do quotidiano. No MAAT cruza a sua obra com a alta-costura de Valentino.',
-    imageUrl: img.maat
+    imageUrl: img.solitario
   },
   {
     slug: 'tiago-guedes', name: 'Tiago Guedes', location: 'Portugal', disciplines: ['Cinema', 'Realização'],
     bio: 'Realizador português. O seu filme Aquí, inspirado na trilogia de Jesus de J. M. Coetzee, estreou na Cannes Première, no Festival de Cannes de 2026.',
-    imageUrl: img.batalha
+    imageUrl: img.cannes
   },
   {
     slug: 'marlene-monteiro-freitas', name: 'Marlene Monteiro Freitas', location: 'Lisboa', disciplines: ['Dança', 'Coreografia'],
     bio: 'Coreógrafa e intérprete nascida em Cabo Verde e radicada em Portugal. Em dezembro de 2026 apresenta Nôt no Theatro Circo, peça inspirada em As Mil e Uma Noites.',
-    imageUrl: img.theatroCirco
+    imageUrl: img.avignon
   },
   {
     slug: 'hugo-sousa', name: 'Hugo Sousa', location: 'Portugal', disciplines: ['Comédia', 'Stand-up'],
-    bio: 'Humorista português de stand-up. Em 2026 estreou Aqui Entre Nós, um solo sobre a vida, a família e as diferenças entre gerações.',
-    imageUrl: img.aulaMagna
+    bio: 'Humorista português de stand-up. Aqui Entre Nós, o solo de 2026 sobre a vida, a família e as diferenças entre gerações, está em digressão por Lisboa, Chaves, Guimarães, Faro e Évora até 5 de dezembro.',
+    imageUrl: img.saoMamede
   },
   {
     slug: 'diogo-faro', name: 'Diogo Faro', location: 'Lisboa', disciplines: ['Comédia', 'Stand-up'],
@@ -190,12 +201,12 @@ const works = [
   {
     slug: 'devagar-que-a-vida-e-curta-ana-lua-caiano', title: 'Devagar Que A Vida É Curta', subtitle: 'Ana Lua Caiano (2026)', type: 'album', category: 'musica', creator: 'Ana Lua Caiano',
     description: 'Segundo álbum de Ana Lua Caiano, editado pela Glitterbeat Records. Mantém a mistura de eletrónica com a música tradicional portuguesa, agora com mais teclas, sopros e harmonias vocais.',
-    officialUrl: RIMAS, imageUrl: img.vinil, releasedAt: '2026-11-06', featured: true
+    officialUrl: RIMAS, imageUrl: img.adufe2, releasedAt: '2026-11-06', featured: true
   },
   {
     slug: 'quebranto-iolanda', title: 'Quebranto', subtitle: 'IOLANDA (2026)', type: 'album', category: 'musica', creator: 'IOLANDA',
     description: 'Pop urbana contemporânea com raízes na música tradicional portuguesa, do fado à viola braguesa.',
-    officialUrl: RIMAS, imageUrl: img.guitarra2, releasedAt: '2026-10-08', featured: true
+    officialUrl: RIMAS, imageUrl: img.violaBraguesa, releasedAt: '2026-10-08', featured: true
   },
   {
     slug: 'cronicas-do-monte-zeus-benjamim', title: 'Crónicas do Monte Zeus', subtitle: 'Benjamim (2026)', type: 'album', category: 'musica', creator: 'Benjamim',
@@ -205,12 +216,12 @@ const works = [
   {
     slug: 'catedral-gotica-niagara', title: 'Catedral Gótica', subtitle: 'Niagara (2026)', type: 'album', category: 'musica', creator: 'Niagara',
     description: 'Novo disco do trio de música eletrónica Niagara, editado pela Príncipe Discos. Sucede a De Motu (2024).',
-    officialUrl: RIMAS, imageUrl: img.vinil, releasedAt: '2026-10-23'
+    officialUrl: RIMAS, imageUrl: img.caixasDeRitmos, releasedAt: '2026-10-23'
   },
   {
     slug: '333-ak-adrix', title: '333', subtitle: 'A.K.Adrix (2026)', type: 'album', category: 'musica', creator: 'A.K.Adrix',
     description: 'Primeiro álbum do produtor em cerca de seis anos, depois de Código de Barras. Edição da Príncipe Discos.',
-    officialUrl: RIMAS, imageUrl: img.vinil2, releasedAt: '2026-10-23'
+    officialUrl: RIMAS, imageUrl: img.caixasDeRitmos, releasedAt: '2026-10-23'
   },
   {
     slug: 'jardim-celeste-mokina', title: 'Jardim Celeste', subtitle: 'mokina (2026)', type: 'album', category: 'musica', creator: 'mokina',
@@ -225,7 +236,7 @@ const works = [
   {
     slug: 'aqui-tiago-guedes', title: 'Aquí', subtitle: 'Filme de Tiago Guedes (2026)', type: 'film', category: 'cinema', creator: 'Tiago Guedes',
     description: 'Simón conhece um rapaz, David, numa travessia por mar até uma terra sem nome. Com Inés, formam uma família pouco convencional. Com Albano Jerónimo, Patricia López Arnaiz e Manolo Solo. Coprodução Portugal-França.',
-    officialUrl: 'https://www.festival-cannes.com/en/f/aqui/', imageUrl: img.batalha, releasedAt: null
+    officialUrl: 'https://www.festival-cannes.com/en/f/aqui/', imageUrl: img.cannes, releasedAt: null
   }
 ];
 
@@ -270,7 +281,7 @@ const events = [
     slug: 'venus-joana-vasconcelos-valentino-maat', title: 'VENUS - Valentino pelo olhar de Joana Vasconcelos', subtitle: 'Exposição no MAAT', category: 'artes-visuais', venue: 'maat',
     city: 'Lisboa', organizer: 'MAAT', startsAt: '2026-10-02T10:00:00Z', endsAt: '2027-02-22T19:00:00Z',
     description: 'Diálogo entre arte e alta-costura: obras de Joana Vasconcelos, antigas e novas, ao lado de cerca de 30 criações de Valentino Garavani. Faz parte dos 10 anos do MAAT.',
-    officialUrl: 'https://www.maat.pt/en/news/venus-valentino-garavani-through-eyes-joana-vasconcelos-maat-october', imageUrl: img.maat, featured: true
+    officialUrl: 'https://www.maat.pt/en/news/venus-valentino-garavani-through-eyes-joana-vasconcelos-maat-october', imageUrl: img.solitario, featured: true
   },
   {
     slug: 'tragedia-e-farsa-pomar-abrantes', title: 'Tragédia e Farsa', subtitle: 'Júlio Pomar e Gabriel Abrantes', category: 'artes-visuais', venue: 'atelier-museu-julio-pomar',
@@ -286,8 +297,8 @@ const events = [
   },
   {
     slug: 'a-arca-eterna-fernando-pessoa', title: 'A Arca Eterna: Fernando Pessoa e a Posteridade', subtitle: 'Exposição na Casa Fernando Pessoa', category: 'literatura', venue: 'casa-fernando-pessoa',
-    city: 'Lisboa', organizer: 'Casa Fernando Pessoa', startsAt: '2025-11-27T10:00:00Z', endsAt: '2026-12-06T18:00:00Z',
-    description: 'Como cresceu a lenda de Pessoa depois de 1935, a partir da famosa arca de inéditos. Curadoria de Antonio Sáez Delgado. Últimas semanas.',
+    city: 'Lisboa', organizer: 'Casa Fernando Pessoa', startsAt: '2025-11-27T10:00:00Z', endsAt: '2027-01-10T18:00:00Z',
+    description: 'Como cresceu a lenda de Pessoa depois de 1935, a partir da famosa arca de inéditos. Curadoria de Antonio Sáez Delgado. Até 10 de janeiro de 2027.',
     officialUrl: 'https://www.casafernandopessoa.pt/pt/cfp/visita/exposicao-temporaria/arca-eterna-fernando-pessoa-e-posteridade', imageUrl: img.pessoa
   },
   {
@@ -309,21 +320,21 @@ const events = [
     officialUrl: 'https://theatrocirco.com/en/event/not-en/', imageUrl: img.theatroCirco
   },
   {
-    slug: 'hugo-sousa-aqui-entre-nos-aula-magna', title: 'Hugo Sousa - Aqui Entre Nós', subtitle: 'Stand-up comedy', category: 'comedia', venue: 'aula-magna',
-    city: 'Lisboa', organizer: 'Aula Magna', startsAt: '2026-11-15T19:00:00Z', endsAt: null,
-    description: 'O novo solo de stand-up de Hugo Sousa, feito de histórias de família, pequenos desastres do dia a dia e diferenças entre gerações. Duas sessões, às 19:00 e às 21:30.',
+    slug: 'hugo-sousa-aqui-entre-nos-aula-magna', title: 'Hugo Sousa - Aqui Entre Nós', subtitle: 'Stand-up comedy · digressão', category: 'comedia', venue: 'aula-magna',
+    city: 'Lisboa', organizer: 'Aula Magna', startsAt: '2026-11-15T19:00:00Z', endsAt: '2026-12-05T22:00:00Z',
+    description: 'O novo solo de stand-up de Hugo Sousa anda em digressão: Lisboa (15 nov), Chaves (19 nov), Guimarães (20 e 21 nov), Faro (4 dez) e Évora (5 dez). Histórias de família, pequenos desastres do dia a dia e diferenças entre gerações.',
     officialUrl: 'https://www.agendalx.pt/events/event/aqui-entre-nos/', imageUrl: img.aulaMagna, featured: true
   },
   {
     slug: 'diogo-faro-massa-mae-trindade', title: 'Diogo Faro - Massa Mãe', subtitle: 'Stand-up comedy', category: 'comedia', venue: 'teatro-da-trindade',
     city: 'Lisboa', organizer: 'Teatro da Trindade', startsAt: '2026-12-15T21:00:00Z', endsAt: null,
-    description: 'Diogo Faro faz o balanço das suas aventuras, dos podcasts às conversas com a avó, com o olhar sobre a sociedade que o tornou conhecido.',
+    description: 'Esgotado. Diogo Faro faz o balanço das suas aventuras, dos podcasts às conversas com a avó, com o olhar sobre a sociedade que o tornou conhecido.',
     officialUrl: 'https://www.timeout.pt/lisboa/pt/coisas-para-fazer/massa-mae', imageUrl: img.trindade
   },
   {
     slug: 'ana-garcia-martins-insuficiente-sa-da-bandeira', title: 'Ana Garcia Martins - Insuficiente', subtitle: 'Stand-up comedy', category: 'comedia', venue: 'teatro-sa-da-bandeira',
     city: 'Porto', organizer: 'Teatro Sá da Bandeira', startsAt: '2026-12-18T21:00:00Z', endsAt: '2026-12-19T23:00:00Z',
-    description: 'O novo solo de Ana Garcia Martins é sobre a sensação de não ser suficiente, a autocrítica e a síndrome do impostor. Duas noites, 18 e 19 de dezembro.',
+    description: 'O novo solo de Ana Garcia Martins é sobre a sensação de não ser suficiente, a autocrítica e a síndrome do impostor. Datas adiadas de setembro: 18 e 19 de dezembro (à venda na Ticketline aparece só a sessão de 19).',
     officialUrl: 'https://teatrosadabandeira.pt/evento/ana-garcia-martins-insuficiente/', imageUrl: img.saDaBandeira
   },
 ];
@@ -338,7 +349,7 @@ const articles = [
   {
     slug: 'exposicoes-em-lisboa-ate-fevereiro', title: 'Cinco exposições portuguesas para ver em Lisboa', subtitle: 'Artes visuais', category: 'artes-visuais',
     excerpt: 'Cabrita Reis e Joana Vasconcelos nos 10 anos do MAAT, Pomar e Abrantes, Carlos Paredes e Fernando Pessoa.',
-    body: 'O MAAT faz 10 anos e celebra com duas exposições de artistas portugueses: Pedro Cabrita Reis mostra quase 200 obras inéditas em sem mágoa no coração (até 15 de fevereiro de 2027) e Joana Vasconcelos junta a sua obra à alta-costura de Valentino em VENUS (até 22 de fevereiro).\n\nNo Atelier-Museu Júlio Pomar, Tragédia e Farsa (desde 5 de novembro) põe o neorrealismo de Pomar ao lado da pintura de Gabriel Abrantes sobre o trabalho precário.\n\nCorre para as últimas semanas de duas exposições: A Arca Eterna, na Casa Fernando Pessoa, fecha a 6 de dezembro, e Variações para Carlos Paredes, no Museu do Fado, a 30 de dezembro.',
+    body: 'O MAAT faz 10 anos e celebra com duas exposições de artistas portugueses: Pedro Cabrita Reis mostra quase 200 obras inéditas em sem mágoa no coração (até 15 de fevereiro de 2027) e Joana Vasconcelos junta a sua obra à alta-costura de Valentino em VENUS (até 22 de fevereiro).\n\nNo Atelier-Museu Júlio Pomar, Tragédia e Farsa (desde 5 de novembro) põe o neorrealismo de Pomar ao lado da pintura de Gabriel Abrantes sobre o trabalho precário.\n\nCorre para as últimas semanas de duas exposições: Variações para Carlos Paredes, no Museu do Fado, fecha a 30 de dezembro, e A Arca Eterna, na Casa Fernando Pessoa, a 10 de janeiro de 2027.',
     imageUrl: img.maatNoite, featured: true, publishedAt: '2026-11-09T10:30:00Z'
   },
   {
@@ -364,12 +375,12 @@ const articles = [
     slug: 'doclisboa-2026-premios-manuel-mozos', title: 'Manuel Mozos vence a competição portuguesa do Doclisboa', subtitle: 'Notícia', category: 'cinema',
     excerpt: 'A Voz de Todos - Jornal do Fundão foi escolhido por unanimidade; João Pedro Rodrigues e João Rui Guerra da Mata ganharam o prémio de realização.',
     body: 'A 24.ª edição do Doclisboa anunciou os premiados a 24 de outubro. Na competição portuguesa, o prémio de melhor filme foi para A Voz de Todos - Jornal do Fundão, de Manuel Mozos, por unanimidade. O prémio do júri distinguiu Hipogeus, de Raul Domingues, e Povo e Poder, de Ico Costa, recebeu o prémio Escola - ETIC.\n\nNa competição internacional, o Grande Prémio foi para Car la Lune, de Éric Baudelaire. João Pedro Rodrigues e João Rui Guerra da Mata receberam o prémio de melhor realização por 13 Alfinetes.\n\nO público escolheu Os continuadores da revolução, de Pedro Neves, e Casa do Artista: Não é permitido envelhecer, de Solveig Nordlund. A 25.ª edição está marcada para 14 a 24 de outubro de 2027.\n\nFonte: RTP / Lusa, 24 de outubro de 2026.',
-    imageUrl: img.culturgest, publishedAt: '2026-10-25T10:00:00Z'
+    imageUrl: img.culturgestEntrada, publishedAt: '2026-10-25T10:00:00Z'
   },
   {
-    slug: 'serralves-anri-sala-holzer-lee-ufan-alice-neel', title: 'O que ver em Serralves até janeiro', subtitle: 'Notícia', category: 'artes-visuais',
-    excerpt: 'Anri Sala chega à ala oeste do museu em novembro; Jenny Holzer, Lee Ufan e Alice Neel continuam até janeiro de 2027.',
-    body: 'O Museu de Serralves, no Porto, recebe a partir de novembro uma instalação pensada para o espaço por Anri Sala, na ala oeste do museu, que fica até maio de 2027.\n\nContinuam abertas até janeiro de 2027 três exposições do programa deste ano: Wrong Answers, de Jenny Holzer, que se estende também à biblioteca; Lee Ufan, na casa e no parque; e Beautifully Imperfect, de Alice Neel, com microcoreografias de Vera Mantero em resposta às pinturas.\n\nNa Casa do Cinema Manoel de Oliveira, Manoel de Oliveira e o Cinema Português III olha para as últimas três décadas do realizador e fica até setembro de 2027.\n\nFonte: programação de Serralves para 2026, apresentada a 16 de dezembro de 2025 (DN / Lusa).',
+    slug: 'serralves-anri-sala-holzer-lee-ufan-alice-neel', title: 'O que ver em Serralves neste inverno', subtitle: 'Notícia', category: 'artes-visuais',
+    excerpt: 'Anri Sala abre a 27 de novembro na ala esquerda do museu; Jenny Holzer, Alice Neel e Lee Ufan continuam em exposição.',
+    body: 'O Museu de Serralves, no Porto, abre a 27 de novembro uma instalação de Anri Sala pensada para a ala esquerda do museu.\n\nContinuam abertas três exposições do programa deste ano: Wrong Answers, de Jenny Holzer, até 3 de janeiro de 2027; Beautifully Imperfect, de Alice Neel, com microcoreografias de Vera Mantero em resposta às pinturas, até 17 de janeiro; e Fragments of Infinity, de Lee Ufan, até 7 de março.\n\nFontes: serralves.pt; e-flux.com.',
     imageUrl: img.serralves, publishedAt: '2026-11-02T10:00:00Z'
   },
   {
@@ -395,7 +406,7 @@ const collections = [
   },
   {
     slug: 'exposicoes-lisboa-inverno-2026', title: 'Exposições em Lisboa neste inverno', description: 'Artistas e figuras da cultura portuguesa nos museus de Lisboa.',
-    introduction: 'Do MAAT à Casa Fernando Pessoa, cinco exposições para ver antes que fechem.\n\nDuas fecham já em dezembro: A Arca Eterna, na Casa Fernando Pessoa (6 de dezembro), e Variações para Carlos Paredes, no Museu do Fado (30 de dezembro). As outras três ficam até fevereiro de 2027. Os bilhetes vão dos 3 € do Atelier-Museu Júlio Pomar aos 11 € do MAAT, e todos se compram no próprio museu ou online.',
+    introduction: 'Do MAAT à Casa Fernando Pessoa, cinco exposições para ver antes que fechem.\n\nDuas fecham primeiro: Variações para Carlos Paredes, no Museu do Fado (30 de dezembro), e A Arca Eterna, na Casa Fernando Pessoa (10 de janeiro de 2027). As outras três ficam até fevereiro de 2027. Os bilhetes vão dos 3 € do Atelier-Museu Júlio Pomar aos 12 € do MAAT, e todos se compram no próprio museu ou online.',
     coverImage: img.maat, featured: true,
     items: [['events', 'pedro-cabrita-reis-sem-magoa-no-coracao-maat'], ['events', 'venus-joana-vasconcelos-valentino-maat'], ['events', 'tragedia-e-farsa-pomar-abrantes'], ['events', 'variacoes-para-carlos-paredes-museu-do-fado'], ['events', 'a-arca-eterna-fernando-pessoa']]
   },
@@ -407,7 +418,7 @@ const collections = [
   },
   {
     slug: 'comedia-ate-ao-fim-do-ano-2026', title: 'Rir até ao fim do ano', description: 'Três solos de stand-up de humoristas portugueses, em Lisboa e no Porto.',
-    introduction: 'Três humoristas, três solos novos, entre novembro e dezembro.\n\nHugo Sousa leva Aqui Entre Nós à Aula Magna a 15 de novembro, Diogo Faro traz Massa Mãe ao Teatro da Trindade a 15 de dezembro e Ana Garcia Martins apresenta Insuficiente no Teatro Sá da Bandeira, no Porto, a 18 e 19 de dezembro. Em cada ficha estão as horas, os preços e a ligação para comprar bilhetes.',
+    introduction: 'Três humoristas, três solos novos, entre novembro e dezembro.\n\nHugo Sousa anda em digressão com Aqui Entre Nós (Lisboa, Chaves, Guimarães, Faro e Évora, até 5 de dezembro), Ana Garcia Martins apresenta Insuficiente no Teatro Sá da Bandeira, no Porto, em dezembro, e Diogo Faro traz Massa Mãe ao Teatro da Trindade a 15 de dezembro (já esgotado). Em cada ficha estão as horas, os preços e a ligação para comprar bilhetes.',
     coverImage: img.trindade, featured: true,
     items: [['events', 'hugo-sousa-aqui-entre-nos-aula-magna'], ['events', 'diogo-faro-massa-mae-trindade'], ['events', 'ana-garcia-martins-insuficiente-sa-da-bandeira']]
   },
@@ -469,6 +480,15 @@ const imageCredits = [
   ['Aula Magna da Universidade de Lisboa', 'Vitor Oliveira', 'CC BY-SA 2.0'],
   ['Teatro da Trindade', 'pedrik', 'CC BY 2.0'],
   ['Teatro Sá da Bandeira', 'Nikolai Ormazablev', 'CC BY 2.0'],
+  ['Adufe (Jardim Botânico de Lisboa)', 'Londonjackbooks', 'CC0'],
+  ['Viola braguesa (Festival Cordofonias 2026)', 'Joseolgon', 'CC BY 4.0'],
+  ['A Linha do Mar, de Pedro Cabrita Reis (Matosinhos)', 'Femagap', 'CC BY-SA 4.0'],
+  ['Solitário #1, de Joana Vasconcelos (MAAT)', 'GualdimG', 'CC BY-SA 4.0'],
+  ['Palais des Festivals, Cannes', 'Timantha102938', 'Domínio público'],
+  ['Cour d\'Honneur do Palácio dos Papas, Festival de Avignon', 'Rémih', 'CC BY-SA 4.0'],
+  ['Caixas de ritmos (Sarlacc Studios)', 'nourogg', 'CC BY-SA 2.0'],
+  ['Entrada da Culturgest', 'GualdimG', 'CC BY-SA 4.0'],
+  ['São Mamede - Centro de Artes e Espetáculos de Guimarães', 'V.B.Speranza', 'CC BY-SA 4.0'],
 ];
 
 // Junta a cada conteúdo o texto completo e a informação de bilhetes (texts.js).

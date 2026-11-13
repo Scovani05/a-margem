@@ -32,12 +32,12 @@ const events = {
   },
   'pedro-cabrita-reis-sem-magoa-no-coracao-maat': {
     body: 'Para os 10 anos do MAAT, Pedro Cabrita Reis ocupa a Galeria Oval com quase 200 obras, muitas nunca mostradas: pintura, desenho e escultura, várias feitas de propósito para esta exposição. A curadoria é de João Pinharanda.\n\nO artista vai buscar referências à arte depois do Renascimento, da escultura à pintura de corte e aos gabinetes de curiosidades. O título vem de Hesíodo e da sua descrição da Idade de Ouro, um tempo em que se vivia sem sofrimento nem preocupações.',
-    ticketInfo: 'Até 15 de fevereiro de 2027, na Galeria Oval do MAAT (Av. Brasília, Belém, Lisboa). O museu abre de quarta a segunda, das 10:00 às 19:00.\n\nO bilhete MAAT + Central Tejo custa 11 € e compra-se na bilheteira do museu ou online em maat.pt.',
+    ticketInfo: 'Até 15 de fevereiro de 2027, na Galeria Oval do MAAT (Av. Brasília, Belém, Lisboa). O museu abre de quarta a segunda, das 10:00 às 19:00.\n\nO bilhete MAAT + Central Tejo custa 12 € e compra-se na bilheteira do museu ou online em maat.pt.',
     ticketUrl: 'https://www.maat.pt/en/event/pedro-cabrita-reis-without-sorrow-heart'
   },
   'venus-joana-vasconcelos-valentino-maat': {
     body: 'VENUS põe frente a frente a escultura de Joana Vasconcelos e a alta-costura de Valentino Garavani (1932-2026). A artista criou um percurso próprio nas Galerias 1 e 2 do MAAT, com obras conhecidas e peças novas, ao lado de cerca de 30 criações de Valentino.\n\nO projeto começou no PM23, em Roma, em janeiro de 2026, e foi adaptado aos espaços do MAAT para o programa dos 10 anos do museu.',
-    ticketInfo: 'Até 22 de fevereiro de 2027, nas Galerias 1 e 2 do MAAT (Av. Brasília, Belém, Lisboa). O museu abre de quarta a segunda, das 10:00 às 19:00.\n\nO bilhete MAAT + Central Tejo custa 11 € e compra-se na bilheteira do museu ou online em maat.pt.',
+    ticketInfo: 'Até 22 de fevereiro de 2027, nas Galerias 1 e 2 do MAAT (Av. Brasília, Belém, Lisboa). O museu abre de quarta a segunda, das 10:00 às 19:00.\n\nO bilhete MAAT + Central Tejo custa 12 € e compra-se na bilheteira do museu ou online em maat.pt.',
     ticketUrl: 'https://www.maat.pt/en/news/venus-valentino-garavani-through-eyes-joana-vasconcelos-maat-october'
   },
   'tragedia-e-farsa-pomar-abrantes': {
@@ -52,7 +52,7 @@ const events = {
   },
   'a-arca-eterna-fernando-pessoa': {
     body: 'Quando morreu, em 1935, Fernando Pessoa deixou uma arca com milhares de papéis inéditos. A Arca Eterna conta como a sua lenda cresceu a partir dela, com edições, leituras e descobertas ao longo de quase um século.\n\nA curadoria é de Antonio Sáez Delgado, professor da Universidade de Évora. No fim do percurso, cada visitante pode montar a sua própria seleção portátil de textos e imagens.',
-    ticketInfo: 'Até 6 de dezembro de 2026, na Casa Fernando Pessoa (Rua Coelho da Rocha 16, Campo de Ourique, Lisboa). Abre de terça a domingo, das 10:00 às 18:00.\n\nBilhetes na bilheteira da Casa ou antecipadamente na BOL. Há visitas guiadas em português aos sábados e domingos às 16:00.',
+    ticketInfo: 'Até 10 de janeiro de 2027, na Casa Fernando Pessoa (Rua Coelho da Rocha 16, Campo de Ourique, Lisboa). Abre de terça a domingo, das 10:00 às 18:00.\n\nBilhetes na bilheteira da Casa ou antecipadamente na BOL. Há visitas guiadas em português aos sábados e domingos às 16:00.',
     ticketUrl: 'https://casafernandopessoa.bol.pt/'
   },
   'auto-da-barca-do-inferno-marta-pazos-tnsj': {
@@ -71,18 +71,18 @@ const events = {
     ticketUrl: 'https://www.bol.pt/Comprar/Bilhetes/180725-not_marlene_monteiro_freitas-theatro_circo/Sessoes'
   },
   'hugo-sousa-aqui-entre-nos-aula-magna': {
-    body: 'Aqui Entre Nós é o novo solo de stand-up de Hugo Sousa. O humorista fala da própria vida: histórias de família, relações, memórias, hábitos, diferenças entre gerações e os pequenos momentos embaraçosos do dia a dia.\n\nO espetáculo dura cerca de 60 minutos, sem intervalo, e é para maiores de 16 anos.',
-    ticketInfo: 'Domingo, 15 de novembro, na Aula Magna (Cidade Universitária, Lisboa), em duas sessões: 19:00 e 21:30. M/16.\n\nBilhetes de 18 € a 27 €, conforme a zona (Doutorais 18-27 €, Anfiteatro Inferior 22 €, Anfiteatro Superior e Tribunas 18 €), à venda na BOL.',
+    body: 'Aqui Entre Nós é o novo solo de stand-up de Hugo Sousa. O humorista fala da própria vida: histórias de família, relações, memórias, hábitos, diferenças entre gerações e os pequenos momentos embaraçosos do dia a dia.\n\nO espetáculo dura cerca de 60 minutos, sem intervalo, e é para maiores de 16 anos. Está em digressão pelo país.',
+    ticketInfo: 'Próximas datas da digressão (M/16):\n\n15 nov · Lisboa, Aula Magna · 19:00 e 21:30 (últimos bilhetes) · 18 € a 27 €\n19 nov · Chaves, Centro Cultural de Chaves · 19:00 e 21:00 · 18 €\n20 e 21 nov · Guimarães, CAE São Mamede · 18 € a 22 €\n4 dez · Faro, Conservatório Regional do Algarve · 21:00 e 23:00 · 18 €\n5 dez · Évora, Auditório Nobre da Universidade de Évora · 17:00 e 21:00 · 18 €\n\nBilhetes na BOL (cada cidade tem a sua página). A sessão de Braga (13 nov) esgotou.',
     ticketUrl: 'https://www.bol.pt/Comprar/Bilhetes/179423-lisboa_hugo_sousa_aqui_entre_nos-aula_magna/'
   },
   'diogo-faro-massa-mae-trindade': {
     body: 'Em Massa Mãe, Diogo Faro faz o balanço das suas aventuras, dos podcasts às conversas com a avó, e volta às observações sobre a sociedade atual que marcam o seu humor.\n\nO espetáculo estreou primeiro no Porto e chega a Lisboa no fim do ano, ao Teatro da Trindade, no Chiado.',
-    ticketInfo: 'Terça-feira, 15 de dezembro, às 21:00, no Teatro da Trindade (Largo da Trindade 7A, Chiado, Lisboa). Metro Baixa-Chiado.\n\nBilhetes de 14 € a 21 €, à venda na Ticketline e na bilheteira do teatro.',
+    ticketInfo: 'ESGOTADO. Terça-feira, 15 de dezembro, às 21:00, no Teatro da Trindade (Largo da Trindade 7A, Chiado, Lisboa). Metro Baixa-Chiado.\n\nBilhetes de 14 € a 21 €, à venda na Ticketline e na bilheteira do teatro.',
     ticketUrl: 'https://www.ticketline.pt/en/evento/massa-mae-diogo-faro-104844'
   },
   'ana-garcia-martins-insuficiente-sa-da-bandeira': {
     body: 'Insuficiente é o novo solo de stand-up de Ana Garcia Martins. Fala dos sentimentos de inadequação, da autocrítica e da síndrome do impostor que a acompanham desde criança, mesmo quando a vida parece dizer o contrário.\n\nO espetáculo estava marcado para setembro e passou para dezembro; os bilhetes já comprados continuam válidos para as novas datas.',
-    ticketInfo: 'Sexta, 18, e sábado, 19 de dezembro, às 21:00, na Sala Principal do Teatro Sá da Bandeira (Porto). M/16.\n\nBilhetes de 15 € a 30 € (valor facial; a Ticketline acrescenta custos de operação), à venda na Ticketline.',
+    ticketInfo: 'Sexta, 18, e sábado, 19 de dezembro, às 21:00, na Sala Principal do Teatro Sá da Bandeira (Porto). M/16. À venda na Ticketline aparece só a sessão de 19.\n\nBilhetes de 15 € a 30 € (valor facial; a Ticketline acrescenta custos de operação), à venda na Ticketline.',
     ticketUrl: 'https://www.ticketline.pt/evento/ana-garcia-martins-insuficiente-105482'
   }
 };
@@ -143,10 +143,10 @@ const artists = {
     body: 'Marlene Monteiro Freitas nasceu em Cabo Verde e vive em Portugal. As suas peças juntam dança, música, máscara e um forte trabalho de expressão facial, e circulam pelos principais festivais internacionais.\n\nNôt, inspirada em As Mil e Uma Noites, estreou no Festival de Avignon em 2025 e chega ao Theatro Circo, em Braga, a 11 de dezembro de 2026.'
   },
   'hugo-sousa': {
-    body: 'Hugo Sousa é humorista de stand-up. Em Aqui Entre Nós, o solo que estreou em 2026 e anda em digressão pelo país, transforma em comédia a própria vida, a família e as diferenças entre gerações.\n\nEm Lisboa, atua na Aula Magna a 15 de novembro de 2026.'
+    body: 'Hugo Sousa é humorista de stand-up. Em Aqui Entre Nós, o solo que estreou em 2026 e anda em digressão pelo país, transforma em comédia a própria vida, a família e as diferenças entre gerações.\n\nPróximas datas: Lisboa (Aula Magna, 15 nov), Chaves (19 nov), Guimarães (CAE São Mamede, 20 e 21 nov), Faro (4 dez) e Évora (5 dez).'
   },
   'diogo-faro': {
-    body: 'Diogo Faro é humorista e um dos nomes do stand-up português que mais junta comédia e comentário social. Massa Mãe, o novo solo, estreou no Porto e chega ao Teatro da Trindade, em Lisboa, a 15 de dezembro de 2026.'
+    body: 'Diogo Faro é humorista e um dos nomes do stand-up português que mais junta comédia e comentário social. Massa Mãe, o novo solo, estreou no Porto e chega ao Teatro da Trindade, em Lisboa, a 15 de dezembro de 2026 (sessão esgotada).'
   },
   'ana-garcia-martins': {
     body: 'Ana Garcia Martins é humorista e autora, conhecida pelo blogue A Pipoca Mais Doce. Em Insuficiente, o novo solo de stand-up, fala de autocrítica e da síndrome do impostor.\n\nApresenta-o no Teatro Sá da Bandeira, no Porto, a 18 e 19 de dezembro de 2026.'
@@ -164,7 +164,7 @@ const venues = {
     body: 'Projetada pelo arquiteto Rem Koolhaas e inaugurada em 2005, a Casa da Música é a principal sala de concertos do Porto e casa da Orquestra Sinfónica do Porto e do Remix Ensemble. A Sala Suggia é a maior; a Sala 2 recebe concertos mais pequenos.\n\nBilheteira: no edifício da Casa da Música e online em casadamusica.com.'
   },
   maat: {
-    body: 'O MAAT, Museu de Arte, Arquitetura e Tecnologia, abriu em 2016 em Belém. Junta o edifício ondulado desenhado por Amanda Levete, à beira do Tejo, e a antiga Central Tejo, uma central elétrica do início do século XX.\n\nAbre de quarta a segunda, das 10:00 às 19:00. O bilhete MAAT + Central Tejo custa 11 € e compra-se no museu ou em maat.pt.'
+    body: 'O MAAT, Museu de Arte, Arquitetura e Tecnologia, abriu em 2016 em Belém. Junta o edifício ondulado desenhado por Amanda Levete, à beira do Tejo, e a antiga Central Tejo, uma central elétrica do início do século XX.\n\nAbre de quarta a segunda, das 10:00 às 19:00. O bilhete MAAT + Central Tejo custa 12 € e compra-se no museu ou em maat.pt.'
   },
   'museu-do-fado': {
     body: 'Em Alfama, o Museu do Fado conta a história da canção de Lisboa desde o século XIX, com instrumentos, discos, cartazes e gravações. Tem também uma escola de guitarra portuguesa e um centro de documentação.\n\nAbre de terça a domingo, das 10:00 às 18:00. Bilhete de 5 €, à venda só na bilheteira do museu ou na BOL.'
