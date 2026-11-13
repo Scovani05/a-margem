@@ -17,8 +17,8 @@ const events = {
   },
   'janeiro-reticencias-coliseu-lisboa': {
     body: 'Reticências é o novo álbum de janeiro, editado a 25 de setembro de 2026, com doze canções. Antes do disco saíram Cor Lá Fora, com Valter Lobo, e Canção da Revolta, com Meta.\n\nEste é o concerto de apresentação em Lisboa, no Coliseu Club, o espaço mais pequeno do Coliseu dos Recreios. No Porto, o disco é apresentado a 3 de dezembro no Hot Five.',
-    ticketInfo: 'Quarta-feira, 18 de novembro, no Coliseu Club (Coliseu dos Recreios, Rua das Portas de Santo Antão 96, Lisboa). A hora não estava publicada à data da recolha: confirma no site do Coliseu.\n\nBilhetes na bilheteira do Coliseu dos Recreios e online em coliseulisboa.com e na BOL.',
-    ticketUrl: 'https://coliseulisboa.bol.pt/'
+    ticketInfo: 'Quarta-feira, 18 de novembro, às 21:00, no Coliseu Club (Coliseu dos Recreios, Rua das Portas de Santo Antão 96, Lisboa).\n\nBilhete a 25 €, à venda na bilheteira do Coliseu dos Recreios e na BOL.',
+    ticketUrl: 'https://www.bol.pt/Comprar/Bilhetes/185399/Sessoes'
   },
   'iolanda-coliseu-dos-recreios-2026': {
     body: 'É a estreia de IOLANDA no Coliseu de Lisboa. A cantora que levou Grito ao Festival Eurovisão da Canção de 2024 apresenta Quebranto, o disco que cruza pop urbana com fado e viola braguesa, e as canções que marcaram o seu percurso.\n\nO espetáculo usa um palco a 360 graus, com o público à volta, e conta a história de um disco que demorou cerca de um ano e meio a fazer. É recomendado a partir dos 6 anos; não é permitida a entrada a crianças com menos de 3.',

@@ -195,6 +195,16 @@ const artists = [
     bio: 'Humorista e autora, conhecida pelo blogue A Pipoca Mais Doce. Insuficiente é o seu novo solo de stand-up.',
     imageUrl: img.saDaBandeira
   },
+  {
+    slug: 'luisa-sobral', name: 'Luísa Sobral', location: 'Lisboa', disciplines: ['Música', 'Canção', 'Escrita'],
+    bio: 'Cantora, compositora e autora. Escreveu Amar Pelos Dois, a canção com que Portugal venceu a Eurovisão em 2017. Cartas de Desamor (outubro de 2026) é o oitavo álbum.',
+    imageUrl: img.casaDaMusica
+  },
+  {
+    slug: 'janeiro', name: 'janeiro', location: 'Lisboa', disciplines: ['Música', 'Canção'],
+    bio: 'Nome artístico de Henrique Janeiro, cantor e compositor nascido em Coimbra. Reticências, editado em setembro de 2026, é um disco de canção enraizado na tradição portuguesa.',
+    imageUrl: img.coliseuLisboa
+  },
 ];
 
 const works = [
@@ -237,6 +247,16 @@ const works = [
     slug: 'aqui-tiago-guedes', title: 'Aquí', subtitle: 'Filme de Tiago Guedes (2026)', type: 'film', category: 'cinema', creator: 'Tiago Guedes',
     description: 'Simón conhece um rapaz, David, numa travessia por mar até uma terra sem nome. Com Inés, formam uma família pouco convencional. Com Albano Jerónimo, Patricia López Arnaiz e Manolo Solo. Coprodução Portugal-França.',
     officialUrl: 'https://www.festival-cannes.com/en/f/aqui/', imageUrl: img.cannes, releasedAt: null
+  },
+  {
+    slug: 'cartas-de-desamor-luisa-sobral', title: 'Cartas de Desamor', subtitle: 'Luísa Sobral (2026)', type: 'album', category: 'musica', creator: 'Luísa Sobral',
+    description: 'Oitavo álbum de Luísa Sobral, em que se aproxima da música tradicional portuguesa, com percussões e ritmos como o do adufe. Produção de Ricardo Dias.',
+    officialUrl: 'https://observador.pt/2026/06/05/luisa-sobral-edita-novo-album-em-outubro-que-apresenta-em-novembro-em-lisboa-e-porto/', imageUrl: img.adufe2, releasedAt: '2026-10-09'
+  },
+  {
+    slug: 'reticencias-janeiro', title: 'Reticências', subtitle: 'janeiro (2026)', type: 'album', category: 'musica', creator: 'janeiro',
+    description: 'Disco de canção e de cantautor, com doze temas, enraizado na tradição portuguesa e com influência da música brasileira.',
+    officialUrl: 'https://www.sabado.pt/sabermais/despido', imageUrl: img.guitarra, releasedAt: '2026-09-25'
   }
 ];
 
@@ -358,6 +378,12 @@ const articles = [
     body: 'Novembro abre no Porto com Linda Martini, que a 11 de novembro tocam na íntegra Olhos de Mongol, 20 anos depois, no Coliseu Box (15 € em pré-venda, à venda em coliseu.pt). A 16, Luísa Sobral apresenta Cartas de Desamor na Sala Suggia da Casa da Música, com bilhetes de 25 € a 35 € no site da Casa da Música.\n\nEm Lisboa, o Coliseu dos Recreios recebe janeiro com Reticências no Coliseu Club (18 de novembro), IOLANDA com as canções de Quebranto num palco a 360 graus (7 de dezembro, de 18 € a 35 €) e Rodrigo Leão com Alma Mater no Misty Fest (18 de dezembro, às 18:00 e às 21:00). Os bilhetes do Coliseu vendem-se na bilheteira, em coliseulisboa.com e na BOL.\n\nFora desta lista, Bruno Pernadas tem concerto anunciado em Lisboa a 30 de novembro, na Casa Capitão.\n\nAs horas e os preços podem mudar: confirma sempre na página de cada concerto, que está ligada em cada ficha.',
     imageUrl: img.coliseuPorto, publishedAt: '2026-11-09T11:00:00Z'
   },
+  {
+    slug: 'agenda-da-semana-16-a-22-novembro-2026', title: 'Agenda da semana: 16 a 22 de novembro', subtitle: 'Agenda', category: 'cultura-independente',
+    excerpt: 'Luísa Sobral na Casa da Música, janeiro no Coliseu Club, Hugo Sousa em digressão, Gil Vicente no São João e quatro exposições em Lisboa.',
+    body: 'O que não perder esta semana, com data, sala e preço.\n\nSegunda, 16, às 21:30: Luísa Sobral apresenta Cartas de Desamor na Sala Suggia da Casa da Música, no Porto. Bilhetes de 25 € a 35 €.\n\nQuarta, 18, às 21:00: janeiro apresenta Reticências no Coliseu Club, em Lisboa. Bilhetes a 25 €.\n\nQuinta, 19, a sábado, 21: Hugo Sousa leva Aqui Entre Nós a Chaves (dia 19) e a Guimarães (dias 20 e 21). Bilhetes desde 18 €.\n\nEm cena até 13 de dezembro: Auto da Barca do Inferno, de Gil Vicente, com encenação de Marta Pazos, no Teatro Nacional São João, no Porto.\n\nExposições em Lisboa: Tragédia e Farsa, de Júlio Pomar e Gabriel Abrantes, no Atelier-Museu Júlio Pomar (3 €); Pedro Cabrita Reis e Joana Vasconcelos no MAAT (12 €); e A Arca Eterna: Fernando Pessoa e a Posteridade, na Casa Fernando Pessoa, até 10 de janeiro.\n\nOs preços e as horas podem mudar: confirma sempre na ficha de cada evento, onde está a ligação para comprar bilhetes.',
+    imageUrl: img.casaDaMusica, featured: true, publishedAt: '2026-11-13T18:00:00Z'
+  },
   // Notícias (secção Revista): factos confirmados nas fontes indicadas no fim de cada texto.
   {
     slug: 'leffest-2026-abre-com-paper-tiger', title: 'LEFFEST abre a 20.ª edição com Paper Tiger, de James Gray', subtitle: 'Notícia', category: 'cinema',
@@ -455,6 +481,19 @@ const relations = [
   ['events', 'hugo-sousa-aqui-entre-nos-aula-magna', 'artists', 'hugo-sousa'],
   ['events', 'diogo-faro-massa-mae-trindade', 'artists', 'diogo-faro'],
   ['events', 'ana-garcia-martins-insuficiente-sa-da-bandeira', 'artists', 'ana-garcia-martins'],
+  ['events', 'luisa-sobral-cartas-de-desamor-casa-da-musica', 'artists', 'luisa-sobral'],
+  ['events', 'luisa-sobral-cartas-de-desamor-casa-da-musica', 'works', 'cartas-de-desamor-luisa-sobral'],
+  ['works', 'cartas-de-desamor-luisa-sobral', 'artists', 'luisa-sobral'],
+  ['events', 'janeiro-reticencias-coliseu-lisboa', 'artists', 'janeiro'],
+  ['events', 'janeiro-reticencias-coliseu-lisboa', 'works', 'reticencias-janeiro'],
+  ['works', 'reticencias-janeiro', 'artists', 'janeiro'],
+  ['articles', 'agenda-da-semana-16-a-22-novembro-2026', 'events', 'luisa-sobral-cartas-de-desamor-casa-da-musica'],
+  ['articles', 'agenda-da-semana-16-a-22-novembro-2026', 'events', 'janeiro-reticencias-coliseu-lisboa'],
+  ['articles', 'agenda-da-semana-16-a-22-novembro-2026', 'events', 'hugo-sousa-aqui-entre-nos-aula-magna'],
+  ['articles', 'agenda-da-semana-16-a-22-novembro-2026', 'events', 'auto-da-barca-do-inferno-marta-pazos-tnsj'],
+  ['articles', 'agenda-da-semana-16-a-22-novembro-2026', 'events', 'tragedia-e-farsa-pomar-abrantes'],
+  ['articles', 'agenda-da-semana-16-a-22-novembro-2026', 'events', 'pedro-cabrita-reis-sem-magoa-no-coracao-maat'],
+  ['articles', 'agenda-da-semana-16-a-22-novembro-2026', 'events', 'a-arca-eterna-fernando-pessoa'],
 ];
 
 // Créditos das fotografias (Wikimedia Commons).
