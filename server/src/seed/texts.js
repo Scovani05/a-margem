@@ -72,7 +72,7 @@ const events = {
   },
   'hugo-sousa-aqui-entre-nos-aula-magna': {
     body: 'Aqui Entre Nós é o novo solo de stand-up de Hugo Sousa. O humorista fala da própria vida: histórias de família, relações, memórias, hábitos, diferenças entre gerações e os pequenos momentos embaraçosos do dia a dia.\n\nO espetáculo dura cerca de 60 minutos, sem intervalo, e é para maiores de 16 anos. Está em digressão pelo país.',
-    ticketInfo: 'Próximas datas da digressão (M/16):\n\n15 nov · Lisboa, Aula Magna · 19:00 e 21:30 (últimos bilhetes) · 18 € a 27 €\n19 nov · Chaves, Centro Cultural de Chaves · 19:00 e 21:00 · 18 €\n20 e 21 nov · Guimarães, CAE São Mamede · 18 € a 22 €\n4 dez · Faro, Conservatório Regional do Algarve · 21:00 e 23:00 · 18 €\n5 dez · Évora, Auditório Nobre da Universidade de Évora · 17:00 e 21:00 · 18 €\n\nBilhetes na BOL (cada cidade tem a sua página). A sessão de Braga (13 nov) esgotou.',
+    ticketInfo: 'Próximas datas da digressão (M/16):\n\n15 nov · Lisboa, Aula Magna · 19:00 e 21:30 (últimos bilhetes) · 18 € a 27 €\n\n19 nov · Chaves, Centro Cultural de Chaves · 19:00 e 21:00 · 18 €\n\n20 e 21 nov · Guimarães, CAE São Mamede · 18 € a 22 €\n\n4 dez · Faro, Conservatório Regional do Algarve · 21:00 e 23:00 · 18 €\n\n5 dez · Évora, Auditório Nobre da Universidade de Évora · 17:00 e 21:00 · 18 €\n\nBilhetes na BOL (cada cidade tem a sua página). A sessão de Braga (13 nov) esgotou.',
     ticketUrl: 'https://www.bol.pt/Comprar/Bilhetes/179423-lisboa_hugo_sousa_aqui_entre_nos-aula_magna/'
   },
   'diogo-faro-massa-mae-trindade': {
