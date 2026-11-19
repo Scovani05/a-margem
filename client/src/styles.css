@@ -889,3 +889,12 @@ a.admin-stat:hover { transform: translateY(-2px); }
 .detail-artists span { color: var(--muted); font: 500 10px var(--mono); letter-spacing: .12em; text-transform: uppercase; margin-right: 4px; }
 .detail-artists a { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px 8px 14px; background: color-mix(in srgb, var(--lime) 60%, var(--paper)); border: 1px solid rgba(23,32,28,.14); color: var(--ink); text-decoration: none; font-weight: 600; font-size: 15px; transition: background .2s; }
 .detail-artists a:hover { background: var(--lime); }
+
+/* Telemóvel: áreas de toque com pelo menos 32px de altura (links do rodapé e "Ler a notícia"). */
+@media (max-width: 768px) {
+  .footer-column { gap: 0; }
+  .footer-column a, .site-footer__bottom a { display: inline-flex; align-items: center; min-height: 32px; }
+  .site-footer__bottom a { font-size: 11px; }
+  .site-footer__bottom > div { align-items: center; flex-wrap: wrap; column-gap: 21px; row-gap: 0; }
+  .text-link { min-height: 32px; }
+}
