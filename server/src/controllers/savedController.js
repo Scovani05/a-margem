@@ -1,12 +1,13 @@
 const { Op } = require('sequelize');
 const { SavedItem, Event, Work, Artist, Venue, Article, Collection, Category } = require('../models');
+const { liveArticle } = require('../services/catalogueService');
 
 const contentModels = {
   events: { model: Event, where: { published: true, status: { [Op.ne]: 'cancelled' } } },
   works: { model: Work, where: { published: true } },
   artists: { model: Artist, where: { published: true } },
   venues: { model: Venue, where: { published: true } },
-  articles: { model: Article, where: { status: 'published' } },
+  articles: { model: Article, get where() { return liveArticle(); } },
   collections: { model: Collection, where: { published: true } }
 };
 

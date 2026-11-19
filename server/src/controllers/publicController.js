@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
 const { Category, Article, Collection, Event, Work, Artist, Venue, ContactMessage } = require('../models');
 const catalogue = require('../services/catalogueService');
+const { liveArticle } = catalogue;
 const { isEmail, cleanText } = require('../middleware/validate');
 
 const listCategories = async (req, res, next) => {
@@ -46,7 +47,7 @@ const contact = async (req, res, next) => {
 const sitemap = async (req, res, next) => {
   try {
     const [articles, collections, events, works, artists, venues] = await Promise.all([
-      Article.findAll({ where: { status: 'published' }, attributes: ['slug', 'updatedAt'] }),
+      Article.findAll({ where: liveArticle(), attributes: ['slug', 'updatedAt'] }),
       Collection.findAll({ where: { published: true }, attributes: ['slug', 'updatedAt'] }),
       Event.findAll({ where: { published: true, status: { [Op.ne]: 'cancelled' } }, attributes: ['slug', 'updatedAt'] }),
       Work.findAll({ where: { published: true }, attributes: ['slug', 'updatedAt'] }),

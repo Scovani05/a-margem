@@ -10,7 +10,9 @@ const resources = {
   collections: { model: Collection, fields: ['title', 'description', 'introduction'] }
 };
 
-const publicWhere = (type) => type === 'articles' ? { status: 'published' } : { published: true };
+// Artigos agendados: publicados mas com data futura só aparecem a partir dessa data.
+const liveArticle = () => ({ status: 'published', publishedAt: { [Op.lte]: new Date() } });
+const publicWhere = (type) => type === 'articles' ? liveArticle() : { published: true };
 
 function includesFor(type) {
   if (type === 'events') return [
@@ -115,7 +117,7 @@ async function detail(resource, slug) {
       const model = models[entry.contentType];
       if (!model) return null;
       const where = entry.contentType === 'articles'
-        ? { id: entry.contentId, status: 'published' }
+        ? { id: entry.contentId, ...liveArticle() }
         : { id: entry.contentId, published: true };
       const item = await model.findOne({ where });
       return item ? { type: entry.contentType, ...item.toJSON(), contentType: entry.contentType } : null;
@@ -171,4 +173,4 @@ async function featured(resource, limit = 4) {
   return rows;
 }
 
-module.exports = { resources, publicWhere, list, detail, featured };
+module.exports = { resources, publicWhere, liveArticle, list, detail, featured };

@@ -18,7 +18,13 @@ test('Sequelize models expose the required cultural relationships', () => {
 
 test('public query scopes exclude unpublished content and drafts', () => {
   assert.deepEqual(catalogue.publicWhere('events'), { published: true });
-  assert.deepEqual(catalogue.publicWhere('articles'), { status: 'published' });
+  const articles = catalogue.publicWhere('articles');
+  assert.equal(articles.status, 'published');
+  // Artigos agendados (data futura) ficam escondidos até à data de publicação.
+  const { Op } = require('sequelize');
+  const limit = articles.publishedAt[Op.lte];
+  assert.ok(limit instanceof Date);
+  assert.ok(Math.abs(limit.getTime() - Date.now()) < 5000);
 });
 
 test('initial migration creates the catalogue, account, and moderation tables', async () => {
