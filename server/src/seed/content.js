@@ -282,7 +282,7 @@ const events = [
   {
     slug: 'iolanda-coliseu-dos-recreios-2026', title: 'IOLANDA', subtitle: 'Apresentação de Quebranto', category: 'musica', venue: 'coliseu-dos-recreios',
     city: 'Lisboa', organizer: 'Coliseu dos Recreios', startsAt: '2026-12-07T21:00:00Z', endsAt: null,
-    description: 'IOLANDA leva ao Coliseu dos Recreios as canções de Quebranto, o disco editado em outubro. Confirma o horário e os preços na bilheteira.',
+    description: 'IOLANDA estreia-se no Coliseu dos Recreios com as canções de Quebranto, num palco circular a 360 graus no centro da sala. Convidados: Carolina Deslandes, Karetus, Vitorino e xtinto.',
     officialUrl: 'https://coliseulisboa.com', imageUrl: img.coliseuLisboa, featured: true
   },
   {
@@ -317,14 +317,14 @@ const events = [
   },
   {
     slug: 'a-arca-eterna-fernando-pessoa', title: 'A Arca Eterna: Fernando Pessoa e a Posteridade', subtitle: 'Exposição na Casa Fernando Pessoa', category: 'literatura', venue: 'casa-fernando-pessoa',
-    city: 'Lisboa', organizer: 'Casa Fernando Pessoa', startsAt: '2025-11-27T10:00:00Z', endsAt: '2027-01-10T18:00:00Z',
-    description: 'Como cresceu a lenda de Pessoa depois de 1935, a partir da famosa arca de inéditos. Curadoria de Antonio Sáez Delgado. Até 10 de janeiro de 2027.',
+    city: 'Lisboa', organizer: 'Casa Fernando Pessoa', startsAt: '2025-11-27T10:00:00Z', endsAt: '2026-12-06T18:00:00Z',
+    description: 'Como cresceu a lenda de Pessoa depois de 1935, a partir da famosa arca de inéditos. Curadoria de Antonio Sáez Delgado. Até 6 de dezembro de 2026.',
     officialUrl: 'https://www.casafernandopessoa.pt/pt/cfp/visita/exposicao-temporaria/arca-eterna-fernando-pessoa-e-posteridade', imageUrl: img.pessoa
   },
   {
     slug: 'auto-da-barca-do-inferno-marta-pazos-tnsj', title: 'Auto da Barca do Inferno', subtitle: 'Gil Vicente, encenação de Marta Pazos', category: 'teatro', venue: 'teatro-nacional-sao-joao',
     city: 'Porto', organizer: 'Teatro Nacional São João e Centro Dramático Galego', startsAt: '2026-11-12T19:00:00Z', endsAt: '2026-12-13T21:00:00Z',
-    description: 'Nova leitura do texto de Gil Vicente que junta teatro, dança e artes visuais. As personagens chegam a um cais onde um Anjo e um Diabo decidem o destino de cada alma. M/12, bilhetes de 10 € a 16 €.',
+    description: 'Nova leitura do texto de Gil Vicente que junta teatro, dança e artes visuais. As personagens chegam a um cais onde um Anjo e um Diabo decidem o destino de cada alma. M/14, bilhetes de 10 € a 16 €.',
     officialUrl: 'https://www.tnsj.pt', imageUrl: img.tnsj
   },
   {
@@ -354,7 +354,7 @@ const events = [
   {
     slug: 'ana-garcia-martins-insuficiente-sa-da-bandeira', title: 'Ana Garcia Martins - Insuficiente', subtitle: 'Stand-up comedy', category: 'comedia', venue: 'teatro-sa-da-bandeira',
     city: 'Porto', organizer: 'Teatro Sá da Bandeira', startsAt: '2026-12-18T21:00:00Z', endsAt: '2026-12-19T23:00:00Z',
-    description: 'O novo solo de Ana Garcia Martins é sobre a sensação de não ser suficiente, a autocrítica e a síndrome do impostor. Datas adiadas de setembro: 18 e 19 de dezembro (à venda na Ticketline aparece só a sessão de 19).',
+    description: 'O novo solo de Ana Garcia Martins é sobre a sensação de não ser suficiente, a autocrítica e a síndrome do impostor. Datas adiadas de setembro: 18 e 19 de dezembro.',
     officialUrl: 'https://teatrosadabandeira.pt/evento/ana-garcia-martins-insuficiente/', imageUrl: img.saDaBandeira
   },
 ];
@@ -369,7 +369,7 @@ const articles = [
   {
     slug: 'exposicoes-em-lisboa-ate-fevereiro', title: 'Cinco exposições portuguesas para ver em Lisboa', subtitle: 'Artes visuais', category: 'artes-visuais',
     excerpt: 'Cabrita Reis e Joana Vasconcelos nos 10 anos do MAAT, Pomar e Abrantes, Carlos Paredes e Fernando Pessoa.',
-    body: 'O MAAT faz 10 anos e celebra com duas exposições de artistas portugueses: Pedro Cabrita Reis mostra quase 200 obras inéditas em sem mágoa no coração (até 15 de fevereiro de 2027) e Joana Vasconcelos junta a sua obra à alta-costura de Valentino em VENUS (até 22 de fevereiro).\n\nNo Atelier-Museu Júlio Pomar, Tragédia e Farsa (desde 5 de novembro) põe o neorrealismo de Pomar ao lado da pintura de Gabriel Abrantes sobre o trabalho precário.\n\nCorre para as últimas semanas de duas exposições: Variações para Carlos Paredes, no Museu do Fado, fecha a 30 de dezembro, e A Arca Eterna, na Casa Fernando Pessoa, a 10 de janeiro de 2027.',
+    body: 'O MAAT faz 10 anos e celebra com duas exposições de artistas portugueses: Pedro Cabrita Reis mostra quase 200 obras inéditas em sem mágoa no coração (até 15 de fevereiro de 2027) e Joana Vasconcelos junta a sua obra à alta-costura de Valentino em VENUS (até 22 de fevereiro).\n\nNo Atelier-Museu Júlio Pomar, Tragédia e Farsa (desde 5 de novembro) põe o neorrealismo de Pomar ao lado da pintura de Gabriel Abrantes sobre o trabalho precário.\n\nCorre para as últimas semanas de duas exposições: A Arca Eterna, na Casa Fernando Pessoa, fecha a 6 de dezembro, e Variações para Carlos Paredes, no Museu do Fado, a 30 de dezembro.',
     imageUrl: img.maatNoite, featured: true, publishedAt: '2026-11-09T10:30:00Z'
   },
   {
@@ -381,7 +381,7 @@ const articles = [
   {
     slug: 'agenda-da-semana-16-a-22-novembro-2026', title: 'Agenda da semana: 16 a 22 de novembro', subtitle: 'Agenda', category: 'cultura-independente',
     excerpt: 'Luísa Sobral na Casa da Música, janeiro no Coliseu Club, Hugo Sousa em digressão, Gil Vicente no São João e quatro exposições em Lisboa.',
-    body: 'O que não perder esta semana, com data, sala e preço.\n\nSegunda, 16, às 21:30: Luísa Sobral apresenta Cartas de Desamor na Sala Suggia da Casa da Música, no Porto. Bilhetes de 25 € a 35 €.\n\nQuarta, 18, às 21:00: janeiro apresenta Reticências no Coliseu Club, em Lisboa. Bilhetes a 25 €.\n\nQuinta, 19, a sábado, 21: Hugo Sousa leva Aqui Entre Nós a Chaves (dia 19) e a Guimarães (dias 20 e 21). Bilhetes desde 18 €.\n\nEm cena até 13 de dezembro: Auto da Barca do Inferno, de Gil Vicente, com encenação de Marta Pazos, no Teatro Nacional São João, no Porto.\n\nExposições em Lisboa: Tragédia e Farsa, de Júlio Pomar e Gabriel Abrantes, no Atelier-Museu Júlio Pomar (3 €); Pedro Cabrita Reis e Joana Vasconcelos no MAAT (12 €); e A Arca Eterna: Fernando Pessoa e a Posteridade, na Casa Fernando Pessoa, até 10 de janeiro.\n\nOs preços e as horas podem mudar: confirma sempre na ficha de cada evento, onde está a ligação para comprar bilhetes.',
+    body: 'O que não perder esta semana, com data, sala e preço.\n\nSegunda, 16, às 21:30: Luísa Sobral apresenta Cartas de Desamor na Sala Suggia da Casa da Música, no Porto. Bilhetes de 25 € a 35 €.\n\nQuarta, 18, às 21:00: janeiro apresenta Reticências no Coliseu Club, em Lisboa. Bilhetes a 25 €.\n\nQuinta, 19, a sábado, 21: Hugo Sousa leva Aqui Entre Nós a Chaves (dia 19) e a Guimarães (dias 20 e 21). Bilhetes desde 18 €.\n\nEm cena até 13 de dezembro: Auto da Barca do Inferno, de Gil Vicente, com encenação de Marta Pazos, no Teatro Nacional São João, no Porto.\n\nExposições em Lisboa: Tragédia e Farsa, de Júlio Pomar e Gabriel Abrantes, no Atelier-Museu Júlio Pomar (3 €); Pedro Cabrita Reis e Joana Vasconcelos no MAAT (12 €); e A Arca Eterna: Fernando Pessoa e a Posteridade, na Casa Fernando Pessoa, até 6 de dezembro.\n\nOs preços e as horas podem mudar: confirma sempre na ficha de cada evento, onde está a ligação para comprar bilhetes.',
     imageUrl: img.casaDaMusica, featured: true, publishedAt: '2026-11-13T18:00:00Z'
   },
   // Notícias (secção Revista): factos confirmados nas fontes indicadas no fim de cada texto.
@@ -432,7 +432,7 @@ const collections = [
   },
   {
     slug: 'exposicoes-lisboa-inverno-2026', title: 'Exposições em Lisboa neste inverno', description: 'Artistas e figuras da cultura portuguesa nos museus de Lisboa.',
-    introduction: 'Do MAAT à Casa Fernando Pessoa, cinco exposições para ver antes que fechem.\n\nDuas fecham primeiro: Variações para Carlos Paredes, no Museu do Fado (30 de dezembro), e A Arca Eterna, na Casa Fernando Pessoa (10 de janeiro de 2027). As outras três ficam até fevereiro de 2027. Os bilhetes vão dos 3 € do Atelier-Museu Júlio Pomar aos 12 € do MAAT, e todos se compram no próprio museu ou online.',
+    introduction: 'Do MAAT à Casa Fernando Pessoa, cinco exposições para ver antes que fechem.\n\nDuas fecham já em dezembro: A Arca Eterna, na Casa Fernando Pessoa (6 de dezembro), e Variações para Carlos Paredes, no Museu do Fado (30 de dezembro). As outras três ficam até fevereiro de 2027. Os bilhetes vão dos 3 € do Atelier-Museu Júlio Pomar aos 12 € do MAAT, e todos se compram no próprio museu ou online.',
     coverImage: img.maat, featured: true,
     items: [['events', 'pedro-cabrita-reis-sem-magoa-no-coracao-maat'], ['events', 'venus-joana-vasconcelos-valentino-maat'], ['events', 'tragedia-e-farsa-pomar-abrantes'], ['events', 'variacoes-para-carlos-paredes-museu-do-fado'], ['events', 'a-arca-eterna-fernando-pessoa']]
   },

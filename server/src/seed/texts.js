@@ -52,12 +52,12 @@ const events = {
   },
   'a-arca-eterna-fernando-pessoa': {
     body: 'Quando morreu, em 1935, Fernando Pessoa deixou uma arca com milhares de papéis inéditos. A Arca Eterna conta como a sua lenda cresceu a partir dela, com edições, leituras e descobertas ao longo de quase um século.\n\nA curadoria é de Antonio Sáez Delgado, professor da Universidade de Évora. No fim do percurso, cada visitante pode montar a sua própria seleção portátil de textos e imagens.',
-    ticketInfo: 'Até 10 de janeiro de 2027, na Casa Fernando Pessoa (Rua Coelho da Rocha 16, Campo de Ourique, Lisboa). Abre de terça a domingo, das 10:00 às 18:00.\n\nBilhetes na bilheteira da Casa ou antecipadamente na BOL. Há visitas guiadas em português aos sábados e domingos às 16:00.',
+    ticketInfo: 'Até 6 de dezembro de 2026, na Casa Fernando Pessoa (Rua Coelho da Rocha 16, Campo de Ourique, Lisboa). Abre de terça a domingo, das 10:00 às 18:00.\n\nBilhetes na bilheteira da Casa ou antecipadamente na BOL. Há visitas guiadas em português aos sábados e domingos às 16:00.',
     ticketUrl: 'https://casafernandopessoa.bol.pt/'
   },
   'auto-da-barca-do-inferno-marta-pazos-tnsj': {
     body: 'O Auto da Barca do Inferno, de Gil Vicente, é um dos textos mais conhecidos do teatro português. Nesta versão, a encenadora galega Marta Pazos junta teatro, dança e artes visuais e procura a energia popular, crítica e satírica do original.\n\nA estrutura mantém-se: o Fidalgo, o Onzeneiro, o Parvo, o Sapateiro, o Frade e a Alcoviteira chegam a um cais onde o Anjo e o Diabo decidem o destino de cada alma. É uma coprodução do Teatro Nacional São João com o Centro Dramático Galego.',
-    ticketInfo: 'De 12 de novembro a 13 de dezembro de 2026, no Teatro Nacional São João (Praça da Batalha, Porto). Cerca de 90 minutos, M/12.\n\nBilhetes de 10 € a 16 €, na bilheteira do TNSJ e online na BOL.',
+    ticketInfo: 'De 12 de novembro a 13 de dezembro de 2026, no Teatro Nacional São João (Praça da Batalha, Porto). Cerca de 90 minutos, M/14.\n\nBilhetes de 10 € a 16 €, na bilheteira do TNSJ e online na BOL.',
     ticketUrl: 'https://www.bol.pt/Comprar/Bilhetes/182996-auto_da_barca_do_inferno_gil_vicente-teatro_nacional_sao_joao/'
   },
   'aqui-antestreia-batalha': {
@@ -82,7 +82,7 @@ const events = {
   },
   'ana-garcia-martins-insuficiente-sa-da-bandeira': {
     body: 'Insuficiente é o novo solo de stand-up de Ana Garcia Martins. Fala dos sentimentos de inadequação, da autocrítica e da síndrome do impostor que a acompanham desde criança, mesmo quando a vida parece dizer o contrário.\n\nO espetáculo estava marcado para setembro e passou para dezembro; os bilhetes já comprados continuam válidos para as novas datas.',
-    ticketInfo: 'Sexta, 18, e sábado, 19 de dezembro, às 21:00, na Sala Principal do Teatro Sá da Bandeira (Porto). M/16. À venda na Ticketline aparece só a sessão de 19.\n\nBilhetes de 15 € a 30 € (valor facial; a Ticketline acrescenta custos de operação), à venda na Ticketline.',
+    ticketInfo: 'Sexta, 18, e sábado, 19 de dezembro, às 21:00, na Sala Principal do Teatro Sá da Bandeira (Porto). M/16. Os bilhetes de 10 de setembro valem para 18 de dezembro e os de 11 de setembro para 19 de dezembro.\n\nBilhetes de 15 € a 30 € (valor facial; a Ticketline acrescenta custos de operação), à venda na Ticketline.',
     ticketUrl: 'https://www.ticketline.pt/evento/ana-garcia-martins-insuficiente-105482'
   }
 };
