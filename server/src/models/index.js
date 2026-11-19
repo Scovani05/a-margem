@@ -15,6 +15,7 @@ const NewsletterSubscriber = require('./NewsletterSubscriber');
 const ContactMessage = require('./ContactMessage');
 const AuditLog = require('./AuditLog');
 const Media = require('./Media');
+const SiteVisit = require('./SiteVisit');
 
 Category.hasMany(Event, { foreignKey: 'categoryId', as: 'events' });
 Event.belongsTo(Category, { foreignKey: 'categoryId', as: 'category' });
@@ -37,5 +38,5 @@ Media.belongsTo(User, { foreignKey: 'uploadedBy', as: 'uploader' });
 
 module.exports = {
   sequelize, User, Category, Event, Work, Artist, Venue, Article, Collection,
-  CollectionItem, ContentRelation, SavedItem, Submission, NewsletterSubscriber, ContactMessage, AuditLog, Media
+  CollectionItem, ContentRelation, SavedItem, Submission, NewsletterSubscriber, ContactMessage, AuditLog, Media, SiteVisit
 };

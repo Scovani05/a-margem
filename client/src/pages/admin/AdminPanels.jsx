@@ -39,6 +39,14 @@ export function Dashboard({ labels }) {
   ];
   return <div className="admin-content">
     <div className="admin-welcome"><div><p className="eyebrow">Bom trabalho começa com atenção</p><h2>O que está a acontecer?</h2><p>Conteúdos, comunidade, base de dados e segurança num só lugar.</p></div><div className="d-flex gap-2 flex-wrap"><Link className="btn btn-outline-dark" to="/admin/database">Base de dados</Link><Link className="btn btn-dark" to="/admin/articles"><Plus size={16} /> Novo artigo</Link></div></div>
+    {data.visitors && <>
+      <h3 className="admin-subheading">Visitantes</h3>
+      <div className="admin-stats admin-stats--three">
+        <article className="admin-stat admin-stat--lime"><span>Total de visitantes</span><strong>{data.visitors.total}</strong></article>
+        <article className="admin-stat"><span>Último mês (30 dias)</span><strong>{data.visitors.month}</strong><small>{data.visitors.monthPageViews} páginas vistas</small></article>
+        <article className="admin-stat"><span>Últimos 7 dias</span><strong>{data.visitors.week}</strong></article>
+      </div>
+    </>}
     <h3 className="admin-subheading">Catálogo</h3>
     <div className="admin-stats">{Object.entries(data.counts).map(([key, value]) => <article className={key === 'pendingSubmissions' && value > 0 ? 'admin-stat admin-stat--lime' : 'admin-stat'} key={key}><span>{labels[key] || (key === 'pendingSubmissions' ? 'Sugestões por rever' : key === 'subscribers' ? 'Inscritos ativos' : key)}</span><strong>{value}</strong></article>)}</div>
     <h3 className="admin-subheading">Comunidade</h3>

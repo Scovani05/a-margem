@@ -6,7 +6,7 @@ const audit = require('../utils/audit');
 // Usa os modelos Sequelize como "lista branca": só tabelas e colunas conhecidas são acessíveis.
 
 const HIDDEN_FIELDS = new Set(['passwordHash', 'resetTokenHash', 'resetTokenExpiresAt', 'tokenVersion', 'unsubscribeToken', 'data']);
-const READ_ONLY_TABLES = new Set(['audit_logs']);
+const READ_ONLY_TABLES = new Set(['audit_logs', 'site_visits']);
 // Na tabela de utilizadores só se editam dados de perfil. Perfis e palavras-passe geram-se nas áreas próprias.
 const EDITABLE_OVERRIDE = { users: new Set(['name', 'bio']) };
 const SENSITIVE_SQL = /(password_hash|reset_token_hash|reset_token_expires_at|token_version|unsubscribe_token)/i;

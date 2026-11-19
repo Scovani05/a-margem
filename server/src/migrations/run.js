@@ -12,7 +12,8 @@ const migrations = [
   ['001-initial-schema', require('./001-initial-schema')],
   ['002-roles-security-audit', require('./002-roles-security-audit')],
   ['003-media-search', require('./003-media-search')],
-  ['004-content-text-tickets', require('./004-content-text-tickets')]
+  ['004-content-text-tickets', require('./004-content-text-tickets')],
+  ['005-site-visits', require('./005-site-visits')]
 ];
 
 async function run() {

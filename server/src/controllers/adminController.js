@@ -4,6 +4,7 @@ const { sequelize, Category, Event, Work, Artist, Venue, Article, Collection, Co
 const { isHttpUrl, isSafeAssetRef, isEmail, cleanText, passwordProblem } = require('../middleware/validate');
 const slugify = require('../utils/slugify');
 const audit = require('../utils/audit');
+const { visitorStats } = require('./visitController');
 
 const managed = {
   categories: { model: Category, fields: ['name', 'slug', 'description', 'color', 'icon', 'sortOrder'], slugSource: 'name' },
@@ -89,14 +90,16 @@ const dashboard = async (req, res, next) => {
       User.count({ where: { createdAt: { [Op.gte]: weekAgo } } }), ContactMessage.count({ where: { status: 'new' } }),
       SavedItem.count(), Article.count({ where: { status: 'draft' } })
     ]);
-    const [recentActivity, recentSubmissions, recentUsers] = await Promise.all([
+    const [recentActivity, recentSubmissions, recentUsers, visitors] = await Promise.all([
       AuditLog.findAll({ order: [['createdAt', 'DESC']], limit: 8 }),
       Submission.findAll({ attributes: ['id', 'title', 'type', 'status', 'createdAt'], order: [['createdAt', 'DESC']], limit: 5 }),
-      User.findAll({ attributes: ['id', 'name', 'email', 'role', 'createdAt'], order: [['createdAt', 'DESC']], limit: 5 })
+      User.findAll({ attributes: ['id', 'name', 'email', 'role', 'createdAt'], order: [['createdAt', 'DESC']], limit: 5 }),
+      visitorStats()
     ]);
     return res.json({
       counts: { events, works, artists, venues, articles, collections, pendingSubmissions, subscribers },
       people: { clients, admins, newUsers, newMessages, saved, drafts },
+      visitors,
       recentActivity, recentSubmissions, recentUsers
     });
   } catch (error) { return next(error); }

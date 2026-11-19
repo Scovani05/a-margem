@@ -89,7 +89,12 @@ export default function DetailPage({ type }) {
 
   const location = item.city || item.location;
   const dateText = item.startsAt ? `${formatDate(item.startsAt, { weekday: 'long' })}${item.endsAt ? ` - ${formatDate(item.endsAt, { weekday: 'long' })}` : ''}` : '';
-  const eventIsPast = type === 'events' && item.startsAt && new Date(item.startsAt) < new Date();
+  // Um evento só passou quando acaba (data de fim); sem data de fim, conta a de início.
+  // Exposições e peças em cena com fim futuro estão "a decorrer", não passadas (igual ao servidor).
+  const now = new Date();
+  const eventStarted = type === 'events' && item.startsAt && new Date(item.startsAt) < now;
+  const eventIsPast = eventStarted && (!item.endsAt || new Date(item.endsAt) < now);
+  const eventIsOngoing = eventStarted && !eventIsPast;
   // O resumo (description/bio/excerpt) aparece em destaque no topo; o texto completo fica no corpo.
   const body = item.body || item.introduction || '';
   const isLongform = type === 'articles' || type === 'collections';
@@ -123,7 +128,7 @@ export default function DetailPage({ type }) {
     <article className={`detail-page detail-page--${type}`}>
       <div className="container detail-page__top"><Link className="back-link" to={type === 'articles' ? '/magazine' : type === 'collections' ? '/collections' : `/discover/${type}`}><ArrowLeft size={15} /> Voltar a {type === 'articles' ? 'Revista' : type === 'collections' ? 'Coleções' : labels[type].toLowerCase()}</Link><span className="eyebrow">{labels[type]}{infoTitle && ` · ${infoTitle}`}</span></div>
       <div className={`container detail-hero ${isLongform ? 'detail-hero--longform' : ''}`}>
-        <div className="detail-hero__copy"><div className="detail-badges">{item.isDemo && <span className="demo-badge">Conteúdo de demonstração</span>}{item.status === 'cancelled' && <span className="status-badge status-badge--cancelled">Cancelado</span>}{eventIsPast && item.status !== 'cancelled' && <span className="status-badge">Evento passado</span>}</div>
+        <div className="detail-hero__copy"><div className="detail-badges">{item.isDemo && <span className="demo-badge">Conteúdo de demonstração</span>}{item.status === 'cancelled' && <span className="status-badge status-badge--cancelled">Cancelado</span>}{eventIsPast && item.status !== 'cancelled' && <span className="status-badge">Evento passado</span>}{eventIsOngoing && item.status !== 'cancelled' && <span className="status-badge status-badge--ongoing">A decorrer</span>}</div>
           <h1>{item.title || item.name}</h1>{item.subtitle && <p className="detail-subtitle">{item.subtitle}</p>}
           {linkedArtists.length > 0 && <p className="detail-artists"><span>{linkedArtists.length > 1 ? 'Artistas' : 'Artista'}</span>{linkedArtists.map((artist) => <Link key={artist.id} to={`/artists/${artist.slug}`}>{artist.name} <ArrowUpRight size={15} /></Link>)}</p>}
           <div className="detail-meta">{item.authorName && <span>Por {item.authorName}</span>}{item.creator && !linkedArtists.some((artist) => artist.name === item.creator) && <span>Por {item.creator}</span>}{item.publishedAt && <span>{formatDate(item.publishedAt)}</span>}{item.releasedAt && <span>{formatDate(item.releasedAt, { month: 'long', year: 'numeric' })}</span>}{item.category && <span>{item.category.name}</span>}</div>

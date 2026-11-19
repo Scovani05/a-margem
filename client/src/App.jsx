@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import api from './api/client.js';
 import Layout from './components/Layout.jsx';
 import { AuthProvider, useAuth } from './context/AuthContext.jsx';
 import { Loading } from './components/States.jsx';
@@ -21,6 +22,30 @@ function RouteScrollReset() {
   return null;
 }
 
+// Identificador anónimo do navegador, só para contar visitantes únicos (ver /api/visits).
+function visitorId() {
+  try {
+    let id = localStorage.getItem('margem_visitor');
+    if (!id) {
+      id = crypto.randomUUID ? crypto.randomUUID() : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 14)}`;
+      localStorage.setItem('margem_visitor', id);
+    }
+    return id;
+  } catch {
+    return null;
+  }
+}
+
+function VisitTracker() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    if (pathname.startsWith('/admin')) return;
+    const id = visitorId();
+    if (id) api.post('/visits', { visitorId: id, path: pathname }).catch(() => {});
+  }, [pathname]);
+  return null;
+}
+
 function RequireUser({ children }) {
   const { user, checking } = useAuth();
   const location = useLocation();
@@ -32,6 +57,7 @@ function RequireUser({ children }) {
 function RoutedApp() {
   return <>
     <RouteScrollReset />
+    <VisitTracker />
     <Layout><Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/discover" element={<DiscoverPage />} />

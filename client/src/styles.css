@@ -253,6 +253,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .detail-hero__image-caption { display: block; margin-top: 8px; text-align: right; color: #81867d; font: 9px var(--mono); }
 .detail-badges { display: flex; gap: 7px; margin-bottom: 14px; }
 .status-badge { padding: 5px 8px; color: #fff; background: #bb4a3e; font: 9px var(--mono); text-transform: uppercase; }
+.status-badge--ongoing { color: var(--ink); background: #d7e977; }
 .detail-hero h1 { margin: 0 0 14px; font: 500 clamp(48px, 6vw, 78px)/.94 var(--serif); letter-spacing: -.05em; }
 .detail-subtitle { margin: 0 0 15px; color: #666d65; font: italic 20px var(--serif); }
 .detail-meta { display: flex; flex-wrap: wrap; gap: 7px 13px; color: #777e76; font: 9px var(--mono); text-transform: uppercase; }
@@ -671,6 +672,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .admin-sidebar nav { gap: 0; }
 .admin-subheading { margin: 26px 0 11px; color: #6f766c; font: 9px var(--mono); letter-spacing: .1em; text-transform: uppercase; }
 .admin-stats--six { grid-template-columns: repeat(6, 1fr); }
+.admin-stats--three { grid-template-columns: repeat(3, 1fr); }
+.admin-stat > small { display: block; margin-top: 4px; color: #737970; font-size: 11px; }
 a.admin-stat { color: var(--ink); transition: transform .2s; }
 a.admin-stat:hover { transform: translateY(-2px); }
 .admin-columns { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; margin-top: 34px; }

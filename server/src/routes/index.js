@@ -9,6 +9,7 @@ const newsletterController = require('../controllers/newsletterController');
 const adminController = require('../controllers/adminController');
 const databaseController = require('../controllers/databaseController');
 const mediaController = require('../controllers/mediaController');
+const visitController = require('../controllers/visitController');
 const { requireAuth, optionalAuth, requireAdmin } = require('../middleware/auth');
 const rateLimit = require('../middleware/rateLimit');
 
@@ -17,6 +18,7 @@ const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 12, message: 'Mui
 const submitLimiter = rateLimit({ windowMs: 60 * 60 * 1000, max: 8 });
 const sensitiveLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 10, message: 'Muitas tentativas. Espera um pouco e tenta novamente.' });
 const adminLimiter = rateLimit({ windowMs: 60 * 1000, max: 120, keyByPath: false });
+const visitLimiter = rateLimit({ windowMs: 60 * 1000, max: 60 });
 
 router.get('/health', (req, res) => res.json({ ok: true, name: 'À Margem API' }));
 router.get('/home', publicController.home);
@@ -24,6 +26,7 @@ router.get('/categories', publicController.listCategories);
 router.get('/search', searchController.search);
 router.get('/search/suggest', searchController.suggest);
 router.get('/media/:id', mediaController.show);
+router.post('/visits', visitLimiter, visitController.record);
 
 for (const resource of ['events', 'works', 'artists', 'venues', 'articles', 'collections']) {
   router.get(`/${resource}`, catalogue.list(resource));
