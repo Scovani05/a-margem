@@ -20,3 +20,9 @@ export function formatDate(date, options = {}) {
   if (!date) return '';
   return new Intl.DateTimeFormat('pt-PT', { day: 'numeric', month: 'short', year: 'numeric', ...options }).format(new Date(date));
 }
+
+// Eventos de um só dia (concertos) também têm data de fim; só a mostramos quando dura mais do que um dia.
+const lisbonDay = (date) => new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Lisbon' }).format(new Date(date));
+export function spansDays(item) {
+  return Boolean(item?.startsAt && item?.endsAt) && lisbonDay(item.startsAt) !== lisbonDay(item.endsAt);
+}

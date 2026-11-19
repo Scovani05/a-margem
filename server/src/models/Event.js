@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const { endOfLisbonDay } = require('../utils/dates');
 
 module.exports = sequelize.define('Event', {
   title: { type: DataTypes.STRING(180), allowNull: false },
@@ -22,4 +23,13 @@ module.exports = sequelize.define('Event', {
   featured: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
   published: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
   isDemo: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false }
-}, { tableName: 'events', underscored: true, timestamps: true, indexes: [{ fields: ['starts_at'] }, { fields: ['city'] }, { fields: ['published', 'featured'] }] });
+}, {
+  tableName: 'events', underscored: true, timestamps: true, indexes: [{ fields: ['starts_at'] }, { fields: ['city'] }, { fields: ['published', 'featured'] }],
+  hooks: {
+    // Todos os eventos têm data de fim, para passarem sozinhos a "Evento passado".
+    // Sem fim indicado (concertos, sessões únicas), o evento termina às 23:59 do dia em que começa (hora de Lisboa).
+    beforeValidate(event) {
+      if (!event.endsAt && event.startsAt) event.endsAt = endOfLisbonDay(event.startsAt);
+    }
+  }
+});

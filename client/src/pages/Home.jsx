@@ -5,7 +5,7 @@ import api from '../api/client.js';
 import ContentCard from '../components/ContentCard.jsx';
 import { ErrorState, Loading, SectionHeading } from '../components/States.jsx';
 import usePageMeta from '../hooks/usePageMeta.js';
-import { formatDate, imageFor } from '../utils/content.js';
+import { formatDate, imageFor, spansDays } from '../utils/content.js';
 
 function ContentGrid({ type, items, className = '' }) {
   return <div className={`row g-4 content-grid ${className}`}>{items.map((item) => <div className="col-12 col-sm-6 col-lg-3" key={`${type}-${item.id}`}><ContentCard type={type} item={item} /></div>)}</div>;
@@ -58,7 +58,7 @@ export function HomePage() {
       <div className="home-hero__art">
         <div className="hero-art__sun" aria-hidden="true" />
         {spotlight && <Link className="hero-photo" to={`/events/${spotlight.slug}`}>
-          <span className="hero-photo__caption"><small>{spotlight.category?.name || 'Em destaque'} · {spotlight.venueName || spotlight.city}</small><strong>{spotlight.title}</strong><span>{spotlight.endsAt && new Date(spotlight.startsAt) < new Date() ? `Até ${formatDate(spotlight.endsAt, { month: 'long', year: undefined })}` : formatDate(spotlight.startsAt)}</span></span>
+          <span className="hero-photo__caption"><small>{spotlight.category?.name || 'Em destaque'} · {spotlight.venueName || spotlight.city}</small><strong>{spotlight.title}</strong><span>{spansDays(spotlight) && new Date(spotlight.startsAt) < new Date() ? `Até ${formatDate(spotlight.endsAt, { month: 'long', year: undefined })}` : formatDate(spotlight.startsAt)}</span></span>
           <img src={imageFor(spotlight)} alt={`Fotografia de ${spotlight.venueName || spotlight.city}`} />
         </Link>}
         {nextUp.length > 0 && <div className="hero-next">

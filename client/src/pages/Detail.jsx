@@ -6,7 +6,7 @@ import ContentCard from '../components/ContentCard.jsx';
 import SaveButton from '../components/SaveButton.jsx';
 import { ErrorState, Loading } from '../components/States.jsx';
 import usePageMeta from '../hooks/usePageMeta.js';
-import { formatDate, getContentTitle, imageFor } from '../utils/content.js';
+import { formatDate, getContentTitle, imageFor, spansDays } from '../utils/content.js';
 
 // Títulos das secções de conteúdos ligados (as ligações valem nos dois sentidos).
 const relatedTitles = { articles: 'Na revista', artists: 'Artistas', events: 'Eventos', works: 'Obras', venues: 'Espaços', collections: 'Em coleções' };
@@ -88,7 +88,7 @@ export default function DetailPage({ type }) {
   if (error || !item) return <div className="container page-loading"><ErrorState message={error || 'Não encontrámos esta página.'} /></div>;
 
   const location = item.city || item.location;
-  const dateText = item.startsAt ? `${formatDate(item.startsAt, { weekday: 'long' })}${item.endsAt ? ` - ${formatDate(item.endsAt, { weekday: 'long' })}` : ''}` : '';
+  const dateText = item.startsAt ? `${formatDate(item.startsAt, { weekday: 'long' })}${spansDays(item) ? ` - ${formatDate(item.endsAt, { weekday: 'long' })}` : ''}` : '';
   // Um evento só passou quando acaba (data de fim); sem data de fim, conta a de início.
   // Exposições e peças em cena com fim futuro estão "a decorrer", não passadas (igual ao servidor).
   const now = new Date();
